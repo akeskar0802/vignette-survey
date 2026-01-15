@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Selection Study</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4ade80;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        /* Screen styles */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome screen */
+        .welcome-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .welcome-content h2 {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 24px;
+        }
+
+        .welcome-content p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .highlight-box {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            text-align: left;
+        }
+
+        .highlight-box h3 {
+            color: #0369a1;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box ul {
+            color: #475569;
+            padding-left: 20px;
+        }
+
+        .highlight-box li {
+            margin-bottom: 8px;
+        }
+
+        .time-estimate {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 12px 20px;
+            display: inline-block;
+            color: #92400e;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        /* Info box (attribute explanations) */
+        .info-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 32px;
+        }
+
+        .info-box h3 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+        }
+
+        .attribute-explain {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .attribute-explain:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .attribute-explain strong {
+            color: #7c3aed;
+        }
+
+        .attribute-explain p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* Choice set display */
+        .choice-set-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .choice-set-header h2 {
+            color: #1e293b;
+            font-size: 1.5rem;
+        }
+
+        .course-context {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .instruction-text {
+            color: #64748b;
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 900px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .course-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .course-card:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+        }
+
+        .card-header {
+            padding: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .card-header.section-a { background: #dbeafe; color: #1e40af; }
+        .card-header.section-b { background: #dcfce7; color: #166534; }
+        .card-header.section-c { background: #fef3c7; color: #92400e; }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .attribute-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .attribute-row:last-child {
+            border-bottom: none;
+        }
+
+        .attr-label {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .attr-value {
+            font-weight: 600;
+            color: #1e293b;
+            text-align: right;
+        }
+
+        .attr-value.banned { color: #dc2626; }
+        .attr-value.guided { color: #2563eb; }
+        .attr-value.unrestricted { color: #16a34a; }
+
+        .point-input-container {
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .point-input-container label {
+            display: block;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+        }
+
+        .point-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .point-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        /* Points summary */
+        .points-summary {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .points-total {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .points-total.valid { color: #16a34a; }
+        .points-total.invalid { color: #dc2626; }
+
+        .points-message {
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        .points-message.error {
+            color: #dc2626;
+            font-weight: 500;
+        }
+
+        /* Belief questions */
+        .belief-section {
+            background: #faf5ff;
+            border: 2px solid #e9d5ff;
+            border-radius: 12px;
+            padding: 28px;
+            margin-top: 32px;
+        }
+
+        .belief-section h3 {
+            color: #7c3aed;
+            margin-bottom: 24px;
+        }
+
+        .belief-question {
+            margin-bottom: 24px;
+        }
+
+        .belief-question:last-child {
+            margin-bottom: 0;
+        }
+
+        .belief-question label {
+            display: block;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .belief-question .highlight {
+            background: #e9d5ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .belief-input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .belief-input {
+            width: 100px;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .belief-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+        }
+
+        /* Attention check */
+        .attention-section {
+            background: #fff7ed;
+            border: 2px solid #fed7aa;
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .attention-section h3 {
+            color: #c2410c;
+            margin-bottom: 16px;
+        }
+
+        .attention-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .attention-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .attention-option:hover {
+            border-color: #f97316;
+            background: #fff7ed;
+        }
+
+        .attention-option.selected {
+            border-color: #f97316;
+            background: #ffedd5;
+        }
+
+        .attention-option input {
+            width: 20px;
+            height: 20px;
+            accent-color: #f97316;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(22, 163, 74, 0.4);
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+        }
+
+        .button-row.center {
+            justify-content: center;
+        }
+
+        /* Completion screen */
+        .completion-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .completion-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .completion-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: white;
+            stroke-width: 3;
+        }
+
+        .completion-content h2 {
+            color: #1e293b;
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .completion-content p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .respondent-id {
+            background: #f1f5f9;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .respondent-id span {
+            color: #64748b;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Course Selection Study</h1>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <span class="progress-text" id="progressText">0%</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Welcome Screen -->
+            <div class="screen active" id="welcomeScreen">
+                <div class="welcome-content">
+                    <h2>Welcome to the Course Selection Study</h2>
+                    <p>This research study examines how students make decisions when choosing between different course sections.</p>
+
+                    <div class="time-estimate">Estimated time: 15-20 minutes</div>
+
+                    <div class="highlight-box">
+                        <h3>What You'll Do</h3>
+                        <ul>
+                            <li>View 8 sets of course options, each with 3 different sections</li>
+                            <li>Allocate 100 points across sections based on how likely you'd be to enroll</li>
+                            <li>Answer a few follow-up questions about your expectations</li>
+                        </ul>
+                    </div>
+
+                    <p>All responses are anonymous. Your unique ID will be generated automatically.</p>
+
+                    <div class="button-row center">
+                        <button class="btn btn-primary" onclick="startSurvey()">Begin Survey</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Screen -->
+            <div class="screen" id="infoScreen">
+                <div class="info-box">
+                    <h3>Before You Begin: Understanding the Course Features</h3>
+
+                    <div class="attribute-explain">
+                        <strong>AI Policy</strong> - Rules for using AI tools (like ChatGPT) on take-home work
+                        <p><b>Banned:</b> No AI use permitted on any assignments.<br>
+                        <b>Guided:</b> AI allowed, but must submit prompt plan, AI output, and verification steps.<br>
+                        <b>Unrestricted:</b> AI allowed with no extra requirements.<br>
+                        <em>Note: AI is never allowed during closed-book exams.</em></p>
+                    </div>
+
+                    <div class="attribute-explain">
+                        <strong>Exam/Grading</strong> - How your grade is determined
+                        <p><b>100/0:</b> 100% closed-book exam, 0% take-home work.<br>
+                        <b>70/30:</b> 70% exam, 30% take-home work.<br>
+                        <b>50/50:</b> 50% exam, 50% take-home work.</p>
+                    </div>
+
+                    <div class="attribute-explain">
+                        <strong>Peer Rating</strong> - Based on ~100 prior student reviews (quality & grading curve)
+                        <p><b>HQ-HD:</b> High quality (4.5/5) with strict curve (avg grade: B-).<br>
+                        <b>LQ-LD:</b> Mixed quality (3.0/5) with lenient curve (avg grade: B+).<br>
+                        <em>Note: Peer rating does NOT indicate time commitment.</em></p>
+                    </div>
+
+                    <div class="attribute-explain">
+                        <strong>Workload</strong> - Expected hours/week outside class (from syllabus)
+                        <p>This is the ONLY feature that tells you the time commitment: 3, 6, 9, or 12 hrs/week.</p>
+                    </div>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" onclick="showFirstChoiceSet()">I Understand - Continue</button>
+                </div>
+            </div>
+
+            <!-- Choice Set Screen -->
+            <div class="screen" id="choiceScreen">
+                <div class="choice-set-header">
+                    <div class="course-context" id="courseContext">Quantitative Course</div>
+                    <h2>Choice Set <span id="setNumber">1</span> of 8</h2>
+                    <p class="instruction-text">
+                        Imagine you need to take a <span id="courseTypeText">quantitative/problem-solving</span> course next term.
+                        Below are three sections of the same course. They differ only in the features shown.<br><br>
+                        <strong>Allocate 100 points</strong> across the sections to indicate how likely you would be to enroll in each.
+                    </p>
+                </div>
+
+                <div class="cards-container" id="cardsContainer">
+                    <!-- Cards dynamically generated -->
+                </div>
+
+                <div class="points-summary">
+                    <div class="points-total" id="pointsTotal">0 / 100</div>
+                    <div class="points-message" id="pointsMessage">Enter points for each section (must total exactly 100)</div>
+                </div>
+
+                <!-- Belief questions (shown for 3 of 8 sets) -->
+                <div class="belief-section" id="beliefSection" style="display: none;">
+                    <h3>Follow-up Questions for Section <span id="beliefSectionLabel">A</span></h3>
+
+                    <div class="belief-question">
+                        <label>If YOU enrolled in Section <span class="highlight" id="beliefLabel1">A</span>, what is the chance you would earn a <strong>B or higher</strong>?</label>
+                        <div class="belief-input-row">
+                            <input type="number" class="belief-input" id="belief1" min="0" max="100" placeholder="0-100" oninput="validatePoints()"> <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="belief-question" id="beliefQuestion2Container">
+                        <label>If AI is allowed as shown, what is the chance you would <strong>use AI tools daily</strong> for this course?</label>
+                        <div class="belief-input-row">
+                            <input type="number" class="belief-input" id="belief2" min="0" max="100" placeholder="0-100" oninput="validatePoints()"> <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="belief-question">
+                        <label>If the AI policy were <strong>flipped</strong> (other features same), what would be your chance of earning a B or higher?</label>
+                        <div class="belief-input-row">
+                            <input type="number" class="belief-input" id="belief3" min="0" max="100" placeholder="0-100" oninput="validatePoints()"> <span>%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="previousSet()" id="prevBtn" style="visibility: hidden;">Previous</button>
+                    <button class="btn btn-primary" onclick="nextSet()" id="nextBtn" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Attention Check Screen -->
+            <div class="screen" id="attentionScreen">
+                <div class="attention-section">
+                    <h3>Quick Question</h3>
+                    <p style="margin-bottom: 20px; color: #1e293b;">In this survey, which column tells you how many hours/week the course requires?</p>
+
+                    <div class="attention-options" id="attentionOptions">
+                        <label class="attention-option" onclick="selectAttention(this, 'peer')">
+                            <input type="radio" name="attention" value="peer">
+                            <span>Peer Rating</span>
+                        </label>
+                        <label class="attention-option" onclick="selectAttention(this, 'workload')">
+                            <input type="radio" name="attention" value="workload">
+                            <span>Workload (hours/week)</span>
+                        </label>
+                        <label class="attention-option" onclick="selectAttention(this, 'grading')">
+                            <input type="radio" name="attention" value="grading">
+                            <span>Exam/Grading</span>
+                        </label>
+                        <label class="attention-option" onclick="selectAttention(this, 'ai')">
+                            <input type="radio" name="attention" value="ai">
+                            <span>AI Policy</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-row center" style="margin-top: 24px;">
+                    <button class="btn btn-primary" onclick="submitAttention()" id="attentionSubmitBtn" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Completion Screen -->
+            <div class="screen" id="completionScreen">
+                <div class="completion-content">
+                    <div class="completion-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2>Thank You!</h2>
+                    <p>You have successfully completed the survey.</p>
+
+                    <div class="respondent-id">
+                        <span>Your ID:</span> <strong id="finalRespondentId"></strong>
+                    </div>
+
+                    <button class="btn btn-success" onclick="downloadResults()">Download Your Responses (CSV)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // BLOCK DATA (from Block_Assignments_v6.txt)
+        // ============================================
+        const BLOCKS = {
+            1: [
+                { profiles: [
+                    { id: 22, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '6 hrs' },
+                    { id: 37, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '3 hrs' },
+                    { id: 51, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '9 hrs' }
+                ]},
+                { profiles: [
+                    { id: 9, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '3 hrs' },
+                    { id: 46, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '6 hrs' },
+                    { id: 49, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '3 hrs' }
+                ]},
+                { profiles: [
+                    { id: 2, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '6 hrs' },
+                    { id: 44, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '12 hrs' },
+                    { id: 63, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '9 hrs' }
+                ]},
+                { profiles: [
+                    { id: 17, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '3 hrs' },
+                    { id: 30, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '6 hrs' },
+                    { id: 57, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '3 hrs' }
+                ]},
+                { profiles: [
+                    { id: 4, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '12 hrs' },
+                    { id: 47, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '9 hrs' },
+                    { id: 64, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '12 hrs' }
+                ]},
+                { profiles: [
+                    { id: 16, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '12 hrs' },
+                    { id: 43, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '9 hrs' },
+                    { id: 54, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '6 hrs' }
+                ]},
+                { profiles: [
+                    { id: 20, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '12 hrs' },
+                    { id: 32, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '12 hrs' },
+                    { id: 59, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '9 hrs' }
+                ]},
+                { profiles: [
+                    { id: 10, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '6 hrs' },
+                    { id: 45, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '3 hrs' },
+                    { id: 55, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '9 hrs' }
+                ]}
+            ],
+            2: [
+                { profiles: [
+                    { id: 13, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '3 hrs' },
+                    { id: 41, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '3 hrs' },
+                    { id: 50, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '6 hrs' }
+                ]},
+                { profiles: [
+                    { id: 24, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '12 hrs' },
+                    { id: 36, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '12 hrs' },
+                    { id: 56, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '12 hrs' }
+                ]},
+                { profiles: [
+                    { id: 21, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '3 hrs' },
+                    { id: 29, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '3 hrs' },
+                    { id: 58, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '6 hrs' }
+                ]},
+                { profiles: [
+                    { id: 5, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '3 hrs' },
+                    { id: 33, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '3 hrs' },
+                    { id: 70, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '6 hrs' }
+                ]},
+                { profiles: [
+                    { id: 23, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '9 hrs' },
+                    { id: 26, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '6 hrs' },
+                    { id: 60, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '12 hrs' }
+                ]},
+                { profiles: [
+                    { id: 7, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '9 hrs' },
+                    { id: 35, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '9 hrs' },
+                    { id: 65, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '3 hrs' }
+                ]},
+                { profiles: [
+                    { id: 11, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '9 hrs' },
+                    { id: 48, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '12 hrs' },
+                    { id: 52, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '12 hrs' }
+                ]},
+                { profiles: [
+                    { id: 14, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '6 hrs' },
+                    { id: 27, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '9 hrs' },
+                    { id: 71, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '9 hrs' }
+                ]}
+            ],
+            3: [
+                { profiles: [
+                    { id: 6, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '6 hrs' },
+                    { id: 38, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '6 hrs' },
+                    { id: 66, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '6 hrs' }
+                ]},
+                { profiles: [
+                    { id: 3, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '9 hrs' },
+                    { id: 40, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '12 hrs' },
+                    { id: 72, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '12 hrs' }
+                ]},
+                { profiles: [
+                    { id: 12, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '12 hrs' },
+                    { id: 31, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '9 hrs' },
+                    { id: 68, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '12 hrs' }
+                ]},
+                { profiles: [
+                    { id: 18, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '6 hrs' },
+                    { id: 25, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '3 hrs' },
+                    { id: 61, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '3 hrs' }
+                ]},
+                { profiles: [
+                    { id: 19, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '9 hrs' },
+                    { id: 28, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '12 hrs' },
+                    { id: 62, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '6 hrs' }
+                ]},
+                { profiles: [
+                    { id: 8, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '12 hrs' },
+                    { id: 39, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '9 hrs' },
+                    { id: 67, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '9 hrs' }
+                ]},
+                { profiles: [
+                    { id: 15, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '9 hrs' },
+                    { id: 42, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '6 hrs' },
+                    { id: 53, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '3 hrs' }
+                ]},
+                { profiles: [
+                    { id: 1, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '3 hrs' },
+                    { id: 34, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '6 hrs' },
+                    { id: 69, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '3 hrs' }
+                ]}
+            ]
+        };
+
+        // ============================================
+        // STATE
+        // ============================================
+        let state = {
+            respondentId: '',
+            block: 0,
+            courseType: '', // 'quantitative' or 'writing'
+            setOrder: [],
+            currentSetIndex: 0,
+            sectionLabelOrders: [], // randomized A/B/C for each set
+            beliefSets: [], // which 3 sets get belief questions
+            attentionPosition: 0, // after which choice set to show attention check
+            attentionAnswer: null,
+            responses: []
+        };
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        function generateId() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let id = '';
+            for (let i = 0; i < 8; i++) {
+                id += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return id;
+        }
+
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function randomChoice(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function updateProgress() {
+            // Total screens: info(1) + 8 choice sets + 1 attention = 10 steps to completion
+            const totalSteps = 10;
+            let currentStep = 0;
+
+            const currentScreen = document.querySelector('.screen.active');
+            if (currentScreen.id === 'welcomeScreen') currentStep = 0;
+            else if (currentScreen.id === 'infoScreen') currentStep = 1;
+            else if (currentScreen.id === 'choiceScreen') currentStep = 2 + state.currentSetIndex;
+            else if (currentScreen.id === 'attentionScreen') currentStep = 2 + state.attentionPosition;
+            else if (currentScreen.id === 'completionScreen') currentStep = totalSteps;
+
+            const pct = Math.round((currentStep / totalSteps) * 100);
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressText').textContent = pct + '%';
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        // ============================================
+        // SURVEY FLOW
+        // ============================================
+        function startSurvey() {
+            // Initialize state
+            state.respondentId = generateId();
+            state.block = randomChoice([1, 2, 3]);
+            state.courseType = randomChoice(['quantitative', 'writing']);
+            state.setOrder = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+
+            // Randomize section labels for each set
+            state.sectionLabelOrders = [];
+            for (let i = 0; i < 8; i++) {
+                state.sectionLabelOrders.push(shuffle([0, 1, 2]));
+            }
+
+            // Select 3 random sets for belief questions
+            const beliefIndices = shuffle([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, 3);
+            state.beliefSets = beliefIndices;
+
+            // Randomly select which section (0, 1, or 2) gets belief questions for each belief set
+            state.beliefSectionIndices = beliefIndices.map(() => Math.floor(Math.random() * 3));
+
+            // Position attention check after set 3, 4, or 5 (mid-survey)
+            state.attentionPosition = randomChoice([3, 4, 5]);
+
+            state.currentSetIndex = 0;
+            state.responses = [];
+
+            showScreen('infoScreen');
+        }
+
+        function showFirstChoiceSet() {
+            renderChoiceSet();
+            showScreen('choiceScreen');
+        }
+
+        function renderChoiceSet() {
+            const setIdx = state.setOrder[state.currentSetIndex];
+            const choiceSet = BLOCKS[state.block][setIdx];
+            const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
+            const labels = ['A', 'B', 'C'];
+
+            // Update header
+            document.getElementById('setNumber').textContent = state.currentSetIndex + 1;
+
+            const courseContextEl = document.getElementById('courseContext');
+            const courseTextEl = document.getElementById('courseTypeText');
+            if (state.courseType === 'quantitative') {
+                courseContextEl.textContent = 'Quantitative / Problem-Solving Course';
+                courseTextEl.textContent = 'quantitative/problem-solving';
+            } else {
+                courseContextEl.textContent = 'Writing-Heavy / Qualitative Course';
+                courseTextEl.textContent = 'writing-heavy/qualitative';
+            }
+
+            // Render cards
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+
+            labelOrder.forEach((profileIdx, displayIdx) => {
+                const profile = choiceSet.profiles[profileIdx];
+                const label = labels[displayIdx];
+                const sectionClass = `section-${label.toLowerCase()}`;
+
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.innerHTML = `
+                    <div class="card-header ${sectionClass}">Section ${label}</div>
+                    <div class="card-body">
+                        <div class="attribute-row">
+                            <span class="attr-label">AI Policy</span>
+                            <span class="attr-value ${profile.ai.toLowerCase()}">${profile.ai}</span>
+                        </div>
+                        <div class="attribute-row">
+                            <span class="attr-label">Exam/Grading</span>
+                            <span class="attr-value">${formatGrading(profile.grading)}</span>
+                        </div>
+                        <div class="attribute-row">
+                            <span class="attr-label">Peer Rating</span>
+                            <span class="attr-value">${formatPeer(profile.peer)}</span>
+                        </div>
+                        <div class="attribute-row">
+                            <span class="attr-label">Workload</span>
+                            <span class="attr-value">${profile.workload}/week</span>
+                        </div>
+                    </div>
+                    <div class="point-input-container">
+                        <label>Points for Section ${label}</label>
+                        <input type="number" class="point-input" id="points${displayIdx}"
+                               min="0" max="100" placeholder="0" oninput="validatePoints()">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Show/hide belief section
+            const beliefSection = document.getElementById('beliefSection');
+            const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
+
+            if (beliefSetIndex !== -1) {
+                beliefSection.style.display = 'block';
+
+                // Determine which section gets belief questions
+                const beliefSectionIdx = state.beliefSectionIndices[beliefSetIndex];
+                const beliefLabel = labels[beliefSectionIdx];
+
+                document.getElementById('beliefSectionLabel').textContent = beliefLabel;
+                document.getElementById('beliefLabel1').textContent = beliefLabel;
+
+                // Get the AI policy of the selected section
+                const selectedProfile = choiceSet.profiles[labelOrder[beliefSectionIdx]];
+                const beliefQ2 = document.getElementById('beliefQuestion2Container');
+                if (selectedProfile.ai === 'Banned') {
+                    beliefQ2.style.display = 'none';
+                } else {
+                    beliefQ2.style.display = 'block';
+                }
+
+                // Clear previous inputs
+                document.getElementById('belief1').value = '';
+                document.getElementById('belief2').value = '';
+                document.getElementById('belief3').value = '';
+            } else {
+                beliefSection.style.display = 'none';
+            }
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.visibility = state.currentSetIndex > 0 ? 'visible' : 'hidden';
+            document.getElementById('nextBtn').textContent = state.currentSetIndex === 7 ? 'Finish' : 'Next';
+            document.getElementById('nextBtn').disabled = true;
+
+            // Reset points display
+            document.getElementById('pointsTotal').textContent = '0 / 100';
+            document.getElementById('pointsTotal').className = 'points-total invalid';
+            document.getElementById('pointsMessage').textContent = 'Enter points for each section (must total exactly 100)';
+            document.getElementById('pointsMessage').className = 'points-message';
+        }
+
+        function formatGrading(grading) {
+            if (grading === '100/0') return '100% Exam';
+            if (grading === '70/30') return '70% Exam / 30% HW';
+            if (grading === '50/50') return '50% Exam / 50% HW';
+            return grading;
+        }
+
+        function formatPeer(peer) {
+            if (peer === 'HQ-HD') return '4.5/5 | Strict (avg B-)';
+            if (peer === 'LQ-LD') return '3.0/5 | Lenient (avg B+)';
+            return peer;
+        }
+
+        function validatePoints() {
+            const p0 = parseInt(document.getElementById('points0').value) || 0;
+            const p1 = parseInt(document.getElementById('points1').value) || 0;
+            const p2 = parseInt(document.getElementById('points2').value) || 0;
+            const total = p0 + p1 + p2;
+
+            const totalEl = document.getElementById('pointsTotal');
+            const msgEl = document.getElementById('pointsMessage');
+            const nextBtn = document.getElementById('nextBtn');
+
+            totalEl.textContent = `${total} / 100`;
+
+            if (total === 100) {
+                totalEl.className = 'points-total valid';
+                msgEl.textContent = 'Points add up to 100';
+                msgEl.className = 'points-message';
+
+                // Check if belief questions are needed and answered
+                const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
+                if (beliefSetIndex !== -1) {
+                    const b1 = document.getElementById('belief1').value;
+                    const b2 = document.getElementById('belief2').value;
+                    const b3 = document.getElementById('belief3').value;
+
+                    const setIdx = state.setOrder[state.currentSetIndex];
+                    const choiceSet = BLOCKS[state.block][setIdx];
+                    const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
+                    const beliefSectionIdx = state.beliefSectionIndices[beliefSetIndex];
+                    const selectedProfile = choiceSet.profiles[labelOrder[beliefSectionIdx]];
+
+                    const needsB2 = selectedProfile.ai !== 'Banned';
+
+                    if (b1 !== '' && b3 !== '' && (!needsB2 || b2 !== '')) {
+                        nextBtn.disabled = false;
+                    } else {
+                        nextBtn.disabled = true;
+                        msgEl.textContent = 'Please answer all follow-up questions below';
+                        msgEl.className = 'points-message error';
+                    }
+                } else {
+                    nextBtn.disabled = false;
+                }
+            } else {
+                totalEl.className = 'points-total invalid';
+                msgEl.textContent = total < 100 ? `Need ${100 - total} more points` : `${total - 100} points over limit`;
+                msgEl.className = 'points-message error';
+                nextBtn.disabled = true;
+            }
+        }
+
+        function saveCurrentResponse() {
+            const setIdx = state.setOrder[state.currentSetIndex];
+            const choiceSet = BLOCKS[state.block][setIdx];
+            const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
+            const labels = ['A', 'B', 'C'];
+
+            const p0 = parseInt(document.getElementById('points0').value) || 0;
+            const p1 = parseInt(document.getElementById('points1').value) || 0;
+            const p2 = parseInt(document.getElementById('points2').value) || 0;
+
+            const response = {
+                choiceSetOrder: state.currentSetIndex + 1,
+                originalSetIndex: setIdx + 1,
+                sectionA_profileId: choiceSet.profiles[labelOrder[0]].id,
+                sectionA_ai: choiceSet.profiles[labelOrder[0]].ai,
+                sectionA_grading: choiceSet.profiles[labelOrder[0]].grading,
+                sectionA_peer: choiceSet.profiles[labelOrder[0]].peer,
+                sectionA_workload: choiceSet.profiles[labelOrder[0]].workload,
+                sectionA_points: p0,
+                sectionB_profileId: choiceSet.profiles[labelOrder[1]].id,
+                sectionB_ai: choiceSet.profiles[labelOrder[1]].ai,
+                sectionB_grading: choiceSet.profiles[labelOrder[1]].grading,
+                sectionB_peer: choiceSet.profiles[labelOrder[1]].peer,
+                sectionB_workload: choiceSet.profiles[labelOrder[1]].workload,
+                sectionB_points: p1,
+                sectionC_profileId: choiceSet.profiles[labelOrder[2]].id,
+                sectionC_ai: choiceSet.profiles[labelOrder[2]].ai,
+                sectionC_grading: choiceSet.profiles[labelOrder[2]].grading,
+                sectionC_peer: choiceSet.profiles[labelOrder[2]].peer,
+                sectionC_workload: choiceSet.profiles[labelOrder[2]].workload,
+                sectionC_points: p2
+            };
+
+            // Add belief questions if applicable
+            const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
+            if (beliefSetIndex !== -1) {
+                const beliefSectionIdx = state.beliefSectionIndices[beliefSetIndex];
+                response.beliefSection = labels[beliefSectionIdx];
+                response.belief_gradeChance = parseInt(document.getElementById('belief1').value) || null;
+                response.belief_aiUsageDaily = parseInt(document.getElementById('belief2').value) || null;
+                response.belief_counterfactualGrade = parseInt(document.getElementById('belief3').value) || null;
+            }
+
+            // Find existing or add new
+            const existingIdx = state.responses.findIndex(r => r.choiceSetOrder === response.choiceSetOrder);
+            if (existingIdx >= 0) {
+                state.responses[existingIdx] = response;
+            } else {
+                state.responses.push(response);
+            }
+        }
+
+        function nextSet() {
+            saveCurrentResponse();
+
+            // Check if attention check should appear
+            if (state.currentSetIndex === state.attentionPosition && !state.attentionShown) {
+                state.attentionShown = true;
+                showScreen('attentionScreen');
+                return;
+            }
+
+            if (state.currentSetIndex < 7) {
+                state.currentSetIndex++;
+                renderChoiceSet();
+                restoreSavedValues(); // Restore if revisiting a previous set
+                updateProgress();
+            } else {
+                showCompletion();
+            }
+        }
+
+        function previousSet() {
+            if (state.currentSetIndex > 0) {
+                saveCurrentResponse();
+                state.currentSetIndex--;
+                renderChoiceSet();
+                restoreSavedValues();
+                updateProgress();
+            }
+        }
+
+        function restoreSavedValues() {
+            const existingResponse = state.responses.find(r => r.choiceSetOrder === state.currentSetIndex + 1);
+            if (existingResponse) {
+                // Restore point allocations
+                document.getElementById('points0').value = existingResponse.sectionA_points;
+                document.getElementById('points1').value = existingResponse.sectionB_points;
+                document.getElementById('points2').value = existingResponse.sectionC_points;
+
+                // Restore belief questions if this set has them
+                const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
+                if (beliefSetIndex !== -1 && existingResponse.belief_gradeChance !== undefined) {
+                    document.getElementById('belief1').value = existingResponse.belief_gradeChance || '';
+                    document.getElementById('belief2').value = existingResponse.belief_aiUsageDaily || '';
+                    document.getElementById('belief3').value = existingResponse.belief_counterfactualGrade || '';
+                }
+
+                validatePoints();
+            }
+        }
+
+        function selectAttention(el, value) {
+            document.querySelectorAll('.attention-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
+            state.attentionAnswer = value;
+            document.getElementById('attentionSubmitBtn').disabled = false;
+        }
+
+        function submitAttention() {
+            if (state.currentSetIndex < 7) {
+                state.currentSetIndex++;
+                renderChoiceSet();
+                showScreen('choiceScreen');
+            } else {
+                showCompletion();
+            }
+        }
+
+        function showCompletion() {
+            document.getElementById('finalRespondentId').textContent = state.respondentId;
+            showScreen('completionScreen');
+        }
+
+        function downloadResults() {
+            // =============================================
+            // SHEET 1: CHOICE RESPONSES (clear, intuitive format)
+            // =============================================
+            const choiceHeaders = [
+                'respondent_id', 'block', 'course_type', 'choice_set',
+                'A_ai_policy', 'A_grading', 'A_peer_rating', 'A_workload_hrs', 'A_points',
+                'B_ai_policy', 'B_grading', 'B_peer_rating', 'B_workload_hrs', 'B_points',
+                'C_ai_policy', 'C_grading', 'C_peer_rating', 'C_workload_hrs', 'C_points'
+            ];
+
+            let choiceCSV = choiceHeaders.join(',') + '\n';
+
+            state.responses.forEach(r => {
+                const row = [
+                    state.respondentId,
+                    state.block,
+                    state.courseType,
+                    r.choiceSetOrder,
+                    r.sectionA_ai, r.sectionA_grading, r.sectionA_peer, parseWorkload(r.sectionA_workload), r.sectionA_points,
+                    r.sectionB_ai, r.sectionB_grading, r.sectionB_peer, parseWorkload(r.sectionB_workload), r.sectionB_points,
+                    r.sectionC_ai, r.sectionC_grading, r.sectionC_peer, parseWorkload(r.sectionC_workload), r.sectionC_points
+                ];
+                choiceCSV += row.join(',') + '\n';
+            });
+
+            // =============================================
+            // SHEET 2: BELIEF RESPONSES (only sets with beliefs)
+            // =============================================
+            const beliefHeaders = [
+                'respondent_id', 'choice_set', 'belief_about_section',
+                'section_ai_policy', 'section_grading', 'section_peer_rating', 'section_workload_hrs',
+                'prob_grade_B_or_higher', 'prob_use_ai_daily', 'prob_grade_if_ai_flipped'
+            ];
+
+            let beliefCSV = beliefHeaders.join(',') + '\n';
+
+            state.responses.forEach(r => {
+                if (r.beliefSection) {
+                    // Get the section's attributes based on which section was asked about
+                    let sectionData;
+                    if (r.beliefSection === 'A') {
+                        sectionData = { ai: r.sectionA_ai, grading: r.sectionA_grading, peer: r.sectionA_peer, workload: r.sectionA_workload };
+                    } else if (r.beliefSection === 'B') {
+                        sectionData = { ai: r.sectionB_ai, grading: r.sectionB_grading, peer: r.sectionB_peer, workload: r.sectionB_workload };
+                    } else {
+                        sectionData = { ai: r.sectionC_ai, grading: r.sectionC_grading, peer: r.sectionC_peer, workload: r.sectionC_workload };
+                    }
+
+                    const row = [
+                        state.respondentId,
+                        r.choiceSetOrder,
+                        r.beliefSection,
+                        sectionData.ai,
+                        sectionData.grading,
+                        sectionData.peer,
+                        parseWorkload(sectionData.workload),
+                        r.belief_gradeChance || '',
+                        r.belief_aiUsageDaily || '',
+                        r.belief_counterfactualGrade || ''
+                    ];
+                    beliefCSV += row.join(',') + '\n';
+                }
+            });
+
+            // =============================================
+            // SHEET 3: SUMMARY (metadata + attention check)
+            // =============================================
+            const summaryCSV = `Respondent Summary
+respondent_id,${state.respondentId}
+block_assigned,${state.block}
+course_type,${state.courseType}
+attention_check_answer,${state.attentionAnswer}
+attention_check_correct,${state.attentionAnswer === 'workload' ? 'YES' : 'NO'}
+timestamp,${new Date().toISOString()}
+total_choice_sets,8
+belief_questions_on_sets,"${state.beliefSets.map(i => i + 1).join(', ')}"
+`;
+
+            // =============================================
+            // COMBINE INTO ONE FILE WITH CLEAR SECTIONS
+            // =============================================
+            const fullCSV = `${'='.repeat(60)}
+VIGNETTE STUDY RESPONSE DATA
+${'='.repeat(60)}
+
+${summaryCSV}
+${'='.repeat(60)}
+CHOICE PROBABILITIES (points allocated to each section)
+${'='.repeat(60)}
+${choiceCSV}
+${'='.repeat(60)}
+BELIEF RESPONSES (asked on ${state.beliefSets.length} randomly selected sets)
+${'='.repeat(60)}
+${beliefCSV}`;
+
+            // Download
+            const blob = new Blob([fullCSV], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `vignette_response_${state.respondentId}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function parseWorkload(workloadStr) {
+            // Convert "6 hrs" to just 6
+            return parseInt(workloadStr) || workloadStr;
+        }
+
+        // Initialize progress on load
+        updateProgress();
+    </script>
+</body>
+</html>
