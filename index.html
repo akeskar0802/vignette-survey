@@ -1314,13 +1314,13 @@
                     All three sections cover <span class="highlight">IDENTICAL CONTENT</span> - they only differ in the features shown below.
                 </div>
 
-                <div class="reminder-box">
-                    <strong>REMINDER:</strong> <span id="choiceStudentName">Emily</span> has a <span id="choiceGPA">3.8</span> GPA | Course type: <span id="choiceCourse">Quantitative</span>
+                <div class="reminder-box" style="font-size: 1.1rem; padding: 16px 20px;">
+                    <span id="choiceStudentName">Emily</span> has a <strong style="color: #7c3aed;"><span id="choiceGPA">3.8</span> GPA</strong> and needs to take a <strong style="color: #7c3aed;"><span id="choiceCourse">Quantitative</span></strong> course this semester.
                 </div>
 
-                <p class="instruction-text">
-                    Allocate 100 points across the three sections to indicate how likely <span id="choiceStudentName2">Emily</span> would be to enroll in each.
-                </p>
+                <div class="identical-content-banner" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); margin-bottom: 24px;">
+                    <strong>YOUR TASK:</strong> Allocate 100 points across the three sections to show how likely <span id="choiceStudentName2">Emily</span> would be to enroll in each.
+                </div>
 
                 <!-- Instructed response notice (shown only for set 7) -->
                 <div class="attention-section instructed" id="instructedNotice" style="display: none; margin-bottom: 24px;">
@@ -1371,20 +1371,6 @@
                         </div>
                     </div>
 
-                    <div class="belief-question" id="counterfactualQuestion">
-                        <label>If AI were <span id="counterfactualPolicy">BANNED</span> instead, what grade would <span id="beliefStudentName4">Emily</span> earn?</label>
-                        <div class="grade-scale" id="counterfactualGradeScale">
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'F')">F</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'D')">D</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'C')">C</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'C+')">C+</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'B-')">B-</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'B')">B</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'B+')">B+</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'A-')">A-</span>
-                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'A')">A</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="button-row">
@@ -1598,8 +1584,6 @@
 
             <!-- Screen 14: Perceived Realism -->
             <div class="screen" id="realismScreen">
-                <h2 style="color: #1e293b; margin-bottom: 24px;">Your Thoughts on This Study</h2>
-
                 <div class="question-container">
                     <label class="question-label">How realistic did you find the course selection scenarios?</label>
                     <div class="radio-group">
@@ -2285,9 +2269,8 @@
                 if (state.beliefSets.includes(state.currentSetIndex)) {
                     const hasGrade = state.currentBeliefs.grade;
                     const hasHours = state.currentBeliefs.hours !== undefined;
-                    const hasCounterfactual = state.currentBeliefs.counterfactualGrade;
 
-                    if (hasGrade && hasHours && hasCounterfactual) {
+                    if (hasGrade && hasHours) {
                         nextBtn.disabled = false;
                     } else {
                         nextBtn.disabled = true;
