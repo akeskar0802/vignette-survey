@@ -1927,15 +1927,6 @@
             validatePoints();
         }
 
-        function selectCounterfactualGrade(el, value) {
-            document.querySelectorAll('#counterfactualGradeScale .grade-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            el.classList.add('selected');
-            state.currentBeliefs.counterfactualGrade = value;
-            validatePoints();
-        }
-
         function updateHoursDisplay() {
             const val = document.getElementById('beliefHours').value;
             document.getElementById('hoursValue').textContent = val >= 20 ? '20+ hrs/week' : val + ' hrs/week';
@@ -2068,7 +2059,6 @@
             document.getElementById('beliefStudentName').textContent = name;
             document.getElementById('beliefStudentName2').textContent = name;
             document.getElementById('beliefStudentName3').textContent = name;
-            document.getElementById('beliefStudentName4').textContent = name;
 
             // Update practice tip names
             document.getElementById('practiceTipName').textContent = name;
@@ -2166,9 +2156,6 @@
                 document.querySelectorAll('.grade-option').forEach(opt => opt.classList.remove('selected'));
                 document.getElementById('beliefHours').value = 8;
                 updateHoursDisplay();
-
-                // Set counterfactual policy text
-                // Find the section with most points (will be determined after input)
             } else {
                 beliefSection.style.display = 'none';
             }
