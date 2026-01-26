@@ -1531,62 +1531,7 @@
                 </div>
             </div>
 
-            <!-- Screen 14: Perceived Realism -->
-            <div class="screen" id="realismScreen">
-                <div class="question-container">
-                    <label class="question-label">How realistic did you find the course selection scenarios?</label>
-                    <div class="radio-group">
-                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '1')">
-                            <input type="radio" name="realism_scenarios" value="1"><span>Not at all realistic</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '2')">
-                            <input type="radio" name="realism_scenarios" value="2"><span>Slightly realistic</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '3')">
-                            <input type="radio" name="realism_scenarios" value="3"><span>Moderately realistic</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '4')">
-                            <input type="radio" name="realism_scenarios" value="4"><span>Very realistic</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '5')">
-                            <input type="radio" name="realism_scenarios" value="5"><span>Extremely realistic</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-container">
-                    <label class="question-label">How easy or difficult was it to imagine what <span id="realismStudentName">Emily</span> would do?</label>
-                    <div class="radio-group">
-                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '1')">
-                            <input type="radio" name="realism_imagine" value="1"><span>Very difficult</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '2')">
-                            <input type="radio" name="realism_imagine" value="2"><span>Somewhat difficult</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '3')">
-                            <input type="radio" name="realism_imagine" value="3"><span>Neither easy nor difficult</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '4')">
-                            <input type="radio" name="realism_imagine" value="4"><span>Somewhat easy</span>
-                        </label>
-                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '5')">
-                            <input type="radio" name="realism_imagine" value="5"><span>Very easy</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-container">
-                    <label class="question-label">Do you have any comments or feedback about this survey? (Optional)</label>
-                    <textarea id="feedbackText" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 1rem; resize: vertical;" placeholder="Enter any comments here..."></textarea>
-                </div>
-
-                <div class="button-row">
-                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
-                    <button class="btn btn-primary" id="realismBtn" onclick="submitRealism()" disabled>Continue</button>
-                </div>
-            </div>
-
-            <!-- Screen 15: Completion -->
+            <!-- Screen 14: Completion -->
             <div class="screen" id="completionScreen">
                 <div class="completion-content">
                     <div class="completion-icon">
@@ -1737,7 +1682,6 @@
             nameCheckAnswer: null,
             wtpResponses: {},
             manipChecks: {},
-            realismResponses: {},
             // Quality flags
             flags: {
                 comprehension: false,
@@ -1782,7 +1726,7 @@
             const currentScreen = document.querySelector('.screen.active');
             const screenOrder = ['welcomeScreen', 'consentScreen', 'demographicsScreen', 'aiExperienceScreen',
                 'framingScreen', 'gpaScaleScreen', 'compCheckScreen', 'meetStudentScreen', 'attributeScreen',
-                'practiceScreen', 'choiceScreen', 'wtpScreen', 'manipCheckScreen', 'realismScreen', 'completionScreen'];
+                'practiceScreen', 'choiceScreen', 'wtpScreen', 'manipCheckScreen', 'completionScreen'];
 
             const idx = screenOrder.indexOf(currentScreen.id);
             if (idx >= 0) {
@@ -1923,11 +1867,6 @@
                 const course = document.querySelector('input[name="manip_course"]:checked');
                 document.getElementById('manipBtn').disabled = !(gpa && course);
             }
-            else if (currentScreen.id === 'realismScreen') {
-                const scenarios = document.querySelector('input[name="realism_scenarios"]:checked');
-                const imagine = document.querySelector('input[name="realism_imagine"]:checked');
-                document.getElementById('realismBtn').disabled = !(scenarios && imagine);
-            }
         }
 
         // ============================================
@@ -2029,8 +1968,6 @@
             document.getElementById('manipStudentName7').textContent = name;
             document.getElementById('manipStudentName8').textContent = name;
 
-            // Update realism screen
-            document.getElementById('realismStudentName').textContent = name;
         }
 
         function submitPractice() {
@@ -2348,16 +2285,6 @@
                 course_correct: courseAnswer === correctCourse
             };
 
-            showScreen('realismScreen');
-        }
-
-        function submitRealism() {
-            state.realismResponses = {
-                scenarios: document.querySelector('input[name="realism_scenarios"]:checked').value,
-                imagine: document.querySelector('input[name="realism_imagine"]:checked').value,
-                feedback: document.getElementById('feedbackText').value
-            };
-
             // Generate confirmation code
             document.getElementById('confirmationCode').textContent = state.respondentId;
             showScreen('completionScreen');
@@ -2423,12 +2350,6 @@
             csv += `manip_gpa_correct,${state.manipChecks.gpa_correct ? 1 : 0}\n`;
             csv += `manip_course_answer,${state.manipChecks.course_answer}\n`;
             csv += `manip_course_correct,${state.manipChecks.course_correct ? 1 : 0}\n\n`;
-
-            // Realism
-            csv += `REALISM\n`;
-            csv += `realism_scenarios,${state.realismResponses.scenarios}\n`;
-            csv += `realism_imagine,${state.realismResponses.imagine}\n`;
-            csv += `feedback,"${state.realismResponses.feedback?.replace(/"/g, '""') || ''}"\n`;
 
             // Download
             const blob = new Blob([csv], { type: 'text/csv' });
