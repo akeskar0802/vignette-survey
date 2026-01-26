@@ -777,6 +777,28 @@
             border-radius: 8px;
             margin-top: 12px;
         }
+
+        /* Prominent identical content banner */
+        .identical-content-banner {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+            border: 3px solid #0369a1;
+        }
+
+        .identical-content-banner .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -1164,16 +1186,16 @@
 
             <!-- Screen 8: Meet the Student -->
             <div class="screen" id="meetStudentScreen">
-                <h2 style="color: #1e293b; margin-bottom: 24px;">Meet Alex</h2>
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Meet <span id="studentNameHeader">Emily</span></h2>
 
                 <div class="student-card">
-                    <h3>Alex</h3>
-                    <p>Alex is a sophomore at Binghamton University majoring in Economics.</p>
+                    <h3 id="studentNameCard">Emily</h3>
+                    <p><span id="studentNameIntro">Emily</span> is a sophomore at Binghamton University majoring in Economics.</p>
 
                     <div class="student-gpa">
-                        <strong>Academic Standing: <span id="alexGPA">3.8</span> GPA</strong>
+                        <strong>Academic Standing: <span id="studentGPA">3.8</span> GPA</strong>
                         <div class="student-gpa-bar">
-                            <div class="student-gpa-marker" id="alexGPAMarker" style="left: 90%;"></div>
+                            <div class="student-gpa-marker" id="studentGPAMarker" style="left: 90%;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; opacity: 0.8;">
                             <span>2.0</span>
@@ -1184,17 +1206,22 @@
                         </div>
                     </div>
 
-                    <p id="alexDescription" style="margin-top: 12px;">Alex is near the top of the class, on the Dean's List, and generally finds coursework manageable.</p>
+                    <p id="studentDescription" style="margin-top: 12px;">Emily is near the top of the class, on the Dean's List, and generally finds coursework manageable.</p>
 
                     <div class="course-requirement">
                         <strong>COURSE REQUIREMENT:</strong><br>
-                        <span id="courseRequirement">Next semester, Alex needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.</span>
+                        <span id="courseRequirement">Next semester, Emily needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.</span>
                     </div>
                 </div>
 
-                <p style="color: #64748b; margin-top: 24px;">Three sections of the same course are available. They cover identical content but differ in the features you'll see. Your task is to help Alex decide how likely they would be to enroll in each section.</p>
+                <div class="identical-content-banner">
+                    All three sections cover <span class="highlight">IDENTICAL CONTENT</span> - they only differ in the features shown below.
+                </div>
 
-                <div class="button-row center">
+                <p style="color: #64748b; margin-top: 24px;">Your task is to help <span id="studentNameTask">Emily</span> decide how likely <span id="studentPronoun">she</span> would be to enroll in each section.</p>
+
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
                     <button class="btn btn-primary" onclick="nextScreen('attributeScreen')">Continue</button>
                 </div>
             </div>
@@ -1233,7 +1260,8 @@
                     </div>
                 </div>
 
-                <div class="button-row center">
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
                     <button class="btn btn-primary" onclick="nextScreen('practiceScreen')">I Understand - Continue</button>
                 </div>
             </div>
@@ -1245,12 +1273,16 @@
                     <p>Let's do a practice round to make sure everything is clear. This response will NOT be counted.</p>
                 </div>
 
+                <div class="identical-content-banner">
+                    All three sections cover <span class="highlight">IDENTICAL CONTENT</span> - they only differ in the features shown below.
+                </div>
+
                 <div class="reminder-box">
-                    <strong>REMINDER:</strong> Alex has a <span id="practiceGPA">3.8</span> GPA and needs a <span id="practiceCourse">quantitative</span> course.
+                    <strong>REMINDER:</strong> <span id="practiceStudentName">Emily</span> has a <span id="practiceGPA">3.8</span> GPA and needs a <span id="practiceCourse">quantitative</span> course.
                 </div>
 
                 <p class="instruction-text">
-                    Below are three sections. Allocate 100 points to show how likely Alex would be to enroll in each section.
+                    Below are three sections. Allocate 100 points to show how likely <span id="practiceStudentName2">Emily</span> would be to enroll in each section.
                 </p>
 
                 <div class="cards-container" id="practiceCards">
@@ -1263,10 +1295,11 @@
                 </div>
 
                 <p style="color: #64748b; background: #f0f9ff; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px;">
-                    <strong>TIP:</strong> If you think Alex would definitely choose one section, give it 100 points. If you think Alex is torn between two options, you might give 50 points each. Use any distribution that reflects your belief.
+                    <strong>TIP:</strong> If you think <span id="practiceTipName">Emily</span> would definitely choose one section, give it 100 points. If you think <span id="practiceTipName2">Emily</span> is torn between two options, you might give 50 points each. Use any distribution that reflects your belief.
                 </p>
 
-                <div class="button-row center">
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
                     <button class="btn btn-primary" id="practiceBtn" onclick="submitPractice()" disabled>Submit Practice</button>
                 </div>
             </div>
@@ -1277,12 +1310,16 @@
                     <h2>Choice Set <span id="setNumber">1</span> of 8</h2>
                 </div>
 
+                <div class="identical-content-banner">
+                    All three sections cover <span class="highlight">IDENTICAL CONTENT</span> - they only differ in the features shown below.
+                </div>
+
                 <div class="reminder-box">
-                    <strong>REMINDER:</strong> Alex has a <span id="choiceGPA">3.8</span> GPA | Course type: <span id="choiceCourse">Quantitative</span>
+                    <strong>REMINDER:</strong> <span id="choiceStudentName">Emily</span> has a <span id="choiceGPA">3.8</span> GPA | Course type: <span id="choiceCourse">Quantitative</span>
                 </div>
 
                 <p class="instruction-text">
-                    Allocate 100 points across the three sections to indicate how likely Alex would be to enroll in each.
+                    Allocate 100 points across the three sections to indicate how likely <span id="choiceStudentName2">Emily</span> would be to enroll in each.
                 </p>
 
                 <!-- Instructed response notice (shown only for set 7) -->
@@ -1304,10 +1341,10 @@
                 <!-- Belief questions (shown for sets 3, 6, 8) -->
                 <div class="belief-section" id="beliefSection" style="display: none;">
                     <h3>Follow-up Questions</h3>
-                    <p style="color: #64748b; margin-bottom: 20px;">Think about the section Alex is MOST likely to choose (the one you gave the most points).</p>
+                    <p style="color: #64748b; margin-bottom: 20px;">Think about the section <span id="beliefStudentName">Emily</span> is MOST likely to choose (the one you gave the most points).</p>
 
                     <div class="belief-question">
-                        <label>What grade do you think Alex would earn in that section?</label>
+                        <label>What grade do you think <span id="beliefStudentName2">Emily</span> would earn in that section?</label>
                         <div class="grade-scale" id="beliefGradeScale">
                             <span class="grade-option" onclick="selectGrade(this, 'F')">F</span>
                             <span class="grade-option" onclick="selectGrade(this, 'D')">D</span>
@@ -1322,7 +1359,7 @@
                     </div>
 
                     <div class="belief-question">
-                        <label>How many hours per week would Alex spend on this course?</label>
+                        <label>How many hours per week would <span id="beliefStudentName3">Emily</span> spend on this course?</label>
                         <div class="slider-container">
                             <input type="range" id="beliefHours" min="0" max="20" value="8" oninput="updateHoursDisplay()">
                             <div class="slider-labels">
@@ -1335,7 +1372,7 @@
                     </div>
 
                     <div class="belief-question" id="counterfactualQuestion">
-                        <label>If AI were <span id="counterfactualPolicy">BANNED</span> instead, what grade would Alex earn?</label>
+                        <label>If AI were <span id="counterfactualPolicy">BANNED</span> instead, what grade would <span id="beliefStudentName4">Emily</span> earn?</label>
                         <div class="grade-scale" id="counterfactualGradeScale">
                             <span class="grade-option" onclick="selectCounterfactualGrade(this, 'F')">F</span>
                             <span class="grade-option" onclick="selectCounterfactualGrade(this, 'D')">D</span>
@@ -1363,18 +1400,18 @@
                     <p style="margin-bottom: 20px; color: #1e293b;">To make sure you're paying attention, please answer this question:</p>
 
                     <label class="question-label">In this survey, the hypothetical student's name is:</label>
-                    <div class="attention-options">
+                    <div class="attention-options" id="nameCheckOptions">
+                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Emily')">
+                            <input type="radio" name="nameCheck" value="Emily"><span>Emily</span>
+                        </label>
+                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Michael')">
+                            <input type="radio" name="nameCheck" value="Michael"><span>Michael</span>
+                        </label>
                         <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Jordan')">
                             <input type="radio" name="nameCheck" value="Jordan"><span>Jordan</span>
                         </label>
                         <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Taylor')">
                             <input type="radio" name="nameCheck" value="Taylor"><span>Taylor</span>
-                        </label>
-                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Alex')">
-                            <input type="radio" name="nameCheck" value="Alex"><span>Alex</span>
-                        </label>
-                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Sam')">
-                            <input type="radio" name="nameCheck" value="Sam"><span>Sam</span>
                         </label>
                     </div>
                 </div>
@@ -1388,7 +1425,7 @@
             <div class="screen" id="wtpScreen">
                 <h2 style="color: #1e293b; margin-bottom: 24px;">AI Skills Training Opportunity</h2>
 
-                <p style="color: #64748b; margin-bottom: 24px;">Imagine that before the semester begins, Alex discovers a highly-rated online course on AI prompt engineering.</p>
+                <p style="color: #64748b; margin-bottom: 24px;">Imagine that before the semester begins, <span id="wtpStudentName">Emily</span> discovers a highly-rated online course on AI prompt engineering.</p>
 
                 <div class="wtp-course-card">
                     <h4>"Effective AI Use for Academic Success"</h4>
@@ -1403,7 +1440,7 @@
                 </div>
 
                 <div class="question-container">
-                    <label class="question-label">What is the MAXIMUM Alex would pay for this course?</label>
+                    <label class="question-label">What is the MAXIMUM <span id="wtpStudentName2">Emily</span> would pay for this course?</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'wtp_money', '0')">
                             <input type="radio" name="wtp_money" value="0"><span>$0</span>
@@ -1430,7 +1467,7 @@
                 </div>
 
                 <div class="question-container">
-                    <label class="question-label">How many hours per week would Alex be willing to spend on this course during the 4 weeks before the semester?</label>
+                    <label class="question-label">How many hours per week would <span id="wtpStudentName3">Emily</span> be willing to spend on this course during the 4 weeks before the semester?</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'wtp_time', '0')">
                             <input type="radio" name="wtp_time" value="0"><span>0 hours</span>
@@ -1454,7 +1491,7 @@
                 </div>
 
                 <div class="question-container">
-                    <label class="question-label">If the course were FREE, how likely is Alex to enroll?</label>
+                    <label class="question-label">If the course were FREE, how likely is <span id="wtpStudentName4">Emily</span> to enroll?</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'wtp_free', '1')">
                             <input type="radio" name="wtp_free" value="1"><span>Very Unlikely</span>
@@ -1474,7 +1511,8 @@
                     </div>
                 </div>
 
-                <div class="button-row center">
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
                     <button class="btn btn-primary" id="wtpBtn" onclick="submitWTP()" disabled>Continue</button>
                 </div>
             </div>
@@ -1484,7 +1522,7 @@
                 <h2 style="color: #1e293b; margin-bottom: 24px;">Final Questions</h2>
 
                 <div class="question-container">
-                    <label class="question-label">Why do you think Alex would or would NOT invest in AI training? (Select all that apply)</label>
+                    <label class="question-label">Why do you think <span id="manipStudentName">Emily</span> would or would NOT invest in AI training? (Select all that apply)</label>
                     <div class="checkbox-group" id="reasonsGroup">
                         <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'grades')">
                             <input type="checkbox" name="reasons" value="grades"><span>Would help get better grades</span>
@@ -1496,19 +1534,19 @@
                             <input type="checkbox" name="reasons" value="learning"><span>Would help learn course material better</span>
                         </label>
                         <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'already_knows')">
-                            <input type="checkbox" name="reasons" value="already_knows"><span>Alex already knows how to use AI effectively</span>
+                            <input type="checkbox" name="reasons" value="already_knows"><span><span id="manipStudentName2">Emily</span> already knows how to use AI effectively</span>
                         </label>
                         <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'not_useful')">
-                            <input type="checkbox" name="reasons" value="not_useful"><span>Alex doesn't think AI is useful for coursework</span>
+                            <input type="checkbox" name="reasons" value="not_useful"><span><span id="manipStudentName3">Emily</span> doesn't think AI is useful for coursework</span>
                         </label>
                         <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'cost')">
-                            <input type="checkbox" name="reasons" value="cost"><span>Alex can't afford the cost</span>
+                            <input type="checkbox" name="reasons" value="cost"><span><span id="manipStudentName4">Emily</span> can't afford the cost</span>
                         </label>
                         <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'no_time')">
-                            <input type="checkbox" name="reasons" value="no_time"><span>Alex doesn't have time before the semester</span>
+                            <input type="checkbox" name="reasons" value="no_time"><span><span id="manipStudentName5">Emily</span> doesn't have time before the semester</span>
                         </label>
                         <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'not_interested')">
-                            <input type="checkbox" name="reasons" value="not_interested"><span>Alex is not interested in learning AI skills</span>
+                            <input type="checkbox" name="reasons" value="not_interested"><span><span id="manipStudentName6">Emily</span> is not interested in learning AI skills</span>
                         </label>
                     </div>
                 </div>
@@ -1517,7 +1555,7 @@
                 <h3 style="color: #1e293b; margin-bottom: 20px;">MANIPULATION CHECKS</h3>
 
                 <div class="question-container">
-                    <label class="question-label">In this study, Alex's GPA was:</label>
+                    <label class="question-label">In this study, <span id="manipStudentName7">Emily</span>'s GPA was:</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'manip_gpa', '2.5')">
                             <input type="radio" name="manip_gpa" value="2.5"><span>2.5 (below average)</span>
@@ -1535,7 +1573,7 @@
                 </div>
 
                 <div class="question-container">
-                    <label class="question-label">The course Alex needed was:</label>
+                    <label class="question-label">The course <span id="manipStudentName8">Emily</span> needed was:</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'quant')">
                             <input type="radio" name="manip_course" value="quant"><span>A quantitative course (like Statistics)</span>
@@ -1552,7 +1590,8 @@
                     </div>
                 </div>
 
-                <div class="button-row center">
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
                     <button class="btn btn-primary" id="manipBtn" onclick="submitManipChecks()" disabled>Continue</button>
                 </div>
             </div>
@@ -1583,7 +1622,7 @@
                 </div>
 
                 <div class="question-container">
-                    <label class="question-label">How easy or difficult was it to imagine what Alex would do?</label>
+                    <label class="question-label">How easy or difficult was it to imagine what <span id="realismStudentName">Emily</span> would do?</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '1')">
                             <input type="radio" name="realism_imagine" value="1"><span>Very difficult</span>
@@ -1608,7 +1647,8 @@
                     <textarea id="feedbackText" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 1rem; resize: vertical;" placeholder="Enter any comments here..."></textarea>
                 </div>
 
-                <div class="button-row center">
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
                     <button class="btn btn-primary" id="realismBtn" onclick="submitRealism()" disabled>Continue</button>
                 </div>
             </div>
@@ -1737,9 +1777,13 @@
             respondentId: '',
             startTime: null,
             // Between-subjects assignment
-            cell: 0, // 1-4
+            cell: 0, // 1-8 (now includes gender)
             studentAbility: '', // 'high' or 'low'
             courseType: '', // 'quantitative' or 'writing'
+            studentGender: '', // 'female' or 'male'
+            studentName: '', // 'Emily' or 'Michael'
+            studentPronoun: '', // 'she' or 'he'
+            studentPronounPossessive: '', // 'her' or 'his'
             block: 0, // 1-3
             // Responses
             demographics: {},
@@ -1764,7 +1808,9 @@
                 dominated: false,
                 speedster: false,
                 straightliner: false
-            }
+            },
+            // Screen history for back button
+            screenHistory: []
         };
 
         // ============================================
@@ -1815,7 +1861,11 @@
             document.getElementById('progressText').textContent = pct + '%';
         }
 
-        function showScreen(screenId) {
+        function showScreen(screenId, addToHistory = true) {
+            const currentScreen = document.querySelector('.screen.active');
+            if (currentScreen && addToHistory && currentScreen.id !== screenId) {
+                state.screenHistory.push(currentScreen.id);
+            }
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
             updateProgress();
@@ -1824,6 +1874,13 @@
 
         function nextScreen(screenId) {
             showScreen(screenId);
+        }
+
+        function goBack() {
+            if (state.screenHistory.length > 0) {
+                const previousScreen = state.screenHistory.pop();
+                showScreen(previousScreen, false);
+            }
         }
 
         // ============================================
@@ -1952,10 +2009,20 @@
             state.respondentId = generateId();
             state.startTime = Date.now();
 
-            // Random assignment to cell (1-4)
-            state.cell = randomChoice([1, 2, 3, 4]);
-            state.studentAbility = state.cell <= 2 ? 'high' : 'low';
-            state.courseType = (state.cell === 1 || state.cell === 3) ? 'quantitative' : 'writing';
+            // Random assignment to cell (1-8: 2 ability x 2 course x 2 gender)
+            state.cell = randomChoice([1, 2, 3, 4, 5, 6, 7, 8]);
+
+            // Ability: cells 1-4 = high, cells 5-8 = low
+            state.studentAbility = state.cell <= 4 ? 'high' : 'low';
+
+            // Course type: odd cells = quantitative, even cells = writing
+            state.courseType = (state.cell % 2 === 1) ? 'quantitative' : 'writing';
+
+            // Gender: cells 1,2,5,6 = female (Emily), cells 3,4,7,8 = male (Michael)
+            state.studentGender = (state.cell <= 2 || (state.cell >= 5 && state.cell <= 6)) ? 'female' : 'male';
+            state.studentName = state.studentGender === 'female' ? 'Emily' : 'Michael';
+            state.studentPronoun = state.studentGender === 'female' ? 'she' : 'he';
+            state.studentPronounPossessive = state.studentGender === 'female' ? 'her' : 'his';
 
             // Random block assignment
             state.block = randomChoice([1, 2, 3]);
@@ -1977,26 +2044,70 @@
         }
 
         function setupStudentCard() {
+            const name = state.studentName;
+            const pronoun = state.studentPronoun;
             const gpa = state.studentAbility === 'high' ? '3.8' : '2.5';
             const markerPos = state.studentAbility === 'high' ? '90%' : '25%';
+
             const description = state.studentAbility === 'high'
-                ? 'Alex is near the top of the class, on the Dean\'s List, and generally finds coursework manageable.'
-                : 'Alex is below average in the class and often finds coursework challenging. Alex has struggled in some previous courses.';
+                ? `${name} is near the top of the class, on the Dean's List, and generally finds coursework manageable.`
+                : `${name} is below average in the class and often finds coursework challenging. ${name} has struggled in some previous courses.`;
 
             const courseText = state.courseType === 'quantitative'
-                ? 'Next semester, Alex needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.'
-                : 'Next semester, Alex needs to take a WRITING-INTENSIVE course (like Policy Analysis or Economic History) to fulfill a requirement.';
+                ? `Next semester, ${name} needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.`
+                : `Next semester, ${name} needs to take a WRITING-INTENSIVE course (like Policy Analysis or Economic History) to fulfill a requirement.`;
 
-            document.getElementById('alexGPA').textContent = gpa;
-            document.getElementById('alexGPAMarker').style.left = markerPos;
-            document.getElementById('alexDescription').textContent = description;
+            // Update meet student screen
+            document.getElementById('studentNameHeader').textContent = name;
+            document.getElementById('studentNameCard').textContent = name;
+            document.getElementById('studentNameIntro').textContent = name;
+            document.getElementById('studentGPA').textContent = gpa;
+            document.getElementById('studentGPAMarker').style.left = markerPos;
+            document.getElementById('studentDescription').textContent = description;
             document.getElementById('courseRequirement').textContent = courseText;
+            document.getElementById('studentNameTask').textContent = name;
+            document.getElementById('studentPronoun').textContent = pronoun;
 
-            // Also update other displays
+            // Update practice screen
+            document.getElementById('practiceStudentName').textContent = name;
+            document.getElementById('practiceStudentName2').textContent = name;
             document.getElementById('practiceGPA').textContent = gpa;
             document.getElementById('practiceCourse').textContent = state.courseType;
+
+            // Update choice screen
+            document.getElementById('choiceStudentName').textContent = name;
+            document.getElementById('choiceStudentName2').textContent = name;
             document.getElementById('choiceGPA').textContent = gpa;
             document.getElementById('choiceCourse').textContent = state.courseType === 'quantitative' ? 'Quantitative' : 'Writing-intensive';
+
+            // Update belief questions
+            document.getElementById('beliefStudentName').textContent = name;
+            document.getElementById('beliefStudentName2').textContent = name;
+            document.getElementById('beliefStudentName3').textContent = name;
+            document.getElementById('beliefStudentName4').textContent = name;
+
+            // Update practice tip names
+            document.getElementById('practiceTipName').textContent = name;
+            document.getElementById('practiceTipName2').textContent = name;
+
+            // Update WTP screen
+            document.getElementById('wtpStudentName').textContent = name;
+            document.getElementById('wtpStudentName2').textContent = name;
+            document.getElementById('wtpStudentName3').textContent = name;
+            document.getElementById('wtpStudentName4').textContent = name;
+
+            // Update manipulation check screen
+            document.getElementById('manipStudentName').textContent = name;
+            document.getElementById('manipStudentName2').textContent = name;
+            document.getElementById('manipStudentName3').textContent = name;
+            document.getElementById('manipStudentName4').textContent = name;
+            document.getElementById('manipStudentName5').textContent = name;
+            document.getElementById('manipStudentName6').textContent = name;
+            document.getElementById('manipStudentName7').textContent = name;
+            document.getElementById('manipStudentName8').textContent = name;
+
+            // Update realism screen
+            document.getElementById('realismStudentName').textContent = name;
         }
 
         function submitPractice() {
@@ -2283,7 +2394,7 @@
         }
 
         function submitNameCheck() {
-            state.flags.attention_name = state.nameCheckAnswer !== 'Alex';
+            state.flags.attention_name = state.nameCheckAnswer !== state.studentName;
 
             // Continue to next choice set
             state.currentSetIndex++;
