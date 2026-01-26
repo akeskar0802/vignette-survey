@@ -571,15 +571,6 @@
             margin-bottom: 16px;
         }
 
-        .attention-section.instructed {
-            background: #fef3c7;
-            border-color: #fcd34d;
-        }
-
-        .attention-section.instructed h3 {
-            color: #92400e;
-        }
-
         .attention-options {
             display: flex;
             flex-direction: column;
@@ -1322,13 +1313,6 @@
                     <strong>YOUR TASK:</strong> Allocate 100 points across the three sections to show how likely <span id="choiceStudentName2">Emily</span> would be to enroll in each.
                 </div>
 
-                <!-- Instructed response notice (shown only for set 7) -->
-                <div class="attention-section instructed" id="instructedNotice" style="display: none; margin-bottom: 24px;">
-                    <h3>ATTENTION CHECK</h3>
-                    <p>This is an attention check. Please allocate exactly:<br>
-                    <strong>60 points</strong> to Section A, <strong>30 points</strong> to Section B, <strong>10 points</strong> to Section C</p>
-                </div>
-
                 <div class="cards-container" id="cardsContainer">
                     <!-- Cards dynamically generated -->
                 </div>
@@ -1697,20 +1681,50 @@
         // 9 choice sets total: 8 regular + 1 dominated check
         // Each set has 3 profiles (one per AI policy: Banned, Guided, Unrestricted)
         // Each profile appears exactly 2 times across the 8 regular sets
-        const CHOICE_SETS = [
-            // Sets 1-4: Same grading & rating across AI policies
-            { profiles: [getProfile(1), getProfile(5), getProfile(9)] },   // All 80/20-A
-            { profiles: [getProfile(2), getProfile(6), getProfile(10)] },  // All 80/20-B
-            { profiles: [getProfile(3), getProfile(7), getProfile(11)] },  // All 50/50-A
-            { profiles: [getProfile(4), getProfile(8), getProfile(12)] },  // All 50/50-B
-            // Sets 5-8: Mixed combinations (each profile appears 2nd time)
-            { profiles: [getProfile(1), getProfile(8), getProfile(11)] },  // 80/20-A, 50/50-B, 50/50-A
-            { profiles: [getProfile(2), getProfile(7), getProfile(12)] },  // 80/20-B, 50/50-A, 50/50-B
-            { profiles: [getProfile(3), getProfile(6), getProfile(9)] },   // 50/50-A, 80/20-B, 80/20-A
-            { profiles: [getProfile(4), getProfile(5), getProfile(10)] },  // 50/50-B, 80/20-A, 80/20-B
-            // Set 9: Dominated check - B has worse rating than C with same grading
-            { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true }  // B=50/50-B, C=50/50-A (C dominates B)
-        ];
+        // BLOCKING DESIGN: 3 blocks, 8 regular sets + 1 dominated = 9 sets per block
+        // Each set has one profile per AI policy (Banned 1-4, Guided 5-8, Unrestricted 9-12)
+        const BLOCKS = {
+            1: [
+                { profiles: [1, 5, 9] },    // Set 1: All 80/20-A
+                { profiles: [2, 6, 10] },   // Set 2: All 80/20-B
+                { profiles: [3, 7, 11] },   // Set 3: All 50/50-A
+                { profiles: [4, 8, 12] },   // Set 4: All 50/50-B
+                { profiles: [1, 8, 11] },   // Set 5: mixed
+                { profiles: [2, 7, 12] },   // Set 6: mixed
+                { profiles: [3, 6, 9] },    // Set 7: mixed
+                { profiles: [4, 5, 10] },   // Set 8: mixed
+                { profiles: [1, 4, 3], isDominated: true }  // Set 9: dominated (B=50/50-B, C=50/50-A, C dominates B)
+            ],
+            2: [
+                { profiles: [3, 7, 11] },   // Set 1: All 50/50-A
+                { profiles: [4, 8, 12] },   // Set 2: All 50/50-B
+                { profiles: [1, 5, 9] },    // Set 3: All 80/20-A
+                { profiles: [2, 6, 10] },   // Set 4: All 80/20-B
+                { profiles: [3, 5, 10] },   // Set 5: mixed
+                { profiles: [4, 6, 9] },    // Set 6: mixed
+                { profiles: [1, 8, 12] },   // Set 7: mixed
+                { profiles: [2, 7, 11] },   // Set 8: mixed
+                { profiles: [1, 4, 3], isDominated: true }  // Set 9: dominated
+            ],
+            3: [
+                { profiles: [2, 6, 10] },   // Set 1: All 80/20-B
+                { profiles: [1, 5, 9] },    // Set 2: All 80/20-A
+                { profiles: [4, 8, 12] },   // Set 3: All 50/50-B
+                { profiles: [3, 7, 11] },   // Set 4: All 50/50-A
+                { profiles: [2, 8, 9] },    // Set 5: mixed
+                { profiles: [1, 7, 10] },   // Set 6: mixed
+                { profiles: [4, 6, 11] },   // Set 7: mixed
+                { profiles: [3, 5, 12] },   // Set 8: mixed
+                { profiles: [1, 4, 3], isDominated: true }  // Set 9: dominated
+            ]
+        };
+
+        function getBlockChoiceSets(blockNum) {
+            return BLOCKS[blockNum].map(set => ({
+                profiles: set.profiles.map(id => getProfile(id)),
+                isDominated: set.isDominated || false
+            }));
+        }
 
         function getProfile(id) {
             return PROFILES.find(p => p.id === id);
@@ -1737,6 +1751,7 @@
             startTime: null,
             // Between-subjects assignment
             cell: 0, // 1-8 (now includes gender)
+            block: 0, // 1-3 for choice set blocking
             studentAbility: '', // 'high' or 'low'
             courseType: '', // 'quantitative' or 'writing'
             studentGender: '', // 'female' or 'male'
@@ -1749,9 +1764,10 @@
             compChecks: { check1: null, check2: null },
             practiceResponse: {},
             choiceResponses: [],
+            choiceSets: [], // Will be populated based on block assignment
             currentSetIndex: 0,
             sectionLabelOrders: [],
-            beliefSets: [1, 4, 7], // Sets 2, 5, 8 (0-indexed) - skip dominated (9)
+            beliefSets: [1, 4, 7], // Sets 2, 5, 8 (0-indexed) - ask beliefs on these sets
             currentBeliefs: {},
             nameCheckAnswer: null,
             wtpResponses: {},
@@ -1762,7 +1778,6 @@
             flags: {
                 comprehension: false,
                 attention_name: false,
-                attention_instructed: false,
                 dominated: false,
                 speedster: false,
                 straightliner: false
@@ -1808,7 +1823,8 @@
             const idx = screenOrder.indexOf(currentScreen.id);
             if (idx >= 0) {
                 if (currentScreen.id === 'choiceScreen') {
-                    currentStep = 10 + (state.currentSetIndex / 8) * 0.8;
+                    const totalSets = state.choiceSets.length || 9;
+                    currentStep = 10 + (state.currentSetIndex / totalSets) * 0.8;
                 } else {
                     currentStep = idx;
                 }
@@ -1973,11 +1989,13 @@
             state.studentPronoun = state.studentGender === 'female' ? 'she' : 'he';
             state.studentPronounPossessive = state.studentGender === 'female' ? 'her' : 'his';
 
-            // No blocking - everyone sees all 9 choice sets
+            // Random assignment to block (1-3 for choice set variation)
+            state.block = randomChoice([1, 2, 3]);
+            state.choiceSets = getBlockChoiceSets(state.block);
 
             // Randomize section labels for each set
             state.sectionLabelOrders = [];
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < state.choiceSets.length; i++) {
                 state.sectionLabelOrders.push(shuffle([0, 1, 2]));
             }
 
@@ -2098,16 +2116,12 @@
         // CHOICE SET RENDERING
         // ============================================
         function renderChoiceSet() {
-            const choiceSet = CHOICE_SETS[state.currentSetIndex];
+            const choiceSet = state.choiceSets[state.currentSetIndex];
             const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
             const labels = ['A', 'B', 'C'];
 
             // Update header
             document.getElementById('setNumber').textContent = state.currentSetIndex + 1;
-
-            // Show/hide instructed response notice
-            const instructedNotice = document.getElementById('instructedNotice');
-            instructedNotice.style.display = choiceSet.isInstructed ? 'block' : 'none';
 
             // Render cards
             const container = document.getElementById('cardsContainer');
@@ -2248,7 +2262,7 @@
         }
 
         function saveCurrentResponse() {
-            const choiceSet = CHOICE_SETS[state.currentSetIndex];
+            const choiceSet = state.choiceSets[state.currentSetIndex];
             const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
             const labels = ['A', 'B', 'C'];
 
@@ -2259,7 +2273,6 @@
             const response = {
                 setNumber: state.currentSetIndex + 1,
                 isDominated: choiceSet.isDominated || false,
-                isInstructed: choiceSet.isInstructed || false,
                 sections: labelOrder.map((profileIdx, displayIdx) => ({
                     label: labels[displayIdx],
                     profile: choiceSet.profiles[profileIdx],
@@ -2282,13 +2295,6 @@
                 }
             }
 
-            // Check instructed response (Set 7)
-            if (choiceSet.isInstructed) {
-                if (p0 !== 60 || p1 !== 30 || p2 !== 10) {
-                    state.flags.attention_instructed = true;
-                }
-            }
-
             // Find existing or add new
             const existingIdx = state.choiceResponses.findIndex(r => r.setNumber === response.setNumber);
             if (existingIdx >= 0) {
@@ -2308,7 +2314,7 @@
                 return;
             }
 
-            if (state.currentSetIndex < 8) {
+            if (state.currentSetIndex < state.choiceSets.length - 1) {
                 state.currentSetIndex++;
                 renderChoiceSet();
                 updateProgress();
@@ -2414,6 +2420,7 @@
             csv += `respondent_id,${state.respondentId}\n`;
             csv += `timestamp,${new Date().toISOString()}\n`;
             csv += `cell,${state.cell}\n`;
+            csv += `block,${state.block}\n`;
             csv += `student_ability,${state.studentAbility}\n`;
             csv += `course_type,${state.courseType}\n`;
             csv += `student_gender,${state.studentGender}\n`;
@@ -2424,7 +2431,6 @@
             csv += `QUALITY FLAGS\n`;
             csv += `flag_comprehension,${state.flags.comprehension ? 1 : 0}\n`;
             csv += `flag_attention_name,${state.flags.attention_name ? 1 : 0}\n`;
-            csv += `flag_attention_instructed,${state.flags.attention_instructed ? 1 : 0}\n`;
             csv += `flag_dominated,${state.flags.dominated ? 1 : 0}\n`;
             csv += `flag_speedster,${state.flags.speedster ? 1 : 0}\n`;
             csv += `flag_straightliner,${state.flags.straightliner ? 1 : 0}\n\n`;
