@@ -798,12 +798,11 @@
                     <h2>Welcome to the Course Selection Study</h2>
                     <p>Thank you for participating in this research study conducted by Binghamton University.</p>
 
-                    <div class="time-estimate">Estimated time: 12-15 minutes</div>
+                    <div class="time-estimate">Estimated time: 8-10 minutes</div>
 
                     <div class="highlight-box">
                         <h3>What You'll Do</h3>
                         <ul>
-                            <li>Answer a few questions about yourself</li>
                             <li>Read about a hypothetical Binghamton student</li>
                             <li>View 8 sets of course options (3 sections each)</li>
                             <li>Allocate points based on enrollment likelihood</li>
@@ -814,7 +813,7 @@
                     <p>Your responses are anonymous and will be used for research purposes only.</p>
 
                     <div class="button-row center">
-                        <button class="btn btn-primary" onclick="nextScreen('consentScreen')">Begin Survey</button>
+                        <button class="btn btn-primary" onclick="startSurvey()">Begin Survey</button>
                     </div>
                 </div>
             </div>
@@ -1067,12 +1066,12 @@
                         <li>There are no right or wrong answers</li>
                         <li>We want YOUR honest opinion about what would happen</li>
                         <li>Please consider each scenario carefully</li>
-                        <li>Some questions may seem similar - this is intentional</li>
+                        <li>We know these questions might seem hard - just do your best!</li>
                     </ul>
                 </div>
 
                 <div class="button-row center">
-                    <button class="btn btn-primary" onclick="nextScreen('gpaScaleScreen')">Continue</button>
+                    <button class="btn btn-primary" onclick="goToMeetStudent()">Continue</button>
                 </div>
             </div>
 
@@ -1229,7 +1228,7 @@
                         <strong>PEER RATING</strong> - Based on reviews from ~100 previous students
                         <p>
                             <b>High Quality, Hard Grading:</b> Teaching: 4.5/5 stars, Average grade: B- (stricter curve).<br>
-                            <b>Low Quality, Easy Grading:</b> Teaching: 3.0/5 stars, Average grade: B+ (lenient curve).
+                            <b>Low Quality, Easy Grading:</b> Teaching: 2.5/5 stars, Average grade: B+ (lenient curve).
                         </p>
                     </div>
                 </div>
@@ -1728,7 +1727,7 @@
 
         const PEER_LABELS = {
             'HQ-HD': 'High Quality, Hard Grading (4.5/5, avg B-)',
-            'LQ-LD': 'Low Quality, Easy Grading (3.0/5, avg B+)'
+            'LQ-LD': 'Low Quality, Easy Grading (2.5/5, avg B+)'
         };
 
         // ============================================
@@ -1948,14 +1947,8 @@
         // ============================================
         // SUBMISSION HANDLERS
         // ============================================
-        function submitConsent() {
-            const selected = document.querySelector('input[name="eligibility"]:checked').value;
-            if (selected === 'no') {
-                alert('Thank you for your interest. Unfortunately, you do not meet the eligibility requirements for this study.');
-                return;
-            }
-
-            // Initialize state
+        function startSurvey() {
+            // Initialize state (no consent/eligibility check)
             state.respondentId = generateId();
             state.startTime = Date.now();
 
@@ -1973,60 +1966,12 @@
                 state.sectionLabelOrders.push(shuffle([0, 1, 2]));
             }
 
-            showScreen('demographicsScreen');
-        }
-
-        function submitDemographics() {
-            state.demographics = {
-                class_standing: document.querySelector('input[name="class_standing"]:checked').value,
-                gpa: document.querySelector('input[name="resp_gpa"]:checked').value,
-                major: document.querySelector('input[name="major"]:checked').value,
-                quant_confidence: document.querySelector('input[name="quant_conf"]:checked').value,
-                writing_confidence: document.querySelector('input[name="writing_conf"]:checked').value
-            };
-            showScreen('aiExperienceScreen');
-        }
-
-        function submitAIExperience() {
-            const tasks = [];
-            document.querySelectorAll('input[name="ai_tasks"]:checked').forEach(cb => {
-                tasks.push(cb.value);
-            });
-
-            state.aiExperience = {
-                frequency: document.querySelector('input[name="ai_freq"]:checked').value,
-                tasks: tasks,
-                skill: document.querySelector('input[name="ai_skill"]:checked').value
-            };
+            // Go directly to framing screen (skip demographics, AI experience)
             showScreen('framingScreen');
         }
 
-        function submitCompChecks() {
-            const c1 = document.querySelector('input[name="comp1"]:checked').value;
-            const c2 = document.querySelector('input[name="comp2"]:checked').value;
-
-            state.compChecks.check1 = c1 === 'below';
-            state.compChecks.check2 = c2 === '3.7';
-
-            // Show feedback if wrong
-            if (c1 !== 'below') {
-                document.getElementById('comp1Feedback').style.display = 'block';
-                document.getElementById('comp1Feedback').className = 'warning-message';
-                document.getElementById('comp1Feedback').textContent = 'A 2.3 GPA is below average and close to academic probation (2.0).';
-            }
-
-            if (c2 !== '3.7') {
-                document.getElementById('comp2Feedback').style.display = 'block';
-                document.getElementById('comp2Feedback').className = 'warning-message';
-                document.getElementById('comp2Feedback').textContent = "The Dean's List typically requires a GPA of 3.5 or higher.";
-            }
-
-            // Flag if both wrong
-            if (!state.compChecks.check1 && !state.compChecks.check2) {
-                state.flags.comprehension = true;
-            }
-
-            // Set up student card based on cell assignment
+        function goToMeetStudent() {
+            // Set up student card and go directly to meet student (skip GPA scale and comp check)
             setupStudentCard();
             showScreen('meetStudentScreen');
         }
