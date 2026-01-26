@@ -826,7 +826,7 @@
                         <h3>What You'll Do</h3>
                         <ul>
                             <li>Read about a hypothetical Binghamton student</li>
-                            <li>View 8 sets of course options (3 sections each)</li>
+                            <li>View 6 sets of course options (3 sections each)</li>
                             <li>Allocate points based on enrollment likelihood</li>
                             <li>Answer questions about expected outcomes</li>
                         </ul>
@@ -1245,17 +1245,17 @@
                     <div class="attribute-explain">
                         <strong>GRADING SPLIT</strong> - How the final grade is calculated
                         <p>
-                            <b>100% Exam:</b> Entire grade from closed-book exam.<br>
-                            <b>70% Exam / 30% HW:</b> Mostly exam, some take-home assignments.<br>
-                            <b>50% Exam / 50% HW:</b> Equal weight on exam and assignments.
+                            <b>80% Exam / 20% Take-Home:</b> Mostly closed-book exam, some take-home assignments.<br>
+                            <b>50% Exam / 50% Take-Home:</b> Equal weight on exam and take-home assignments.<br>
+                            <em>Note: AI can be used on take-home work (depending on AI policy), but never on exams.</em>
                         </p>
                     </div>
 
                     <div class="attribute-explain">
-                        <strong>PEER RATING</strong> - Based on reviews from ~100 previous students
+                        <strong>CLASS RATING DATA</strong> - Based on reviews from ~100 previous students
                         <p>
-                            <b>High Quality, Hard Grading:</b> Teaching: 4.5/5 stars, Average grade: B- (stricter curve).<br>
-                            <b>Low Quality, Easy Grading:</b> Teaching: 2.5/5 stars, Average grade: B+ (lenient curve).
+                            Ratings show teaching quality (out of 5 stars) and average grade in the course.<br>
+                            <em>Interpret this data however you think is most relevant to the student's decision.</em>
                         </p>
                     </div>
                 </div>
@@ -1307,7 +1307,7 @@
             <!-- Screen 11: Main Choice Sets -->
             <div class="screen" id="choiceScreen">
                 <div class="choice-set-header">
-                    <h2>Choice Set <span id="setNumber">1</span> of 8</h2>
+                    <h2>Choice Set <span id="setNumber">1</span> of 6</h2>
                 </div>
 
                 <div class="identical-content-banner">
@@ -1562,10 +1562,10 @@
                     <label class="question-label">The course <span id="manipStudentName8">Emily</span> needed was:</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'quant')">
-                            <input type="radio" name="manip_course" value="quant"><span>A quantitative course (like Statistics)</span>
+                            <input type="radio" name="manip_course" value="quant"><span>A quantitative/math-intensive course (like Statistics)</span>
                         </label>
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'writing')">
-                            <input type="radio" name="manip_course" value="writing"><span>A writing-intensive course (like Policy Analysis)</span>
+                            <input type="radio" name="manip_course" value="writing"><span>A writing-intensive/qualitative course (like Literature)</span>
                         </label>
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'lab')">
                             <input type="radio" name="manip_course" value="lab"><span>A laboratory course</span>
@@ -1674,67 +1674,59 @@
 
     <script>
         // ============================================
-        // BLOCK DATA (V8: 18 profiles, no workload)
+        // BLOCK DATA (V9: 12 profiles, 3 AI x 2 grading x 2 rating)
         // ============================================
-        // Profile structure: id, ai, grading, peer
+        // Profile structure: id, ai, grading, rating
+        // Grading: 80/20 or 50/50
+        // Rating: Rating-A (4.5/5, avg B-) or Rating-B (2.5/5, avg B+)
         const PROFILES = [
-            { id: 1, ai: 'Banned', grading: '100/0', peer: 'HQ-HD' },
-            { id: 2, ai: 'Banned', grading: '100/0', peer: 'LQ-LD' },
-            { id: 3, ai: 'Banned', grading: '70/30', peer: 'HQ-HD' },
-            { id: 4, ai: 'Banned', grading: '70/30', peer: 'LQ-LD' },
-            { id: 5, ai: 'Banned', grading: '50/50', peer: 'HQ-HD' },
-            { id: 6, ai: 'Banned', grading: '50/50', peer: 'LQ-LD' },
-            { id: 7, ai: 'Guided', grading: '100/0', peer: 'HQ-HD' },
-            { id: 8, ai: 'Guided', grading: '100/0', peer: 'LQ-LD' },
-            { id: 9, ai: 'Guided', grading: '70/30', peer: 'HQ-HD' },
-            { id: 10, ai: 'Guided', grading: '70/30', peer: 'LQ-LD' },
-            { id: 11, ai: 'Guided', grading: '50/50', peer: 'HQ-HD' },
-            { id: 12, ai: 'Guided', grading: '50/50', peer: 'LQ-LD' },
-            { id: 13, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD' },
-            { id: 14, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD' },
-            { id: 15, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD' },
-            { id: 16, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD' },
-            { id: 17, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD' },
-            { id: 18, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD' }
+            { id: 1, ai: 'Banned', grading: '80/20', rating: 'A' },
+            { id: 2, ai: 'Banned', grading: '80/20', rating: 'B' },
+            { id: 3, ai: 'Banned', grading: '50/50', rating: 'A' },
+            { id: 4, ai: 'Banned', grading: '50/50', rating: 'B' },
+            { id: 5, ai: 'Guided', grading: '80/20', rating: 'A' },
+            { id: 6, ai: 'Guided', grading: '80/20', rating: 'B' },
+            { id: 7, ai: 'Guided', grading: '50/50', rating: 'A' },
+            { id: 8, ai: 'Guided', grading: '50/50', rating: 'B' },
+            { id: 9, ai: 'Unrestricted', grading: '80/20', rating: 'A' },
+            { id: 10, ai: 'Unrestricted', grading: '80/20', rating: 'B' },
+            { id: 11, ai: 'Unrestricted', grading: '50/50', rating: 'A' },
+            { id: 12, ai: 'Unrestricted', grading: '50/50', rating: 'B' }
         ];
 
         // Pre-defined blocks (one profile per AI policy per set)
+        // 12 profiles = 4 choice sets per block (each set has 3 profiles, one per AI policy)
+        // + 1 dominated check + 1 instructed response = 6 sets total
         const BLOCKS = {
             1: [
-                { profiles: [getProfile(1), getProfile(7), getProfile(13)] },
-                { profiles: [getProfile(4), getProfile(10), getProfile(16)] },
-                { profiles: [getProfile(5), getProfile(8), getProfile(15)] },
-                { profiles: [getProfile(3), getProfile(12), getProfile(14)] },
-                // Set 5: Dominated check - B and C have same grading, C has better peer
-                { profiles: [getProfile(2), getProfile(12), getProfile(17)], isDominated: true },
-                { profiles: [getProfile(6), getProfile(9), getProfile(13)] },
-                // Set 7: Instructed response
-                { profiles: [getProfile(3), getProfile(8), getProfile(17)], isInstructed: true },
-                { profiles: [getProfile(4), getProfile(11), getProfile(15)] }
+                { profiles: [getProfile(1), getProfile(5), getProfile(9)] },   // 80/20-A across AI
+                { profiles: [getProfile(2), getProfile(6), getProfile(10)] },  // 80/20-B across AI
+                { profiles: [getProfile(3), getProfile(7), getProfile(11)] },  // 50/50-A across AI
+                { profiles: [getProfile(4), getProfile(8), getProfile(12)] },  // 50/50-B across AI
+                // Set 5: Dominated check - same AI & grading, but C has better rating than B
+                { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true },
+                // Set 6: Instructed response
+                { profiles: [getProfile(2), getProfile(7), getProfile(9)], isInstructed: true }
             ],
             2: [
-                { profiles: [getProfile(2), getProfile(9), getProfile(15)] },
-                { profiles: [getProfile(5), getProfile(11), getProfile(14)] },
-                { profiles: [getProfile(1), getProfile(10), getProfile(18)] },
-                { profiles: [getProfile(6), getProfile(7), getProfile(16)] },
+                { profiles: [getProfile(2), getProfile(7), getProfile(9)] },
+                { profiles: [getProfile(1), getProfile(8), getProfile(10)] },
+                { profiles: [getProfile(4), getProfile(5), getProfile(11)] },
+                { profiles: [getProfile(3), getProfile(6), getProfile(12)] },
                 // Set 5: Dominated check
-                { profiles: [getProfile(2), getProfile(12), getProfile(17)], isDominated: true },
-                { profiles: [getProfile(3), getProfile(8), getProfile(13)] },
-                // Set 7: Instructed response
-                { profiles: [getProfile(3), getProfile(8), getProfile(17)], isInstructed: true },
-                { profiles: [getProfile(4), getProfile(12), getProfile(14)] }
+                { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true },
+                // Set 6: Instructed response
+                { profiles: [getProfile(2), getProfile(8), getProfile(11)], isInstructed: true }
             ],
             3: [
-                { profiles: [getProfile(3), getProfile(11), getProfile(16)] },
-                { profiles: [getProfile(6), getProfile(8), getProfile(13)] },
-                { profiles: [getProfile(2), getProfile(7), getProfile(15)] },
-                { profiles: [getProfile(1), getProfile(12), getProfile(18)] },
+                { profiles: [getProfile(3), getProfile(6), getProfile(10)] },
+                { profiles: [getProfile(4), getProfile(5), getProfile(9)] },
+                { profiles: [getProfile(1), getProfile(7), getProfile(12)] },
+                { profiles: [getProfile(2), getProfile(8), getProfile(11)] },
                 // Set 5: Dominated check
-                { profiles: [getProfile(2), getProfile(12), getProfile(17)], isDominated: true },
-                { profiles: [getProfile(5), getProfile(10), getProfile(14)] },
-                // Set 7: Instructed response
-                { profiles: [getProfile(3), getProfile(8), getProfile(17)], isInstructed: true },
-                { profiles: [getProfile(4), getProfile(9), getProfile(13)] }
+                { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true },
+                // Set 6: Instructed response
+                { profiles: [getProfile(3), getProfile(5), getProfile(10)], isInstructed: true }
             ]
         };
 
@@ -1749,9 +1741,10 @@
             'Unrestricted': 'AI Permitted'
         };
 
-        const PEER_LABELS = {
-            'HQ-HD': 'High Quality, Hard Grading (4.5/5, avg B-)',
-            'LQ-LD': 'Low Quality, Easy Grading (2.5/5, avg B+)'
+        // Class Rating Data - neutral labels, just show the data
+        const RATING_LABELS = {
+            'A': '4.5/5 stars, Avg grade: B-',
+            'B': '2.5/5 stars, Avg grade: B+'
         };
 
         // ============================================
@@ -1777,7 +1770,7 @@
             choiceResponses: [],
             currentSetIndex: 0,
             sectionLabelOrders: [],
-            beliefSets: [2, 5, 7], // Sets 3, 6, 8 (0-indexed)
+            beliefSets: [1, 3], // Sets 2, 4 (0-indexed) - skip dominated (5) and instructed (6)
             currentBeliefs: {},
             nameCheckAnswer: null,
             wtpResponses: {},
@@ -2004,7 +1997,7 @@
 
             // Randomize section labels for each set
             state.sectionLabelOrders = [];
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 6; i++) {
                 state.sectionLabelOrders.push(shuffle([0, 1, 2]));
             }
 
@@ -2029,8 +2022,8 @@
                 : `${name} is below average in the class and often finds coursework challenging. ${name} has struggled in some previous courses.`;
 
             const courseText = state.courseType === 'quantitative'
-                ? `Next semester, ${name} needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.`
-                : `Next semester, ${name} needs to take a WRITING-INTENSIVE course (like Policy Analysis or Economic History) to fulfill a requirement.`;
+                ? `Next semester, ${name} needs to take a QUANTITATIVE (math-intensive) course (like Statistics or Econometrics) to fulfill a requirement.`
+                : `Next semester, ${name} needs to take a WRITING-INTENSIVE (qualitative) course (like Literature or History) to fulfill a requirement.`;
 
             // Update meet student screen
             document.getElementById('studentNameHeader').textContent = name;
@@ -2092,7 +2085,7 @@
             state.practiceResponse = { A: p0, B: p1, C: p2 };
 
             // Show confirmation
-            alert(`Great! You allocated ${p0} to A, ${p1} to B, and ${p2} to C.\nIn the actual task, there are 8 similar choice sets. Ready to begin?`);
+            alert(`Great! You allocated ${p0} to A, ${p1} to B, and ${p2} to C.\nIn the actual task, there are 6 choice sets. Ready to begin?`);
 
             // Start main task
             state.currentSetIndex = 0;
@@ -2105,9 +2098,9 @@
         // ============================================
         function renderPracticeSet() {
             const practiceProfiles = [
-                { ai: 'Banned', grading: '70/30', peer: 'HQ-HD' },
-                { ai: 'Guided', grading: '50/50', peer: 'LQ-LD' },
-                { ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD' }
+                { ai: 'Banned', grading: '80/20', rating: 'A' },
+                { ai: 'Guided', grading: '50/50', rating: 'B' },
+                { ai: 'Unrestricted', grading: '80/20', rating: 'A' }
             ];
 
             const container = document.getElementById('practiceCards');
@@ -2162,7 +2155,7 @@
 
             // Update navigation buttons
             document.getElementById('prevBtn').style.visibility = state.currentSetIndex > 0 ? 'visible' : 'hidden';
-            document.getElementById('nextBtn').textContent = state.currentSetIndex === 7 ? 'Finish' : 'Next';
+            document.getElementById('nextBtn').textContent = state.currentSetIndex === 5 ? 'Finish' : 'Next';
             document.getElementById('nextBtn').disabled = true;
 
             // Reset points display
@@ -2190,8 +2183,8 @@
                         <span class="attr-value">${formatGrading(profile.grading)}</span>
                     </div>
                     <div class="attribute-row">
-                        <span class="attr-label">Peer Rating</span>
-                        <span class="attr-value">${PEER_LABELS[profile.peer]}</span>
+                        <span class="attr-label">Class Rating Data</span>
+                        <span class="attr-value">${RATING_LABELS[profile.rating]}</span>
                     </div>
                 </div>
                 <div class="point-input-container">
@@ -2204,9 +2197,8 @@
         }
 
         function formatGrading(grading) {
-            if (grading === '100/0') return '100% Exam';
-            if (grading === '70/30') return '70% Exam / 30% HW';
-            if (grading === '50/50') return '50% Exam / 50% HW';
+            if (grading === '80/20') return '80% Exam / 20% Take-Home';
+            if (grading === '50/50') return '50% Exam / 50% Take-Home';
             return grading;
         }
 
@@ -2336,7 +2328,7 @@
                 return;
             }
 
-            if (state.currentSetIndex < 7) {
+            if (state.currentSetIndex < 5) {
                 state.currentSetIndex++;
                 renderChoiceSet();
                 updateProgress();
