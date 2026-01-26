@@ -1491,37 +1491,6 @@
             <div class="screen" id="manipCheckScreen">
                 <h2 style="color: #1e293b; margin-bottom: 24px;">Final Questions</h2>
 
-                <div class="question-container">
-                    <label class="question-label">Why do you think <span id="manipStudentName">Emily</span> would or would NOT invest in AI training? (Select all that apply)</label>
-                    <div class="checkbox-group" id="reasonsGroup">
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'grades')">
-                            <input type="checkbox" name="reasons" value="grades"><span>Would help get better grades</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'time')">
-                            <input type="checkbox" name="reasons" value="time"><span>Would save time on assignments</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'learning')">
-                            <input type="checkbox" name="reasons" value="learning"><span>Would help learn course material better</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'already_knows')">
-                            <input type="checkbox" name="reasons" value="already_knows"><span><span id="manipStudentName2">Emily</span> already knows how to use AI effectively</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'not_useful')">
-                            <input type="checkbox" name="reasons" value="not_useful"><span><span id="manipStudentName3">Emily</span> doesn't think AI is useful for coursework</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'cost')">
-                            <input type="checkbox" name="reasons" value="cost"><span><span id="manipStudentName4">Emily</span> can't afford the cost</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'no_time')">
-                            <input type="checkbox" name="reasons" value="no_time"><span><span id="manipStudentName5">Emily</span> doesn't have time before the semester</span>
-                        </label>
-                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'not_interested')">
-                            <input type="checkbox" name="reasons" value="not_interested"><span><span id="manipStudentName6">Emily</span> is not interested in learning AI skills</span>
-                        </label>
-                    </div>
-                </div>
-
-                <hr style="margin: 32px 0; border: none; border-top: 2px solid #e2e8f0;">
                 <h3 style="color: #1e293b; margin-bottom: 20px;">MANIPULATION CHECKS</h3>
 
                 <div class="question-container">
@@ -1773,7 +1742,6 @@
             wtpResponses: {},
             manipChecks: {},
             realismResponses: {},
-            reasons: [],
             // Quality flags
             flags: {
                 comprehension: false,
@@ -2389,11 +2357,6 @@
                 course_answer: courseAnswer,
                 course_correct: courseAnswer === correctCourse
             };
-
-            // Collect reasons
-            document.querySelectorAll('input[name="reasons"]:checked').forEach(cb => {
-                state.reasons.push(cb.value);
-            });
 
             showScreen('realismScreen');
         }
