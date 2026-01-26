@@ -826,7 +826,7 @@
                         <h3>What You'll Do</h3>
                         <ul>
                             <li>Read about a hypothetical Binghamton student</li>
-                            <li>View 6 sets of course options (3 sections each)</li>
+                            <li>View 9 sets of course options (3 sections each)</li>
                             <li>Allocate points based on enrollment likelihood</li>
                             <li>Answer questions about expected outcomes</li>
                         </ul>
@@ -1307,7 +1307,7 @@
             <!-- Screen 11: Main Choice Sets -->
             <div class="screen" id="choiceScreen">
                 <div class="choice-set-header">
-                    <h2>Choice Set <span id="setNumber">1</span> of 6</h2>
+                    <h2>Choice Set <span id="setNumber">1</span> of 9</h2>
                 </div>
 
                 <div class="identical-content-banner">
@@ -1694,41 +1694,23 @@
             { id: 12, ai: 'Unrestricted', grading: '50/50', rating: 'B' }
         ];
 
-        // Pre-defined blocks (one profile per AI policy per set)
-        // 12 profiles = 4 choice sets per block (each set has 3 profiles, one per AI policy)
-        // + 1 dominated check + 1 instructed response = 6 sets total
-        const BLOCKS = {
-            1: [
-                { profiles: [getProfile(1), getProfile(5), getProfile(9)] },   // 80/20-A across AI
-                { profiles: [getProfile(2), getProfile(6), getProfile(10)] },  // 80/20-B across AI
-                { profiles: [getProfile(3), getProfile(7), getProfile(11)] },  // 50/50-A across AI
-                { profiles: [getProfile(4), getProfile(8), getProfile(12)] },  // 50/50-B across AI
-                // Set 5: Dominated check - same AI & grading, but C has better rating than B
-                { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true },
-                // Set 6: Instructed response
-                { profiles: [getProfile(2), getProfile(7), getProfile(9)], isInstructed: true }
-            ],
-            2: [
-                { profiles: [getProfile(2), getProfile(7), getProfile(9)] },
-                { profiles: [getProfile(1), getProfile(8), getProfile(10)] },
-                { profiles: [getProfile(4), getProfile(5), getProfile(11)] },
-                { profiles: [getProfile(3), getProfile(6), getProfile(12)] },
-                // Set 5: Dominated check
-                { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true },
-                // Set 6: Instructed response
-                { profiles: [getProfile(2), getProfile(8), getProfile(11)], isInstructed: true }
-            ],
-            3: [
-                { profiles: [getProfile(3), getProfile(6), getProfile(10)] },
-                { profiles: [getProfile(4), getProfile(5), getProfile(9)] },
-                { profiles: [getProfile(1), getProfile(7), getProfile(12)] },
-                { profiles: [getProfile(2), getProfile(8), getProfile(11)] },
-                // Set 5: Dominated check
-                { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true },
-                // Set 6: Instructed response
-                { profiles: [getProfile(3), getProfile(5), getProfile(10)], isInstructed: true }
-            ]
-        };
+        // 9 choice sets total: 8 regular + 1 dominated check
+        // Each set has 3 profiles (one per AI policy: Banned, Guided, Unrestricted)
+        // Each profile appears exactly 2 times across the 8 regular sets
+        const CHOICE_SETS = [
+            // Sets 1-4: Same grading & rating across AI policies
+            { profiles: [getProfile(1), getProfile(5), getProfile(9)] },   // All 80/20-A
+            { profiles: [getProfile(2), getProfile(6), getProfile(10)] },  // All 80/20-B
+            { profiles: [getProfile(3), getProfile(7), getProfile(11)] },  // All 50/50-A
+            { profiles: [getProfile(4), getProfile(8), getProfile(12)] },  // All 50/50-B
+            // Sets 5-8: Mixed combinations (each profile appears 2nd time)
+            { profiles: [getProfile(1), getProfile(8), getProfile(11)] },  // 80/20-A, 50/50-B, 50/50-A
+            { profiles: [getProfile(2), getProfile(7), getProfile(12)] },  // 80/20-B, 50/50-A, 50/50-B
+            { profiles: [getProfile(3), getProfile(6), getProfile(9)] },   // 50/50-A, 80/20-B, 80/20-A
+            { profiles: [getProfile(4), getProfile(5), getProfile(10)] },  // 50/50-B, 80/20-A, 80/20-B
+            // Set 9: Dominated check - B has worse rating than C with same grading
+            { profiles: [getProfile(1), getProfile(4), getProfile(3)], isDominated: true }  // B=50/50-B, C=50/50-A (C dominates B)
+        ];
 
         function getProfile(id) {
             return PROFILES.find(p => p.id === id);
@@ -1761,7 +1743,6 @@
             studentName: '', // 'Emily' or 'Michael'
             studentPronoun: '', // 'she' or 'he'
             studentPronounPossessive: '', // 'her' or 'his'
-            block: 0, // 1-3
             // Responses
             demographics: {},
             aiExperience: {},
@@ -1770,7 +1751,7 @@
             choiceResponses: [],
             currentSetIndex: 0,
             sectionLabelOrders: [],
-            beliefSets: [1, 3], // Sets 2, 4 (0-indexed) - skip dominated (5) and instructed (6)
+            beliefSets: [1, 4, 7], // Sets 2, 5, 8 (0-indexed) - skip dominated (9)
             currentBeliefs: {},
             nameCheckAnswer: null,
             wtpResponses: {},
@@ -1992,12 +1973,11 @@
             state.studentPronoun = state.studentGender === 'female' ? 'she' : 'he';
             state.studentPronounPossessive = state.studentGender === 'female' ? 'her' : 'his';
 
-            // Random block assignment
-            state.block = randomChoice([1, 2, 3]);
+            // No blocking - everyone sees all 9 choice sets
 
             // Randomize section labels for each set
             state.sectionLabelOrders = [];
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 9; i++) {
                 state.sectionLabelOrders.push(shuffle([0, 1, 2]));
             }
 
@@ -2085,7 +2065,7 @@
             state.practiceResponse = { A: p0, B: p1, C: p2 };
 
             // Show confirmation
-            alert(`Great! You allocated ${p0} to A, ${p1} to B, and ${p2} to C.\nIn the actual task, there are 6 choice sets. Ready to begin?`);
+            alert(`Great! You allocated ${p0} to A, ${p1} to B, and ${p2} to C.\nIn the actual task, there are 9 choice sets. Ready to begin?`);
 
             // Start main task
             state.currentSetIndex = 0;
@@ -2118,7 +2098,7 @@
         // CHOICE SET RENDERING
         // ============================================
         function renderChoiceSet() {
-            const choiceSet = BLOCKS[state.block][state.currentSetIndex];
+            const choiceSet = CHOICE_SETS[state.currentSetIndex];
             const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
             const labels = ['A', 'B', 'C'];
 
@@ -2155,7 +2135,7 @@
 
             // Update navigation buttons
             document.getElementById('prevBtn').style.visibility = state.currentSetIndex > 0 ? 'visible' : 'hidden';
-            document.getElementById('nextBtn').textContent = state.currentSetIndex === 5 ? 'Finish' : 'Next';
+            document.getElementById('nextBtn').textContent = state.currentSetIndex === 8 ? 'Finish' : 'Next';
             document.getElementById('nextBtn').disabled = true;
 
             // Reset points display
@@ -2268,7 +2248,7 @@
         }
 
         function saveCurrentResponse() {
-            const choiceSet = BLOCKS[state.block][state.currentSetIndex];
+            const choiceSet = CHOICE_SETS[state.currentSetIndex];
             const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
             const labels = ['A', 'B', 'C'];
 
@@ -2328,7 +2308,7 @@
                 return;
             }
 
-            if (state.currentSetIndex < 5) {
+            if (state.currentSetIndex < 8) {
                 state.currentSetIndex++;
                 renderChoiceSet();
                 updateProgress();
@@ -2426,7 +2406,7 @@
 
         function downloadResults() {
             // Build comprehensive CSV
-            let csv = `VIGNETTE STUDY RESPONSE DATA (V8)\n`;
+            let csv = `VIGNETTE STUDY RESPONSE DATA (V9)\n`;
             csv += `${'='.repeat(60)}\n\n`;
 
             // Summary
@@ -2436,7 +2416,8 @@
             csv += `cell,${state.cell}\n`;
             csv += `student_ability,${state.studentAbility}\n`;
             csv += `course_type,${state.courseType}\n`;
-            csv += `block,${state.block}\n`;
+            csv += `student_gender,${state.studentGender}\n`;
+            csv += `student_name,${state.studentName}\n`;
             csv += `duration_minutes,${((Date.now() - state.startTime) / 1000 / 60).toFixed(2)}\n\n`;
 
             // Flags
