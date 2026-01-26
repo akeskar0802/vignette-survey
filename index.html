@@ -140,6 +140,52 @@
             margin-bottom: 24px;
         }
 
+        /* Question containers */
+        .question-container {
+            margin-bottom: 28px;
+        }
+
+        .question-label {
+            display: block;
+            color: #1e293b;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            border-color: #8b5cf6;
+            background: #faf5ff;
+        }
+
+        .radio-option.selected, .checkbox-option.selected {
+            border-color: #8b5cf6;
+            background: #f3e8ff;
+        }
+
+        .radio-option input, .checkbox-option input {
+            width: 20px;
+            height: 20px;
+            accent-color: #8b5cf6;
+        }
+
         /* Info box (attribute explanations) */
         .info-box {
             background: #f8fafc;
@@ -177,6 +223,85 @@
             margin-top: 4px;
         }
 
+        /* GPA Scale visualization */
+        .gpa-scale {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .gpa-scale-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin: 20px 0 10px;
+            padding: 0 20px;
+        }
+
+        .gpa-scale-line {
+            height: 8px;
+            background: linear-gradient(to right, #ef4444, #f59e0b, #22c55e, #22c55e);
+            border-radius: 4px;
+            margin: 0 20px;
+        }
+
+        .gpa-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Student card */
+        .student-card {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 28px;
+            margin: 24px 0;
+        }
+
+        .student-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .student-gpa {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .student-gpa-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            position: relative;
+            margin-top: 12px;
+        }
+
+        .student-gpa-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: -4px;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .course-requirement {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
         /* Choice set display */
         .choice-set-header {
             text-align: center;
@@ -196,6 +321,15 @@
             display: inline-block;
             margin-bottom: 16px;
             font-weight: 500;
+        }
+
+        .reminder-box {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            color: #92400e;
         }
 
         .instruction-text {
@@ -266,6 +400,7 @@
             font-weight: 600;
             color: #1e293b;
             text-align: right;
+            font-size: 0.9rem;
         }
 
         .attr-value.banned { color: #dc2626; }
@@ -355,38 +490,75 @@
         .belief-question label {
             display: block;
             color: #1e293b;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             font-weight: 500;
         }
 
-        .belief-question .highlight {
-            background: #e9d5ff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .belief-input-row {
+        .grade-scale {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
         }
 
-        .belief-input {
-            width: 100px;
-            padding: 10px;
+        .grade-option {
+            padding: 8px 16px;
             border: 2px solid #e2e8f0;
             border-radius: 8px;
-            font-size: 1.1rem;
-            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
 
-        .belief-input:focus {
-            outline: none;
+        .grade-option:hover {
             border-color: #8b5cf6;
         }
 
-        /* Attention check */
+        .grade-option.selected {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+
+        .slider-container {
+            margin-top: 12px;
+        }
+
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #e2e8f0;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #8b5cf6;
+            margin-top: 8px;
+        }
+
+        /* Attention check styles */
         .attention-section {
             background: #fff7ed;
             border: 2px solid #fed7aa;
@@ -397,6 +569,15 @@
         .attention-section h3 {
             color: #c2410c;
             margin-bottom: 16px;
+        }
+
+        .attention-section.instructed {
+            background: #fef3c7;
+            border-color: #fcd34d;
+        }
+
+        .attention-section.instructed h3 {
+            color: #92400e;
         }
 
         .attention-options {
@@ -431,6 +612,44 @@
             width: 20px;
             height: 20px;
             accent-color: #f97316;
+        }
+
+        /* WTP Section */
+        .wtp-section {
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .wtp-section h3 {
+            color: #0369a1;
+            margin-bottom: 16px;
+        }
+
+        .wtp-course-card {
+            background: white;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .wtp-course-card h4 {
+            color: #0369a1;
+            margin-bottom: 12px;
+        }
+
+        .wtp-course-card ul {
+            color: #475569;
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wtp-course-card .rating {
+            color: #f59e0b;
+            font-weight: 500;
         }
 
         /* Buttons */
@@ -525,18 +744,38 @@
             margin-bottom: 32px;
         }
 
-        .respondent-id {
+        .confirmation-code {
             background: #f1f5f9;
             padding: 16px 24px;
             border-radius: 8px;
             font-family: monospace;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             margin-bottom: 32px;
         }
 
-        .respondent-id span {
+        .confirmation-code span {
             color: #64748b;
             font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+        }
+
+        /* Error/warning messages */
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .warning-message {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            color: #92400e;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
         }
     </style>
 </head>
@@ -553,79 +792,505 @@
         </div>
 
         <div class="content">
-            <!-- Welcome Screen -->
+            <!-- Screen 1: Welcome -->
             <div class="screen active" id="welcomeScreen">
                 <div class="welcome-content">
                     <h2>Welcome to the Course Selection Study</h2>
-                    <p>This research study examines how students make decisions when choosing between different course sections.</p>
+                    <p>Thank you for participating in this research study conducted by Binghamton University.</p>
 
-                    <div class="time-estimate">Estimated time: 15-20 minutes</div>
+                    <div class="time-estimate">Estimated time: 12-15 minutes</div>
 
                     <div class="highlight-box">
                         <h3>What You'll Do</h3>
                         <ul>
-                            <li>View 8 sets of course options, each with 3 different sections</li>
-                            <li>Allocate 100 points across sections based on how likely you'd be to enroll</li>
-                            <li>Answer a few follow-up questions about your expectations</li>
+                            <li>Answer a few questions about yourself</li>
+                            <li>Read about a hypothetical Binghamton student</li>
+                            <li>View 8 sets of course options (3 sections each)</li>
+                            <li>Allocate points based on enrollment likelihood</li>
+                            <li>Answer questions about expected outcomes</li>
                         </ul>
                     </div>
 
-                    <p>All responses are anonymous. Your unique ID will be generated automatically.</p>
+                    <p>Your responses are anonymous and will be used for research purposes only.</p>
 
                     <div class="button-row center">
-                        <button class="btn btn-primary" onclick="startSurvey()">Begin Survey</button>
+                        <button class="btn btn-primary" onclick="nextScreen('consentScreen')">Begin Survey</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Info Screen -->
-            <div class="screen" id="infoScreen">
+            <!-- Screen 2: Consent & Eligibility -->
+            <div class="screen" id="consentScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Eligibility & Consent</h2>
+
                 <div class="info-box">
-                    <h3>Before You Begin: Understanding the Course Features</h3>
+                    <p style="margin-bottom: 16px;">To participate, you must be:</p>
+                    <ul style="padding-left: 24px; color: #475569;">
+                        <li>Currently enrolled as an undergraduate student</li>
+                        <li>18 years of age or older</li>
+                    </ul>
+                </div>
 
-                    <div class="attribute-explain">
-                        <strong>AI Policy</strong> - Rules for using AI tools (like ChatGPT) on take-home work
-                        <p><b>Banned:</b> No AI use permitted on any assignments.<br>
-                        <b>Guided:</b> AI allowed, but must submit prompt plan, AI output, and verification steps.<br>
-                        <b>Unrestricted:</b> AI allowed with no extra requirements.<br>
-                        <em>Note: AI is never allowed during closed-book exams.</em></p>
+                <div class="question-container">
+                    <label class="question-label">Do you confirm that you meet these eligibility requirements?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'eligibility', 'yes')">
+                            <input type="radio" name="eligibility" value="yes">
+                            <span>Yes, I am an undergraduate student aged 18 or older</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'eligibility', 'no')">
+                            <input type="radio" name="eligibility" value="no">
+                            <span>No, I do not meet the eligibility requirements</span>
+                        </label>
                     </div>
+                </div>
 
-                    <div class="attribute-explain">
-                        <strong>Exam/Grading</strong> - How your grade is determined
-                        <p><b>100/0:</b> 100% closed-book exam, 0% take-home work.<br>
-                        <b>70/30:</b> 70% exam, 30% take-home work.<br>
-                        <b>50/50:</b> 50% exam, 50% take-home work.</p>
+                <p style="color: #64748b; margin-top: 24px;">By clicking "Continue," you consent to participate in this study. You may exit at any time without penalty.</p>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="consentBtn" onclick="submitConsent()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 3: Demographics -->
+            <div class="screen" id="demographicsScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">About You</h2>
+                <p style="color: #64748b; margin-bottom: 32px;">These questions help us understand who is participating in our study.</p>
+
+                <div class="question-container">
+                    <label class="question-label">Q1. What is your current class standing?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'class_standing', '1')">
+                            <input type="radio" name="class_standing" value="1"><span>First-year (Freshman)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'class_standing', '2')">
+                            <input type="radio" name="class_standing" value="2"><span>Sophomore</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'class_standing', '3')">
+                            <input type="radio" name="class_standing" value="3"><span>Junior</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'class_standing', '4')">
+                            <input type="radio" name="class_standing" value="4"><span>Senior</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'class_standing', '5')">
+                            <input type="radio" name="class_standing" value="5"><span>Other / Prefer not to say</span>
+                        </label>
                     </div>
+                </div>
 
-                    <div class="attribute-explain">
-                        <strong>Peer Rating</strong> - Based on ~100 prior student reviews (quality & grading curve)
-                        <p><b>HQ-HD:</b> High quality (4.5/5) with strict curve (avg grade: B-).<br>
-                        <b>LQ-LD:</b> Mixed quality (3.0/5) with lenient curve (avg grade: B+).<br>
-                        <em>Note: Peer rating does NOT indicate time commitment.</em></p>
+                <div class="question-container">
+                    <label class="question-label">Q2. What is your current cumulative GPA? (approximate)</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'resp_gpa', '1')">
+                            <input type="radio" name="resp_gpa" value="1"><span>Below 2.5</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'resp_gpa', '2')">
+                            <input type="radio" name="resp_gpa" value="2"><span>2.5 - 2.99</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'resp_gpa', '3')">
+                            <input type="radio" name="resp_gpa" value="3"><span>3.0 - 3.49</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'resp_gpa', '4')">
+                            <input type="radio" name="resp_gpa" value="4"><span>3.5 - 4.0</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'resp_gpa', '5')">
+                            <input type="radio" name="resp_gpa" value="5"><span>Prefer not to say</span>
+                        </label>
                     </div>
+                </div>
 
-                    <div class="attribute-explain">
-                        <strong>Workload</strong> - Expected hours/week outside class (from syllabus)
-                        <p>This is the ONLY feature that tells you the time commitment: 3, 6, 9, or 12 hrs/week.</p>
+                <div class="question-container">
+                    <label class="question-label">Q3. What is your major or intended major?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'major', 'econ')">
+                            <input type="radio" name="major" value="econ"><span>Economics</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'major', 'socsci')">
+                            <input type="radio" name="major" value="socsci"><span>Other Social Science (e.g., Political Science, Sociology)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'major', 'business')">
+                            <input type="radio" name="major" value="business"><span>Business / Management</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'major', 'stem')">
+                            <input type="radio" name="major" value="stem"><span>STEM (e.g., Math, Computer Science, Engineering)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'major', 'humanities')">
+                            <input type="radio" name="major" value="humanities"><span>Humanities (e.g., English, History, Philosophy)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'major', 'undecided')">
+                            <input type="radio" name="major" value="undecided"><span>Undecided</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">Q4. How would you describe your confidence with quantitative coursework?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'quant_conf', '5')">
+                            <input type="radio" name="quant_conf" value="5"><span>Very confident</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'quant_conf', '4')">
+                            <input type="radio" name="quant_conf" value="4"><span>Somewhat confident</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'quant_conf', '3')">
+                            <input type="radio" name="quant_conf" value="3"><span>Neutral</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'quant_conf', '2')">
+                            <input type="radio" name="quant_conf" value="2"><span>Somewhat unconfident</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'quant_conf', '1')">
+                            <input type="radio" name="quant_conf" value="1"><span>Very unconfident</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">Q5. How would you describe your confidence with writing-intensive coursework?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'writing_conf', '5')">
+                            <input type="radio" name="writing_conf" value="5"><span>Very confident</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'writing_conf', '4')">
+                            <input type="radio" name="writing_conf" value="4"><span>Somewhat confident</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'writing_conf', '3')">
+                            <input type="radio" name="writing_conf" value="3"><span>Neutral</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'writing_conf', '2')">
+                            <input type="radio" name="writing_conf" value="2"><span>Somewhat unconfident</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'writing_conf', '1')">
+                            <input type="radio" name="writing_conf" value="1"><span>Very unconfident</span>
+                        </label>
                     </div>
                 </div>
 
                 <div class="button-row center">
-                    <button class="btn btn-primary" onclick="showFirstChoiceSet()">I Understand - Continue</button>
+                    <button class="btn btn-primary" id="demoBtn" onclick="submitDemographics()" disabled>Continue</button>
                 </div>
             </div>
 
-            <!-- Choice Set Screen -->
+            <!-- Screen 4: AI Experience -->
+            <div class="screen" id="aiExperienceScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Your Experience with AI Tools</h2>
+
+                <div class="question-container">
+                    <label class="question-label">Q6. How often do you currently use AI tools (e.g., ChatGPT, Claude, Copilot) for your coursework?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'ai_freq', '1')">
+                            <input type="radio" name="ai_freq" value="1"><span>Never</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_freq', '2')">
+                            <input type="radio" name="ai_freq" value="2"><span>Rarely (a few times per semester)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_freq', '3')">
+                            <input type="radio" name="ai_freq" value="3"><span>Sometimes (a few times per month)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_freq', '4')">
+                            <input type="radio" name="ai_freq" value="4"><span>Often (weekly)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_freq', '5')">
+                            <input type="radio" name="ai_freq" value="5"><span>Very often (daily or almost daily)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">Q7. For which types of tasks do you typically use AI? (Select all that apply)</label>
+                    <div class="checkbox-group" id="aiTasksGroup">
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'brainstorm')">
+                            <input type="checkbox" name="ai_tasks" value="brainstorm"><span>Brainstorming ideas</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'explain')">
+                            <input type="checkbox" name="ai_tasks" value="explain"><span>Explaining difficult concepts</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'check')">
+                            <input type="checkbox" name="ai_tasks" value="check"><span>Checking my work / getting feedback</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'writing')">
+                            <input type="checkbox" name="ai_tasks" value="writing"><span>Drafting or editing written assignments</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'math')">
+                            <input type="checkbox" name="ai_tasks" value="math"><span>Solving problem sets or math problems</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'code')">
+                            <input type="checkbox" name="ai_tasks" value="code"><span>Generating code</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'ai_tasks', 'none')">
+                            <input type="checkbox" name="ai_tasks" value="none"><span>I don't use AI for coursework</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">Q8. How would you rate your skill at using AI tools effectively for academic work?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'ai_skill', '5')">
+                            <input type="radio" name="ai_skill" value="5"><span>Expert (I know advanced prompting techniques)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_skill', '4')">
+                            <input type="radio" name="ai_skill" value="4"><span>Proficient (I can usually get what I need)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_skill', '3')">
+                            <input type="radio" name="ai_skill" value="3"><span>Basic (I use simple prompts)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_skill', '2')">
+                            <input type="radio" name="ai_skill" value="2"><span>Novice (I've tried it but struggle to get useful results)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_skill', '1')">
+                            <input type="radio" name="ai_skill" value="1"><span>No experience</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="aiExpBtn" onclick="submitAIExperience()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 5: Study Framing -->
+            <div class="screen" id="framingScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Your Task in This Study</h2>
+
+                <div class="info-box">
+                    <p style="margin-bottom: 16px;">We are interested in how students make decisions when choosing courses with different AI policies.</p>
+
+                    <p style="margin-bottom: 16px;"><strong>You will:</strong></p>
+                    <ol style="padding-left: 24px; color: #475569; margin-bottom: 16px;">
+                        <li>Meet a hypothetical Binghamton student</li>
+                        <li>Help them decide between course sections with different features</li>
+                        <li>Tell us what you think would happen in each scenario</li>
+                    </ol>
+
+                    <p style="color: #64748b;"><strong>Important Notes:</strong></p>
+                    <ul style="padding-left: 24px; color: #64748b;">
+                        <li>There are no right or wrong answers</li>
+                        <li>We want YOUR honest opinion about what would happen</li>
+                        <li>Please consider each scenario carefully</li>
+                        <li>Some questions may seem similar - this is intentional</li>
+                    </ul>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" onclick="nextScreen('gpaScaleScreen')">Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 6: GPA Scale -->
+            <div class="screen" id="gpaScaleScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Understanding the GPA Scale</h2>
+
+                <p style="color: #64748b; margin-bottom: 24px;">The scale below shows student academic performance at Binghamton University.</p>
+
+                <div class="gpa-scale">
+                    <div class="gpa-scale-line"></div>
+                    <div class="gpa-labels">
+                        <div style="text-align: center;">
+                            <strong>2.0</strong><br>
+                            <span style="font-size: 0.75rem;">Academic<br>Probation</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong>2.5</strong><br>
+                            <span style="font-size: 0.75rem;">Below<br>Average</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong>3.0</strong><br>
+                            <span style="font-size: 0.75rem;">Average</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong>3.5</strong><br>
+                            <span style="font-size: 0.75rem;">Above<br>Average</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <strong>4.0</strong><br>
+                            <span style="font-size: 0.75rem;">Dean's<br>List</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="color: #64748b; text-align: center; margin-top: 24px;">Most Binghamton students have GPAs between 2.8 and 3.4.</p>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" onclick="nextScreen('compCheckScreen')">Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 7: Comprehension Checks -->
+            <div class="screen" id="compCheckScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Quick Check</h2>
+                <p style="color: #64748b; margin-bottom: 24px;">Please answer these questions to confirm you understand the GPA scale.</p>
+
+                <div class="question-container">
+                    <label class="question-label">A student with a 2.3 GPA would be considered:</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'comp1', 'above')">
+                            <input type="radio" name="comp1" value="above"><span>Above average</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'comp1', 'average')">
+                            <input type="radio" name="comp1" value="average"><span>Average</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'comp1', 'below')">
+                            <input type="radio" name="comp1" value="below"><span>Below average / At risk of academic probation</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'comp1', 'deans')">
+                            <input type="radio" name="comp1" value="deans"><span>On the Dean's List</span>
+                        </label>
+                    </div>
+                    <div id="comp1Feedback" style="display: none;"></div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">A student on the Dean's List would have approximately what GPA?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'comp2', '2.5')">
+                            <input type="radio" name="comp2" value="2.5"><span>2.5</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'comp2', '3.0')">
+                            <input type="radio" name="comp2" value="3.0"><span>3.0</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'comp2', '3.3')">
+                            <input type="radio" name="comp2" value="3.3"><span>3.3</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'comp2', '3.7')">
+                            <input type="radio" name="comp2" value="3.7"><span>3.7 or higher</span>
+                        </label>
+                    </div>
+                    <div id="comp2Feedback" style="display: none;"></div>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="compBtn" onclick="submitCompChecks()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 8: Meet the Student -->
+            <div class="screen" id="meetStudentScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Meet Alex</h2>
+
+                <div class="student-card">
+                    <h3>Alex</h3>
+                    <p>Alex is a sophomore at Binghamton University majoring in Economics.</p>
+
+                    <div class="student-gpa">
+                        <strong>Academic Standing: <span id="alexGPA">3.8</span> GPA</strong>
+                        <div class="student-gpa-bar">
+                            <div class="student-gpa-marker" id="alexGPAMarker" style="left: 90%;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; opacity: 0.8;">
+                            <span>2.0</span>
+                            <span>2.5</span>
+                            <span>3.0</span>
+                            <span>3.5</span>
+                            <span>4.0</span>
+                        </div>
+                    </div>
+
+                    <p id="alexDescription" style="margin-top: 12px;">Alex is near the top of the class, on the Dean's List, and generally finds coursework manageable.</p>
+
+                    <div class="course-requirement">
+                        <strong>COURSE REQUIREMENT:</strong><br>
+                        <span id="courseRequirement">Next semester, Alex needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.</span>
+                    </div>
+                </div>
+
+                <p style="color: #64748b; margin-top: 24px;">Three sections of the same course are available. They cover identical content but differ in the features you'll see. Your task is to help Alex decide how likely they would be to enroll in each section.</p>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" onclick="nextScreen('attributeScreen')">Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 9: Attribute Definitions -->
+            <div class="screen" id="attributeScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Understanding the Course Features</h2>
+                <p style="color: #64748b; margin-bottom: 24px;">Each course section will have THREE features. Please read these definitions carefully.</p>
+
+                <div class="info-box">
+                    <div class="attribute-explain">
+                        <strong>AI POLICY</strong> - Rules for using AI tools (e.g., ChatGPT) on take-home work
+                        <p>
+                            <b>AI Prohibited:</b> No AI tools allowed on any assignments.<br>
+                            <b>AI with Verification:</b> AI allowed, but student must submit prompt plan, AI outputs used, and verification of AI answers.<br>
+                            <b>AI Permitted:</b> AI allowed with no extra documentation requirements.<br>
+                            <em style="color: #dc2626;">Note: AI is NEVER allowed during closed-book exams, regardless of policy.</em>
+                        </p>
+                    </div>
+
+                    <div class="attribute-explain">
+                        <strong>GRADING SPLIT</strong> - How the final grade is calculated
+                        <p>
+                            <b>100% Exam:</b> Entire grade from closed-book exam.<br>
+                            <b>70% Exam / 30% HW:</b> Mostly exam, some take-home assignments.<br>
+                            <b>50% Exam / 50% HW:</b> Equal weight on exam and assignments.
+                        </p>
+                    </div>
+
+                    <div class="attribute-explain">
+                        <strong>PEER RATING</strong> - Based on reviews from ~100 previous students
+                        <p>
+                            <b>High Quality, Hard Grading:</b> Teaching: 4.5/5 stars, Average grade: B- (stricter curve).<br>
+                            <b>Low Quality, Easy Grading:</b> Teaching: 3.0/5 stars, Average grade: B+ (lenient curve).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" onclick="nextScreen('practiceScreen')">I Understand - Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 10: Practice Choice Set -->
+            <div class="screen" id="practiceScreen">
+                <div class="attention-section instructed" style="margin-bottom: 24px;">
+                    <h3>PRACTICE ROUND</h3>
+                    <p>Let's do a practice round to make sure everything is clear. This response will NOT be counted.</p>
+                </div>
+
+                <div class="reminder-box">
+                    <strong>REMINDER:</strong> Alex has a <span id="practiceGPA">3.8</span> GPA and needs a <span id="practiceCourse">quantitative</span> course.
+                </div>
+
+                <p class="instruction-text">
+                    Below are three sections. Allocate 100 points to show how likely Alex would be to enroll in each section.
+                </p>
+
+                <div class="cards-container" id="practiceCards">
+                    <!-- Practice cards rendered by JS -->
+                </div>
+
+                <div class="points-summary">
+                    <div class="points-total" id="practiceTotal">0 / 100</div>
+                    <div class="points-message" id="practiceMessage">Enter points for each section (must total exactly 100)</div>
+                </div>
+
+                <p style="color: #64748b; background: #f0f9ff; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px;">
+                    <strong>TIP:</strong> If you think Alex would definitely choose one section, give it 100 points. If you think Alex is torn between two options, you might give 50 points each. Use any distribution that reflects your belief.
+                </p>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="practiceBtn" onclick="submitPractice()" disabled>Submit Practice</button>
+                </div>
+            </div>
+
+            <!-- Screen 11: Main Choice Sets -->
             <div class="screen" id="choiceScreen">
                 <div class="choice-set-header">
-                    <div class="course-context" id="courseContext">Quantitative Course</div>
                     <h2>Choice Set <span id="setNumber">1</span> of 8</h2>
-                    <p class="instruction-text">
-                        Imagine you need to take a <span id="courseTypeText">quantitative/problem-solving</span> course next term.
-                        Below are three sections of the same course. They differ only in the features shown.<br><br>
-                        <strong>Allocate 100 points</strong> across the sections to indicate how likely you would be to enroll in each.
-                    </p>
+                </div>
+
+                <div class="reminder-box">
+                    <strong>REMINDER:</strong> Alex has a <span id="choiceGPA">3.8</span> GPA | Course type: <span id="choiceCourse">Quantitative</span>
+                </div>
+
+                <p class="instruction-text">
+                    Allocate 100 points across the three sections to indicate how likely Alex would be to enroll in each.
+                </p>
+
+                <!-- Instructed response notice (shown only for set 7) -->
+                <div class="attention-section instructed" id="instructedNotice" style="display: none; margin-bottom: 24px;">
+                    <h3>ATTENTION CHECK</h3>
+                    <p>This is an attention check. Please allocate exactly:<br>
+                    <strong>60 points</strong> to Section A, <strong>30 points</strong> to Section B, <strong>10 points</strong> to Section C</p>
                 </div>
 
                 <div class="cards-container" id="cardsContainer">
@@ -637,28 +1302,51 @@
                     <div class="points-message" id="pointsMessage">Enter points for each section (must total exactly 100)</div>
                 </div>
 
-                <!-- Belief questions (shown for 3 of 8 sets) -->
+                <!-- Belief questions (shown for sets 3, 6, 8) -->
                 <div class="belief-section" id="beliefSection" style="display: none;">
-                    <h3>Follow-up Questions for Section <span id="beliefSectionLabel">A</span></h3>
+                    <h3>Follow-up Questions</h3>
+                    <p style="color: #64748b; margin-bottom: 20px;">Think about the section Alex is MOST likely to choose (the one you gave the most points).</p>
 
                     <div class="belief-question">
-                        <label>If YOU enrolled in Section <span class="highlight" id="beliefLabel1">A</span>, what is the chance you would earn a <strong>B or higher</strong>?</label>
-                        <div class="belief-input-row">
-                            <input type="number" class="belief-input" id="belief1" min="0" max="100" placeholder="0-100" oninput="validatePoints()"> <span>%</span>
+                        <label>What grade do you think Alex would earn in that section?</label>
+                        <div class="grade-scale" id="beliefGradeScale">
+                            <span class="grade-option" onclick="selectGrade(this, 'F')">F</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'D')">D</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'C')">C</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'C+')">C+</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'B-')">B-</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'B')">B</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'B+')">B+</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'A-')">A-</span>
+                            <span class="grade-option" onclick="selectGrade(this, 'A')">A</span>
                         </div>
                     </div>
 
-                    <div class="belief-question" id="beliefQuestion2Container">
-                        <label>If AI is allowed as shown, what is the chance you would <strong>use AI tools daily</strong> for this course?</label>
-                        <div class="belief-input-row">
-                            <input type="number" class="belief-input" id="belief2" min="0" max="100" placeholder="0-100" oninput="validatePoints()"> <span>%</span>
+                    <div class="belief-question">
+                        <label>How many hours per week would Alex spend on this course?</label>
+                        <div class="slider-container">
+                            <input type="range" id="beliefHours" min="0" max="20" value="8" oninput="updateHoursDisplay()">
+                            <div class="slider-labels">
+                                <span>0 hrs</span>
+                                <span>10 hrs</span>
+                                <span>20+ hrs</span>
+                            </div>
+                            <div class="slider-value" id="hoursValue">8 hrs/week</div>
                         </div>
                     </div>
 
-                    <div class="belief-question">
-                        <label>If the AI policy were <strong>flipped</strong> (other features same), what would be your chance of earning a B or higher?</label>
-                        <div class="belief-input-row">
-                            <input type="number" class="belief-input" id="belief3" min="0" max="100" placeholder="0-100" oninput="validatePoints()"> <span>%</span>
+                    <div class="belief-question" id="counterfactualQuestion">
+                        <label>If AI were <span id="counterfactualPolicy">BANNED</span> instead, what grade would Alex earn?</label>
+                        <div class="grade-scale" id="counterfactualGradeScale">
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'F')">F</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'D')">D</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'C')">C</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'C+')">C+</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'B-')">B-</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'B')">B</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'B+')">B+</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'A-')">A-</span>
+                            <span class="grade-option" onclick="selectCounterfactualGrade(this, 'A')">A</span>
                         </div>
                     </div>
                 </div>
@@ -669,38 +1357,264 @@
                 </div>
             </div>
 
-            <!-- Attention Check Screen -->
-            <div class="screen" id="attentionScreen">
+            <!-- Attention Check: Name (after set 2) -->
+            <div class="screen" id="nameCheckScreen">
                 <div class="attention-section">
                     <h3>Quick Question</h3>
-                    <p style="margin-bottom: 20px; color: #1e293b;">In this survey, which column tells you how many hours/week the course requires?</p>
+                    <p style="margin-bottom: 20px; color: #1e293b;">To make sure you're paying attention, please answer this question:</p>
 
-                    <div class="attention-options" id="attentionOptions">
-                        <label class="attention-option" onclick="selectAttention(this, 'peer')">
-                            <input type="radio" name="attention" value="peer">
-                            <span>Peer Rating</span>
+                    <label class="question-label">In this survey, the hypothetical student's name is:</label>
+                    <div class="attention-options">
+                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Jordan')">
+                            <input type="radio" name="nameCheck" value="Jordan"><span>Jordan</span>
                         </label>
-                        <label class="attention-option" onclick="selectAttention(this, 'workload')">
-                            <input type="radio" name="attention" value="workload">
-                            <span>Workload (hours/week)</span>
+                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Taylor')">
+                            <input type="radio" name="nameCheck" value="Taylor"><span>Taylor</span>
                         </label>
-                        <label class="attention-option" onclick="selectAttention(this, 'grading')">
-                            <input type="radio" name="attention" value="grading">
-                            <span>Exam/Grading</span>
+                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Alex')">
+                            <input type="radio" name="nameCheck" value="Alex"><span>Alex</span>
                         </label>
-                        <label class="attention-option" onclick="selectAttention(this, 'ai')">
-                            <input type="radio" name="attention" value="ai">
-                            <span>AI Policy</span>
+                        <label class="attention-option" onclick="selectAttention(this, 'nameCheck', 'Sam')">
+                            <input type="radio" name="nameCheck" value="Sam"><span>Sam</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="button-row center" style="margin-top: 24px;">
-                    <button class="btn btn-primary" onclick="submitAttention()" id="attentionSubmitBtn" disabled>Continue</button>
+                    <button class="btn btn-primary" onclick="submitNameCheck()" id="nameCheckBtn" disabled>Continue</button>
                 </div>
             </div>
 
-            <!-- Completion Screen -->
+            <!-- Screen 12: WTP Questions -->
+            <div class="screen" id="wtpScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">AI Skills Training Opportunity</h2>
+
+                <p style="color: #64748b; margin-bottom: 24px;">Imagine that before the semester begins, Alex discovers a highly-rated online course on AI prompt engineering.</p>
+
+                <div class="wtp-course-card">
+                    <h4>"Effective AI Use for Academic Success"</h4>
+                    <ul>
+                        <li>How to write effective prompts</li>
+                        <li>How to verify and fact-check AI outputs</li>
+                        <li>How to integrate AI into studying and assignments</li>
+                        <li>Strategies for learning WITH AI (not just FROM AI)</li>
+                    </ul>
+                    <p class="rating">Rating: 4.8/5 from 500+ students</p>
+                    <p style="color: #64748b;">Duration: 4 weeks (self-paced)</p>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">What is the MAXIMUM Alex would pay for this course?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '0')">
+                            <input type="radio" name="wtp_money" value="0"><span>$0</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '25')">
+                            <input type="radio" name="wtp_money" value="25"><span>$25</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '50')">
+                            <input type="radio" name="wtp_money" value="50"><span>$50</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '75')">
+                            <input type="radio" name="wtp_money" value="75"><span>$75</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '100')">
+                            <input type="radio" name="wtp_money" value="100"><span>$100</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '150')">
+                            <input type="radio" name="wtp_money" value="150"><span>$150</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_money', '200')">
+                            <input type="radio" name="wtp_money" value="200"><span>$200+</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">How many hours per week would Alex be willing to spend on this course during the 4 weeks before the semester?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_time', '0')">
+                            <input type="radio" name="wtp_time" value="0"><span>0 hours</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_time', '1-2')">
+                            <input type="radio" name="wtp_time" value="1-2"><span>1-2 hours</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_time', '3-4')">
+                            <input type="radio" name="wtp_time" value="3-4"><span>3-4 hours</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_time', '5-6')">
+                            <input type="radio" name="wtp_time" value="5-6"><span>5-6 hours</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_time', '7-8')">
+                            <input type="radio" name="wtp_time" value="7-8"><span>7-8 hours</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_time', '10+')">
+                            <input type="radio" name="wtp_time" value="10+"><span>10+ hours</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">If the course were FREE, how likely is Alex to enroll?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_free', '1')">
+                            <input type="radio" name="wtp_free" value="1"><span>Very Unlikely</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_free', '2')">
+                            <input type="radio" name="wtp_free" value="2"><span>Unlikely</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_free', '3')">
+                            <input type="radio" name="wtp_free" value="3"><span>Neutral</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_free', '4')">
+                            <input type="radio" name="wtp_free" value="4"><span>Likely</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'wtp_free', '5')">
+                            <input type="radio" name="wtp_free" value="5"><span>Very Likely</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="wtpBtn" onclick="submitWTP()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 13: Manipulation Checks -->
+            <div class="screen" id="manipCheckScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Final Questions</h2>
+
+                <div class="question-container">
+                    <label class="question-label">Why do you think Alex would or would NOT invest in AI training? (Select all that apply)</label>
+                    <div class="checkbox-group" id="reasonsGroup">
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'grades')">
+                            <input type="checkbox" name="reasons" value="grades"><span>Would help get better grades</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'time')">
+                            <input type="checkbox" name="reasons" value="time"><span>Would save time on assignments</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'learning')">
+                            <input type="checkbox" name="reasons" value="learning"><span>Would help learn course material better</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'already_knows')">
+                            <input type="checkbox" name="reasons" value="already_knows"><span>Alex already knows how to use AI effectively</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'not_useful')">
+                            <input type="checkbox" name="reasons" value="not_useful"><span>Alex doesn't think AI is useful for coursework</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'cost')">
+                            <input type="checkbox" name="reasons" value="cost"><span>Alex can't afford the cost</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'no_time')">
+                            <input type="checkbox" name="reasons" value="no_time"><span>Alex doesn't have time before the semester</span>
+                        </label>
+                        <label class="checkbox-option" onclick="toggleCheckbox(this, 'reasons', 'not_interested')">
+                            <input type="checkbox" name="reasons" value="not_interested"><span>Alex is not interested in learning AI skills</span>
+                        </label>
+                    </div>
+                </div>
+
+                <hr style="margin: 32px 0; border: none; border-top: 2px solid #e2e8f0;">
+                <h3 style="color: #1e293b; margin-bottom: 20px;">MANIPULATION CHECKS</h3>
+
+                <div class="question-container">
+                    <label class="question-label">In this study, Alex's GPA was:</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'manip_gpa', '2.5')">
+                            <input type="radio" name="manip_gpa" value="2.5"><span>2.5 (below average)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'manip_gpa', '3.0')">
+                            <input type="radio" name="manip_gpa" value="3.0"><span>3.0 (average)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'manip_gpa', '3.8')">
+                            <input type="radio" name="manip_gpa" value="3.8"><span>3.8 (above average)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'manip_gpa', 'dont_remember')">
+                            <input type="radio" name="manip_gpa" value="dont_remember"><span>I don't remember</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">The course Alex needed was:</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'manip_course', 'quant')">
+                            <input type="radio" name="manip_course" value="quant"><span>A quantitative course (like Statistics)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'manip_course', 'writing')">
+                            <input type="radio" name="manip_course" value="writing"><span>A writing-intensive course (like Policy Analysis)</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'manip_course', 'lab')">
+                            <input type="radio" name="manip_course" value="lab"><span>A laboratory course</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'manip_course', 'dont_remember')">
+                            <input type="radio" name="manip_course" value="dont_remember"><span>I don't remember</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="manipBtn" onclick="submitManipChecks()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 14: Perceived Realism -->
+            <div class="screen" id="realismScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">Your Thoughts on This Study</h2>
+
+                <div class="question-container">
+                    <label class="question-label">How realistic did you find the course selection scenarios?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '1')">
+                            <input type="radio" name="realism_scenarios" value="1"><span>Not at all realistic</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '2')">
+                            <input type="radio" name="realism_scenarios" value="2"><span>Slightly realistic</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '3')">
+                            <input type="radio" name="realism_scenarios" value="3"><span>Moderately realistic</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '4')">
+                            <input type="radio" name="realism_scenarios" value="4"><span>Very realistic</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_scenarios', '5')">
+                            <input type="radio" name="realism_scenarios" value="5"><span>Extremely realistic</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">How easy or difficult was it to imagine what Alex would do?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '1')">
+                            <input type="radio" name="realism_imagine" value="1"><span>Very difficult</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '2')">
+                            <input type="radio" name="realism_imagine" value="2"><span>Somewhat difficult</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '3')">
+                            <input type="radio" name="realism_imagine" value="3"><span>Neither easy nor difficult</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '4')">
+                            <input type="radio" name="realism_imagine" value="4"><span>Somewhat easy</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'realism_imagine', '5')">
+                            <input type="radio" name="realism_imagine" value="5"><span>Very easy</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">Do you have any comments or feedback about this survey? (Optional)</label>
+                    <textarea id="feedbackText" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 1rem; resize: vertical;" placeholder="Enter any comments here..."></textarea>
+                </div>
+
+                <div class="button-row center">
+                    <button class="btn btn-primary" id="realismBtn" onclick="submitRealism()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 15: Completion -->
             <div class="screen" id="completionScreen">
                 <div class="completion-content">
                     <div class="completion-icon">
@@ -711,11 +1625,25 @@
                     <h2>Thank You!</h2>
                     <p>You have successfully completed the survey.</p>
 
-                    <div class="respondent-id">
-                        <span>Your ID:</span> <strong id="finalRespondentId"></strong>
+                    <div class="info-box" style="text-align: left; margin-bottom: 24px;">
+                        <h3 style="margin-bottom: 12px;">About This Study</h3>
+                        <p style="color: #64748b;">This research examines how AI policies in courses affect student enrollment decisions. We are particularly interested in whether students' beliefs about performance outcomes vary based on:</p>
+                        <ul style="color: #64748b; padding-left: 24px; margin-top: 12px;">
+                            <li>The student's academic ability (high vs. low GPA)</li>
+                            <li>The type of course (quantitative vs. writing-intensive)</li>
+                            <li>The AI policy (prohibited, guided, or unrestricted)</li>
+                        </ul>
+                        <p style="color: #64748b; margin-top: 12px;">Your responses will help universities design AI policies that support student learning while maintaining academic integrity.</p>
                     </div>
 
-                    <button class="btn btn-success" onclick="downloadResults()">Download Your Responses (CSV)</button>
+                    <div class="confirmation-code">
+                        <span>Your Confirmation Code:</span><br>
+                        <strong id="confirmationCode"></strong>
+                    </div>
+
+                    <p style="color: #64748b; margin-bottom: 24px;">Please save this code for your records.</p>
+
+                    <button class="btn btn-success" onclick="downloadResults()">Download My Responses (CSV)</button>
                 </div>
             </div>
         </div>
@@ -723,135 +1651,84 @@
 
     <script>
         // ============================================
-        // BLOCK DATA (from Block_Assignments_v6.txt)
+        // BLOCK DATA (V8: 18 profiles, no workload)
         // ============================================
+        // Profile structure: id, ai, grading, peer
+        const PROFILES = [
+            { id: 1, ai: 'Banned', grading: '100/0', peer: 'HQ-HD' },
+            { id: 2, ai: 'Banned', grading: '100/0', peer: 'LQ-LD' },
+            { id: 3, ai: 'Banned', grading: '70/30', peer: 'HQ-HD' },
+            { id: 4, ai: 'Banned', grading: '70/30', peer: 'LQ-LD' },
+            { id: 5, ai: 'Banned', grading: '50/50', peer: 'HQ-HD' },
+            { id: 6, ai: 'Banned', grading: '50/50', peer: 'LQ-LD' },
+            { id: 7, ai: 'Guided', grading: '100/0', peer: 'HQ-HD' },
+            { id: 8, ai: 'Guided', grading: '100/0', peer: 'LQ-LD' },
+            { id: 9, ai: 'Guided', grading: '70/30', peer: 'HQ-HD' },
+            { id: 10, ai: 'Guided', grading: '70/30', peer: 'LQ-LD' },
+            { id: 11, ai: 'Guided', grading: '50/50', peer: 'HQ-HD' },
+            { id: 12, ai: 'Guided', grading: '50/50', peer: 'LQ-LD' },
+            { id: 13, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD' },
+            { id: 14, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD' },
+            { id: 15, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD' },
+            { id: 16, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD' },
+            { id: 17, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD' },
+            { id: 18, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD' }
+        ];
+
+        // Pre-defined blocks (one profile per AI policy per set)
         const BLOCKS = {
             1: [
-                { profiles: [
-                    { id: 22, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '6 hrs' },
-                    { id: 37, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '3 hrs' },
-                    { id: 51, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '9 hrs' }
-                ]},
-                { profiles: [
-                    { id: 9, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '3 hrs' },
-                    { id: 46, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '6 hrs' },
-                    { id: 49, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '3 hrs' }
-                ]},
-                { profiles: [
-                    { id: 2, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '6 hrs' },
-                    { id: 44, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '12 hrs' },
-                    { id: 63, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '9 hrs' }
-                ]},
-                { profiles: [
-                    { id: 17, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '3 hrs' },
-                    { id: 30, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '6 hrs' },
-                    { id: 57, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '3 hrs' }
-                ]},
-                { profiles: [
-                    { id: 4, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '12 hrs' },
-                    { id: 47, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '9 hrs' },
-                    { id: 64, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '12 hrs' }
-                ]},
-                { profiles: [
-                    { id: 16, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '12 hrs' },
-                    { id: 43, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '9 hrs' },
-                    { id: 54, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '6 hrs' }
-                ]},
-                { profiles: [
-                    { id: 20, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '12 hrs' },
-                    { id: 32, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '12 hrs' },
-                    { id: 59, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '9 hrs' }
-                ]},
-                { profiles: [
-                    { id: 10, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '6 hrs' },
-                    { id: 45, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '3 hrs' },
-                    { id: 55, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '9 hrs' }
-                ]}
+                { profiles: [getProfile(1), getProfile(7), getProfile(13)] },
+                { profiles: [getProfile(4), getProfile(10), getProfile(16)] },
+                { profiles: [getProfile(5), getProfile(8), getProfile(15)] },
+                { profiles: [getProfile(3), getProfile(12), getProfile(14)] },
+                // Set 5: Dominated check - B and C have same grading, C has better peer
+                { profiles: [getProfile(2), getProfile(12), getProfile(17)], isDominated: true },
+                { profiles: [getProfile(6), getProfile(9), getProfile(13)] },
+                // Set 7: Instructed response
+                { profiles: [getProfile(3), getProfile(8), getProfile(17)], isInstructed: true },
+                { profiles: [getProfile(4), getProfile(11), getProfile(15)] }
             ],
             2: [
-                { profiles: [
-                    { id: 13, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '3 hrs' },
-                    { id: 41, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '3 hrs' },
-                    { id: 50, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '6 hrs' }
-                ]},
-                { profiles: [
-                    { id: 24, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '12 hrs' },
-                    { id: 36, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '12 hrs' },
-                    { id: 56, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '12 hrs' }
-                ]},
-                { profiles: [
-                    { id: 21, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '3 hrs' },
-                    { id: 29, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '3 hrs' },
-                    { id: 58, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '6 hrs' }
-                ]},
-                { profiles: [
-                    { id: 5, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '3 hrs' },
-                    { id: 33, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '3 hrs' },
-                    { id: 70, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '6 hrs' }
-                ]},
-                { profiles: [
-                    { id: 23, ai: 'Banned', grading: '50/50', peer: 'LQ-LD', workload: '9 hrs' },
-                    { id: 26, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '6 hrs' },
-                    { id: 60, ai: 'Unrestricted', grading: '70/30', peer: 'HQ-HD', workload: '12 hrs' }
-                ]},
-                { profiles: [
-                    { id: 7, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '9 hrs' },
-                    { id: 35, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '9 hrs' },
-                    { id: 65, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '3 hrs' }
-                ]},
-                { profiles: [
-                    { id: 11, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '9 hrs' },
-                    { id: 48, ai: 'Guided', grading: '50/50', peer: 'LQ-LD', workload: '12 hrs' },
-                    { id: 52, ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD', workload: '12 hrs' }
-                ]},
-                { profiles: [
-                    { id: 14, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '6 hrs' },
-                    { id: 27, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '9 hrs' },
-                    { id: 71, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '9 hrs' }
-                ]}
+                { profiles: [getProfile(2), getProfile(9), getProfile(15)] },
+                { profiles: [getProfile(5), getProfile(11), getProfile(14)] },
+                { profiles: [getProfile(1), getProfile(10), getProfile(18)] },
+                { profiles: [getProfile(6), getProfile(7), getProfile(16)] },
+                // Set 5: Dominated check
+                { profiles: [getProfile(2), getProfile(12), getProfile(17)], isDominated: true },
+                { profiles: [getProfile(3), getProfile(8), getProfile(13)] },
+                // Set 7: Instructed response
+                { profiles: [getProfile(3), getProfile(8), getProfile(17)], isInstructed: true },
+                { profiles: [getProfile(4), getProfile(12), getProfile(14)] }
             ],
             3: [
-                { profiles: [
-                    { id: 6, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '6 hrs' },
-                    { id: 38, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '6 hrs' },
-                    { id: 66, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '6 hrs' }
-                ]},
-                { profiles: [
-                    { id: 3, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '9 hrs' },
-                    { id: 40, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '12 hrs' },
-                    { id: 72, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '12 hrs' }
-                ]},
-                { profiles: [
-                    { id: 12, ai: 'Banned', grading: '70/30', peer: 'HQ-HD', workload: '12 hrs' },
-                    { id: 31, ai: 'Guided', grading: '100/0', peer: 'LQ-LD', workload: '9 hrs' },
-                    { id: 68, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '12 hrs' }
-                ]},
-                { profiles: [
-                    { id: 18, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '6 hrs' },
-                    { id: 25, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '3 hrs' },
-                    { id: 61, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '3 hrs' }
-                ]},
-                { profiles: [
-                    { id: 19, ai: 'Banned', grading: '50/50', peer: 'HQ-HD', workload: '9 hrs' },
-                    { id: 28, ai: 'Guided', grading: '100/0', peer: 'HQ-HD', workload: '12 hrs' },
-                    { id: 62, ai: 'Unrestricted', grading: '70/30', peer: 'LQ-LD', workload: '6 hrs' }
-                ]},
-                { profiles: [
-                    { id: 8, ai: 'Banned', grading: '100/0', peer: 'LQ-LD', workload: '12 hrs' },
-                    { id: 39, ai: 'Guided', grading: '70/30', peer: 'LQ-LD', workload: '9 hrs' },
-                    { id: 67, ai: 'Unrestricted', grading: '50/50', peer: 'HQ-HD', workload: '9 hrs' }
-                ]},
-                { profiles: [
-                    { id: 15, ai: 'Banned', grading: '70/30', peer: 'LQ-LD', workload: '9 hrs' },
-                    { id: 42, ai: 'Guided', grading: '50/50', peer: 'HQ-HD', workload: '6 hrs' },
-                    { id: 53, ai: 'Unrestricted', grading: '100/0', peer: 'LQ-LD', workload: '3 hrs' }
-                ]},
-                { profiles: [
-                    { id: 1, ai: 'Banned', grading: '100/0', peer: 'HQ-HD', workload: '3 hrs' },
-                    { id: 34, ai: 'Guided', grading: '70/30', peer: 'HQ-HD', workload: '6 hrs' },
-                    { id: 69, ai: 'Unrestricted', grading: '50/50', peer: 'LQ-LD', workload: '3 hrs' }
-                ]}
+                { profiles: [getProfile(3), getProfile(11), getProfile(16)] },
+                { profiles: [getProfile(6), getProfile(8), getProfile(13)] },
+                { profiles: [getProfile(2), getProfile(7), getProfile(15)] },
+                { profiles: [getProfile(1), getProfile(12), getProfile(18)] },
+                // Set 5: Dominated check
+                { profiles: [getProfile(2), getProfile(12), getProfile(17)], isDominated: true },
+                { profiles: [getProfile(5), getProfile(10), getProfile(14)] },
+                // Set 7: Instructed response
+                { profiles: [getProfile(3), getProfile(8), getProfile(17)], isInstructed: true },
+                { profiles: [getProfile(4), getProfile(9), getProfile(13)] }
             ]
+        };
+
+        function getProfile(id) {
+            return PROFILES.find(p => p.id === id);
+        }
+
+        // Display labels
+        const AI_LABELS = {
+            'Banned': 'AI Prohibited',
+            'Guided': 'AI with Verification',
+            'Unrestricted': 'AI Permitted'
+        };
+
+        const PEER_LABELS = {
+            'HQ-HD': 'High Quality, Hard Grading (4.5/5, avg B-)',
+            'LQ-LD': 'Low Quality, Easy Grading (3.0/5, avg B+)'
         };
 
         // ============================================
@@ -859,15 +1736,36 @@
         // ============================================
         let state = {
             respondentId: '',
-            block: 0,
+            startTime: null,
+            // Between-subjects assignment
+            cell: 0, // 1-4
+            studentAbility: '', // 'high' or 'low'
             courseType: '', // 'quantitative' or 'writing'
-            setOrder: [],
+            block: 0, // 1-3
+            // Responses
+            demographics: {},
+            aiExperience: {},
+            compChecks: { check1: null, check2: null },
+            practiceResponse: {},
+            choiceResponses: [],
             currentSetIndex: 0,
-            sectionLabelOrders: [], // randomized A/B/C for each set
-            beliefSets: [], // which 3 sets get belief questions
-            attentionPosition: 0, // after which choice set to show attention check
-            attentionAnswer: null,
-            responses: []
+            sectionLabelOrders: [],
+            beliefSets: [2, 5, 7], // Sets 3, 6, 8 (0-indexed)
+            currentBeliefs: {},
+            nameCheckAnswer: null,
+            wtpResponses: {},
+            manipChecks: {},
+            realismResponses: {},
+            reasons: [],
+            // Quality flags
+            flags: {
+                comprehension: false,
+                attention_name: false,
+                attention_instructed: false,
+                dominated: false,
+                speedster: false,
+                straightliner: false
+            }
         };
 
         // ============================================
@@ -896,16 +1794,22 @@
         }
 
         function updateProgress() {
-            // Total screens: info(1) + 8 choice sets + 1 attention = 10 steps to completion
-            const totalSteps = 10;
+            const totalSteps = 15;
             let currentStep = 0;
 
             const currentScreen = document.querySelector('.screen.active');
-            if (currentScreen.id === 'welcomeScreen') currentStep = 0;
-            else if (currentScreen.id === 'infoScreen') currentStep = 1;
-            else if (currentScreen.id === 'choiceScreen') currentStep = 2 + state.currentSetIndex;
-            else if (currentScreen.id === 'attentionScreen') currentStep = 2 + state.attentionPosition;
-            else if (currentScreen.id === 'completionScreen') currentStep = totalSteps;
+            const screenOrder = ['welcomeScreen', 'consentScreen', 'demographicsScreen', 'aiExperienceScreen',
+                'framingScreen', 'gpaScaleScreen', 'compCheckScreen', 'meetStudentScreen', 'attributeScreen',
+                'practiceScreen', 'choiceScreen', 'wtpScreen', 'manipCheckScreen', 'realismScreen', 'completionScreen'];
+
+            const idx = screenOrder.indexOf(currentScreen.id);
+            if (idx >= 0) {
+                if (currentScreen.id === 'choiceScreen') {
+                    currentStep = 10 + (state.currentSetIndex / 8) * 0.8;
+                } else {
+                    currentStep = idx;
+                }
+            }
 
             const pct = Math.round((currentStep / totalSteps) * 100);
             document.getElementById('progressFill').style.width = pct + '%';
@@ -919,15 +1823,149 @@
             window.scrollTo(0, 0);
         }
 
+        function nextScreen(screenId) {
+            showScreen(screenId);
+        }
+
         // ============================================
-        // SURVEY FLOW
+        // OPTION SELECTION HANDLERS
         // ============================================
-        function startSurvey() {
+        function selectOption(el, name, value) {
+            // Clear previous selection
+            el.closest('.radio-group').querySelectorAll('.radio-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
+
+            // Validate current screen
+            validateCurrentScreen();
+        }
+
+        function toggleCheckbox(el, name, value) {
+            const input = el.querySelector('input');
+            input.checked = !input.checked;
+            el.classList.toggle('selected', input.checked);
+
+            // Special handling for "I don't use AI" option
+            if (name === 'ai_tasks' && value === 'none' && input.checked) {
+                // Uncheck all other options
+                document.querySelectorAll('input[name="ai_tasks"]').forEach(cb => {
+                    if (cb.value !== 'none') {
+                        cb.checked = false;
+                        cb.closest('.checkbox-option').classList.remove('selected');
+                    }
+                });
+            } else if (name === 'ai_tasks' && value !== 'none' && input.checked) {
+                // Uncheck "none" option
+                const noneInput = document.querySelector('input[name="ai_tasks"][value="none"]');
+                if (noneInput) {
+                    noneInput.checked = false;
+                    noneInput.closest('.checkbox-option').classList.remove('selected');
+                }
+            }
+
+            validateCurrentScreen();
+        }
+
+        function selectAttention(el, name, value) {
+            el.closest('.attention-options').querySelectorAll('.attention-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
+            state[name === 'nameCheck' ? 'nameCheckAnswer' : name] = value;
+            document.getElementById('nameCheckBtn').disabled = false;
+        }
+
+        function selectGrade(el, value) {
+            document.querySelectorAll('#beliefGradeScale .grade-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            state.currentBeliefs.grade = value;
+            validatePoints();
+        }
+
+        function selectCounterfactualGrade(el, value) {
+            document.querySelectorAll('#counterfactualGradeScale .grade-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            state.currentBeliefs.counterfactualGrade = value;
+            validatePoints();
+        }
+
+        function updateHoursDisplay() {
+            const val = document.getElementById('beliefHours').value;
+            document.getElementById('hoursValue').textContent = val >= 20 ? '20+ hrs/week' : val + ' hrs/week';
+            state.currentBeliefs.hours = parseInt(val);
+        }
+
+        // ============================================
+        // VALIDATION FUNCTIONS
+        // ============================================
+        function validateCurrentScreen() {
+            const currentScreen = document.querySelector('.screen.active');
+
+            if (currentScreen.id === 'consentScreen') {
+                const selected = document.querySelector('input[name="eligibility"]:checked');
+                document.getElementById('consentBtn').disabled = !selected;
+            }
+            else if (currentScreen.id === 'demographicsScreen') {
+                const fields = ['class_standing', 'resp_gpa', 'major', 'quant_conf', 'writing_conf'];
+                const allFilled = fields.every(f => document.querySelector(`input[name="${f}"]:checked`));
+                document.getElementById('demoBtn').disabled = !allFilled;
+            }
+            else if (currentScreen.id === 'aiExperienceScreen') {
+                const freq = document.querySelector('input[name="ai_freq"]:checked');
+                const skill = document.querySelector('input[name="ai_skill"]:checked');
+                const tasks = document.querySelectorAll('input[name="ai_tasks"]:checked');
+                document.getElementById('aiExpBtn').disabled = !(freq && skill && tasks.length > 0);
+            }
+            else if (currentScreen.id === 'compCheckScreen') {
+                const c1 = document.querySelector('input[name="comp1"]:checked');
+                const c2 = document.querySelector('input[name="comp2"]:checked');
+                document.getElementById('compBtn').disabled = !(c1 && c2);
+            }
+            else if (currentScreen.id === 'wtpScreen') {
+                const fields = ['wtp_money', 'wtp_time', 'wtp_free'];
+                const allFilled = fields.every(f => document.querySelector(`input[name="${f}"]:checked`));
+                document.getElementById('wtpBtn').disabled = !allFilled;
+            }
+            else if (currentScreen.id === 'manipCheckScreen') {
+                const gpa = document.querySelector('input[name="manip_gpa"]:checked');
+                const course = document.querySelector('input[name="manip_course"]:checked');
+                document.getElementById('manipBtn').disabled = !(gpa && course);
+            }
+            else if (currentScreen.id === 'realismScreen') {
+                const scenarios = document.querySelector('input[name="realism_scenarios"]:checked');
+                const imagine = document.querySelector('input[name="realism_imagine"]:checked');
+                document.getElementById('realismBtn').disabled = !(scenarios && imagine);
+            }
+        }
+
+        // ============================================
+        // SUBMISSION HANDLERS
+        // ============================================
+        function submitConsent() {
+            const selected = document.querySelector('input[name="eligibility"]:checked').value;
+            if (selected === 'no') {
+                alert('Thank you for your interest. Unfortunately, you do not meet the eligibility requirements for this study.');
+                return;
+            }
+
             // Initialize state
             state.respondentId = generateId();
+            state.startTime = Date.now();
+
+            // Random assignment to cell (1-4)
+            state.cell = randomChoice([1, 2, 3, 4]);
+            state.studentAbility = state.cell <= 2 ? 'high' : 'low';
+            state.courseType = (state.cell === 1 || state.cell === 3) ? 'quantitative' : 'writing';
+
+            // Random block assignment
             state.block = randomChoice([1, 2, 3]);
-            state.courseType = randomChoice(['quantitative', 'writing']);
-            state.setOrder = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
 
             // Randomize section labels for each set
             state.sectionLabelOrders = [];
@@ -935,45 +1973,138 @@
                 state.sectionLabelOrders.push(shuffle([0, 1, 2]));
             }
 
-            // Select 3 random sets for belief questions
-            const beliefIndices = shuffle([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, 3);
-            state.beliefSets = beliefIndices;
-
-            // Randomly select which section (0, 1, or 2) gets belief questions for each belief set
-            state.beliefSectionIndices = beliefIndices.map(() => Math.floor(Math.random() * 3));
-
-            // Position attention check after set 3, 4, or 5 (mid-survey)
-            state.attentionPosition = randomChoice([3, 4, 5]);
-
-            state.currentSetIndex = 0;
-            state.responses = [];
-
-            showScreen('infoScreen');
+            showScreen('demographicsScreen');
         }
 
-        function showFirstChoiceSet() {
+        function submitDemographics() {
+            state.demographics = {
+                class_standing: document.querySelector('input[name="class_standing"]:checked').value,
+                gpa: document.querySelector('input[name="resp_gpa"]:checked').value,
+                major: document.querySelector('input[name="major"]:checked').value,
+                quant_confidence: document.querySelector('input[name="quant_conf"]:checked').value,
+                writing_confidence: document.querySelector('input[name="writing_conf"]:checked').value
+            };
+            showScreen('aiExperienceScreen');
+        }
+
+        function submitAIExperience() {
+            const tasks = [];
+            document.querySelectorAll('input[name="ai_tasks"]:checked').forEach(cb => {
+                tasks.push(cb.value);
+            });
+
+            state.aiExperience = {
+                frequency: document.querySelector('input[name="ai_freq"]:checked').value,
+                tasks: tasks,
+                skill: document.querySelector('input[name="ai_skill"]:checked').value
+            };
+            showScreen('framingScreen');
+        }
+
+        function submitCompChecks() {
+            const c1 = document.querySelector('input[name="comp1"]:checked').value;
+            const c2 = document.querySelector('input[name="comp2"]:checked').value;
+
+            state.compChecks.check1 = c1 === 'below';
+            state.compChecks.check2 = c2 === '3.7';
+
+            // Show feedback if wrong
+            if (c1 !== 'below') {
+                document.getElementById('comp1Feedback').style.display = 'block';
+                document.getElementById('comp1Feedback').className = 'warning-message';
+                document.getElementById('comp1Feedback').textContent = 'A 2.3 GPA is below average and close to academic probation (2.0).';
+            }
+
+            if (c2 !== '3.7') {
+                document.getElementById('comp2Feedback').style.display = 'block';
+                document.getElementById('comp2Feedback').className = 'warning-message';
+                document.getElementById('comp2Feedback').textContent = "The Dean's List typically requires a GPA of 3.5 or higher.";
+            }
+
+            // Flag if both wrong
+            if (!state.compChecks.check1 && !state.compChecks.check2) {
+                state.flags.comprehension = true;
+            }
+
+            // Set up student card based on cell assignment
+            setupStudentCard();
+            showScreen('meetStudentScreen');
+        }
+
+        function setupStudentCard() {
+            const gpa = state.studentAbility === 'high' ? '3.8' : '2.5';
+            const markerPos = state.studentAbility === 'high' ? '90%' : '25%';
+            const description = state.studentAbility === 'high'
+                ? 'Alex is near the top of the class, on the Dean\'s List, and generally finds coursework manageable.'
+                : 'Alex is below average in the class and often finds coursework challenging. Alex has struggled in some previous courses.';
+
+            const courseText = state.courseType === 'quantitative'
+                ? 'Next semester, Alex needs to take a QUANTITATIVE course (like Statistics or Econometrics) to fulfill a requirement.'
+                : 'Next semester, Alex needs to take a WRITING-INTENSIVE course (like Policy Analysis or Economic History) to fulfill a requirement.';
+
+            document.getElementById('alexGPA').textContent = gpa;
+            document.getElementById('alexGPAMarker').style.left = markerPos;
+            document.getElementById('alexDescription').textContent = description;
+            document.getElementById('courseRequirement').textContent = courseText;
+
+            // Also update other displays
+            document.getElementById('practiceGPA').textContent = gpa;
+            document.getElementById('practiceCourse').textContent = state.courseType;
+            document.getElementById('choiceGPA').textContent = gpa;
+            document.getElementById('choiceCourse').textContent = state.courseType === 'quantitative' ? 'Quantitative' : 'Writing-intensive';
+        }
+
+        function submitPractice() {
+            const p0 = parseInt(document.getElementById('practicePoints0').value) || 0;
+            const p1 = parseInt(document.getElementById('practicePoints1').value) || 0;
+            const p2 = parseInt(document.getElementById('practicePoints2').value) || 0;
+
+            state.practiceResponse = { A: p0, B: p1, C: p2 };
+
+            // Show confirmation
+            alert(`Great! You allocated ${p0} to A, ${p1} to B, and ${p2} to C.\nIn the actual task, there are 8 similar choice sets. Ready to begin?`);
+
+            // Start main task
+            state.currentSetIndex = 0;
             renderChoiceSet();
             showScreen('choiceScreen');
         }
 
+        // ============================================
+        // PRACTICE SET RENDERING
+        // ============================================
+        function renderPracticeSet() {
+            const practiceProfiles = [
+                { ai: 'Banned', grading: '70/30', peer: 'HQ-HD' },
+                { ai: 'Guided', grading: '50/50', peer: 'LQ-LD' },
+                { ai: 'Unrestricted', grading: '100/0', peer: 'HQ-HD' }
+            ];
+
+            const container = document.getElementById('practiceCards');
+            container.innerHTML = '';
+
+            const labels = ['A', 'B', 'C'];
+            practiceProfiles.forEach((profile, idx) => {
+                const label = labels[idx];
+                const card = createCard(profile, label, 'practice');
+                container.appendChild(card);
+            });
+        }
+
+        // ============================================
+        // CHOICE SET RENDERING
+        // ============================================
         function renderChoiceSet() {
-            const setIdx = state.setOrder[state.currentSetIndex];
-            const choiceSet = BLOCKS[state.block][setIdx];
+            const choiceSet = BLOCKS[state.block][state.currentSetIndex];
             const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
             const labels = ['A', 'B', 'C'];
 
             // Update header
             document.getElementById('setNumber').textContent = state.currentSetIndex + 1;
 
-            const courseContextEl = document.getElementById('courseContext');
-            const courseTextEl = document.getElementById('courseTypeText');
-            if (state.courseType === 'quantitative') {
-                courseContextEl.textContent = 'Quantitative / Problem-Solving Course';
-                courseTextEl.textContent = 'quantitative/problem-solving';
-            } else {
-                courseContextEl.textContent = 'Writing-Heavy / Qualitative Course';
-                courseTextEl.textContent = 'writing-heavy/qualitative';
-            }
+            // Show/hide instructed response notice
+            const instructedNotice = document.getElementById('instructedNotice');
+            instructedNotice.style.display = choiceSet.isInstructed ? 'block' : 'none';
 
             // Render cards
             const container = document.getElementById('cardsContainer');
@@ -982,66 +2113,22 @@
             labelOrder.forEach((profileIdx, displayIdx) => {
                 const profile = choiceSet.profiles[profileIdx];
                 const label = labels[displayIdx];
-                const sectionClass = `section-${label.toLowerCase()}`;
-
-                const card = document.createElement('div');
-                card.className = 'course-card';
-                card.innerHTML = `
-                    <div class="card-header ${sectionClass}">Section ${label}</div>
-                    <div class="card-body">
-                        <div class="attribute-row">
-                            <span class="attr-label">AI Policy</span>
-                            <span class="attr-value ${profile.ai.toLowerCase()}">${profile.ai}</span>
-                        </div>
-                        <div class="attribute-row">
-                            <span class="attr-label">Exam/Grading</span>
-                            <span class="attr-value">${formatGrading(profile.grading)}</span>
-                        </div>
-                        <div class="attribute-row">
-                            <span class="attr-label">Peer Rating</span>
-                            <span class="attr-value">${formatPeer(profile.peer)}</span>
-                        </div>
-                        <div class="attribute-row">
-                            <span class="attr-label">Workload</span>
-                            <span class="attr-value">${profile.workload}/week</span>
-                        </div>
-                    </div>
-                    <div class="point-input-container">
-                        <label>Points for Section ${label}</label>
-                        <input type="number" class="point-input" id="points${displayIdx}"
-                               min="0" max="100" placeholder="0" oninput="validatePoints()">
-                    </div>
-                `;
+                const card = createCard(profile, label, 'main');
                 container.appendChild(card);
             });
 
             // Show/hide belief section
             const beliefSection = document.getElementById('beliefSection');
-            const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
-
-            if (beliefSetIndex !== -1) {
+            if (state.beliefSets.includes(state.currentSetIndex)) {
                 beliefSection.style.display = 'block';
+                // Reset belief inputs
+                state.currentBeliefs = {};
+                document.querySelectorAll('.grade-option').forEach(opt => opt.classList.remove('selected'));
+                document.getElementById('beliefHours').value = 8;
+                updateHoursDisplay();
 
-                // Determine which section gets belief questions
-                const beliefSectionIdx = state.beliefSectionIndices[beliefSetIndex];
-                const beliefLabel = labels[beliefSectionIdx];
-
-                document.getElementById('beliefSectionLabel').textContent = beliefLabel;
-                document.getElementById('beliefLabel1').textContent = beliefLabel;
-
-                // Get the AI policy of the selected section
-                const selectedProfile = choiceSet.profiles[labelOrder[beliefSectionIdx]];
-                const beliefQ2 = document.getElementById('beliefQuestion2Container');
-                if (selectedProfile.ai === 'Banned') {
-                    beliefQ2.style.display = 'none';
-                } else {
-                    beliefQ2.style.display = 'block';
-                }
-
-                // Clear previous inputs
-                document.getElementById('belief1').value = '';
-                document.getElementById('belief2').value = '';
-                document.getElementById('belief3').value = '';
+                // Set counterfactual policy text
+                // Find the section with most points (will be determined after input)
             } else {
                 beliefSection.style.display = 'none';
             }
@@ -1058,6 +2145,37 @@
             document.getElementById('pointsMessage').className = 'points-message';
         }
 
+        function createCard(profile, label, mode) {
+            const sectionClass = `section-${label.toLowerCase()}`;
+            const prefix = mode === 'practice' ? 'practice' : '';
+
+            const card = document.createElement('div');
+            card.className = 'course-card';
+            card.innerHTML = `
+                <div class="card-header ${sectionClass}">Section ${label}</div>
+                <div class="card-body">
+                    <div class="attribute-row">
+                        <span class="attr-label">AI Policy</span>
+                        <span class="attr-value ${profile.ai.toLowerCase()}">${AI_LABELS[profile.ai]}</span>
+                    </div>
+                    <div class="attribute-row">
+                        <span class="attr-label">Grading</span>
+                        <span class="attr-value">${formatGrading(profile.grading)}</span>
+                    </div>
+                    <div class="attribute-row">
+                        <span class="attr-label">Peer Rating</span>
+                        <span class="attr-value">${PEER_LABELS[profile.peer]}</span>
+                    </div>
+                </div>
+                <div class="point-input-container">
+                    <label>Points for Section ${label}</label>
+                    <input type="number" class="point-input" id="${prefix}Points${['A', 'B', 'C'].indexOf(label)}"
+                           min="0" max="100" placeholder="0" oninput="${mode === 'practice' ? 'validatePracticePoints()' : 'validatePoints()'}">
+                </div>
+            `;
+            return card;
+        }
+
         function formatGrading(grading) {
             if (grading === '100/0') return '100% Exam';
             if (grading === '70/30') return '70% Exam / 30% HW';
@@ -1065,16 +2183,35 @@
             return grading;
         }
 
-        function formatPeer(peer) {
-            if (peer === 'HQ-HD') return '4.5/5 | Strict (avg B-)';
-            if (peer === 'LQ-LD') return '3.0/5 | Lenient (avg B+)';
-            return peer;
+        function validatePracticePoints() {
+            const p0 = parseInt(document.getElementById('practicePoints0').value) || 0;
+            const p1 = parseInt(document.getElementById('practicePoints1').value) || 0;
+            const p2 = parseInt(document.getElementById('practicePoints2').value) || 0;
+            const total = p0 + p1 + p2;
+
+            const totalEl = document.getElementById('practiceTotal');
+            const msgEl = document.getElementById('practiceMessage');
+            const btn = document.getElementById('practiceBtn');
+
+            totalEl.textContent = `${total} / 100`;
+
+            if (total === 100) {
+                totalEl.className = 'points-total valid';
+                msgEl.textContent = 'Points add up to 100';
+                msgEl.className = 'points-message';
+                btn.disabled = false;
+            } else {
+                totalEl.className = 'points-total invalid';
+                msgEl.textContent = total < 100 ? `Need ${100 - total} more points` : `${total - 100} points over limit`;
+                msgEl.className = 'points-message error';
+                btn.disabled = true;
+            }
         }
 
         function validatePoints() {
-            const p0 = parseInt(document.getElementById('points0').value) || 0;
-            const p1 = parseInt(document.getElementById('points1').value) || 0;
-            const p2 = parseInt(document.getElementById('points2').value) || 0;
+            const p0 = parseInt(document.getElementById('Points0')?.value) || 0;
+            const p1 = parseInt(document.getElementById('Points1')?.value) || 0;
+            const p2 = parseInt(document.getElementById('Points2')?.value) || 0;
             const total = p0 + p1 + p2;
 
             const totalEl = document.getElementById('pointsTotal');
@@ -1088,22 +2225,13 @@
                 msgEl.textContent = 'Points add up to 100';
                 msgEl.className = 'points-message';
 
-                // Check if belief questions are needed and answered
-                const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
-                if (beliefSetIndex !== -1) {
-                    const b1 = document.getElementById('belief1').value;
-                    const b2 = document.getElementById('belief2').value;
-                    const b3 = document.getElementById('belief3').value;
+                // Check belief questions if needed
+                if (state.beliefSets.includes(state.currentSetIndex)) {
+                    const hasGrade = state.currentBeliefs.grade;
+                    const hasHours = state.currentBeliefs.hours !== undefined;
+                    const hasCounterfactual = state.currentBeliefs.counterfactualGrade;
 
-                    const setIdx = state.setOrder[state.currentSetIndex];
-                    const choiceSet = BLOCKS[state.block][setIdx];
-                    const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
-                    const beliefSectionIdx = state.beliefSectionIndices[beliefSetIndex];
-                    const selectedProfile = choiceSet.profiles[labelOrder[beliefSectionIdx]];
-
-                    const needsB2 = selectedProfile.ai !== 'Banned';
-
-                    if (b1 !== '' && b3 !== '' && (!needsB2 || b2 !== '')) {
+                    if (hasGrade && hasHours && hasCounterfactual) {
                         nextBtn.disabled = false;
                     } else {
                         nextBtn.disabled = true;
@@ -1122,74 +2250,81 @@
         }
 
         function saveCurrentResponse() {
-            const setIdx = state.setOrder[state.currentSetIndex];
-            const choiceSet = BLOCKS[state.block][setIdx];
+            const choiceSet = BLOCKS[state.block][state.currentSetIndex];
             const labelOrder = state.sectionLabelOrders[state.currentSetIndex];
             const labels = ['A', 'B', 'C'];
 
-            const p0 = parseInt(document.getElementById('points0').value) || 0;
-            const p1 = parseInt(document.getElementById('points1').value) || 0;
-            const p2 = parseInt(document.getElementById('points2').value) || 0;
+            const p0 = parseInt(document.getElementById('Points0').value) || 0;
+            const p1 = parseInt(document.getElementById('Points1').value) || 0;
+            const p2 = parseInt(document.getElementById('Points2').value) || 0;
 
             const response = {
-                choiceSetOrder: state.currentSetIndex + 1,
-                originalSetIndex: setIdx + 1,
-                sectionA_profileId: choiceSet.profiles[labelOrder[0]].id,
-                sectionA_ai: choiceSet.profiles[labelOrder[0]].ai,
-                sectionA_grading: choiceSet.profiles[labelOrder[0]].grading,
-                sectionA_peer: choiceSet.profiles[labelOrder[0]].peer,
-                sectionA_workload: choiceSet.profiles[labelOrder[0]].workload,
-                sectionA_points: p0,
-                sectionB_profileId: choiceSet.profiles[labelOrder[1]].id,
-                sectionB_ai: choiceSet.profiles[labelOrder[1]].ai,
-                sectionB_grading: choiceSet.profiles[labelOrder[1]].grading,
-                sectionB_peer: choiceSet.profiles[labelOrder[1]].peer,
-                sectionB_workload: choiceSet.profiles[labelOrder[1]].workload,
-                sectionB_points: p1,
-                sectionC_profileId: choiceSet.profiles[labelOrder[2]].id,
-                sectionC_ai: choiceSet.profiles[labelOrder[2]].ai,
-                sectionC_grading: choiceSet.profiles[labelOrder[2]].grading,
-                sectionC_peer: choiceSet.profiles[labelOrder[2]].peer,
-                sectionC_workload: choiceSet.profiles[labelOrder[2]].workload,
-                sectionC_points: p2
+                setNumber: state.currentSetIndex + 1,
+                isDominated: choiceSet.isDominated || false,
+                isInstructed: choiceSet.isInstructed || false,
+                sections: labelOrder.map((profileIdx, displayIdx) => ({
+                    label: labels[displayIdx],
+                    profile: choiceSet.profiles[profileIdx],
+                    points: [p0, p1, p2][displayIdx]
+                }))
             };
 
-            // Add belief questions if applicable
-            const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
-            if (beliefSetIndex !== -1) {
-                const beliefSectionIdx = state.beliefSectionIndices[beliefSetIndex];
-                response.beliefSection = labels[beliefSectionIdx];
-                response.belief_gradeChance = parseInt(document.getElementById('belief1').value) || null;
-                response.belief_aiUsageDaily = parseInt(document.getElementById('belief2').value) || null;
-                response.belief_counterfactualGrade = parseInt(document.getElementById('belief3').value) || null;
+            // Add belief data if applicable
+            if (state.beliefSets.includes(state.currentSetIndex)) {
+                response.beliefs = { ...state.currentBeliefs };
+            }
+
+            // Check dominated response (Set 5)
+            if (choiceSet.isDominated) {
+                // B should get less than C if paying attention
+                const bPoints = response.sections.find(s => s.label === 'B').points;
+                const cPoints = response.sections.find(s => s.label === 'C').points;
+                if (bPoints > cPoints) {
+                    state.flags.dominated = true;
+                }
+            }
+
+            // Check instructed response (Set 7)
+            if (choiceSet.isInstructed) {
+                if (p0 !== 60 || p1 !== 30 || p2 !== 10) {
+                    state.flags.attention_instructed = true;
+                }
             }
 
             // Find existing or add new
-            const existingIdx = state.responses.findIndex(r => r.choiceSetOrder === response.choiceSetOrder);
+            const existingIdx = state.choiceResponses.findIndex(r => r.setNumber === response.setNumber);
             if (existingIdx >= 0) {
-                state.responses[existingIdx] = response;
+                state.choiceResponses[existingIdx] = response;
             } else {
-                state.responses.push(response);
+                state.choiceResponses.push(response);
             }
         }
 
         function nextSet() {
             saveCurrentResponse();
 
-            // Check if attention check should appear
-            if (state.currentSetIndex === state.attentionPosition && !state.attentionShown) {
-                state.attentionShown = true;
-                showScreen('attentionScreen');
+            // After set 2 (index 1), show name check
+            if (state.currentSetIndex === 1 && !state.nameCheckShown) {
+                state.nameCheckShown = true;
+                showScreen('nameCheckScreen');
                 return;
             }
 
             if (state.currentSetIndex < 7) {
                 state.currentSetIndex++;
                 renderChoiceSet();
-                restoreSavedValues(); // Restore if revisiting a previous set
                 updateProgress();
             } else {
-                showCompletion();
+                // Check for speedster
+                const duration = (Date.now() - state.startTime) / 1000 / 60; // minutes
+                if (duration < 5) {
+                    state.flags.speedster = true;
+                }
+
+                // Check for straightliner
+                checkStraightliner();
+
+                showScreen('wtpScreen');
             }
         }
 
@@ -1198,169 +2333,162 @@
                 saveCurrentResponse();
                 state.currentSetIndex--;
                 renderChoiceSet();
-                restoreSavedValues();
                 updateProgress();
             }
         }
 
-        function restoreSavedValues() {
-            const existingResponse = state.responses.find(r => r.choiceSetOrder === state.currentSetIndex + 1);
-            if (existingResponse) {
-                // Restore point allocations
-                document.getElementById('points0').value = existingResponse.sectionA_points;
-                document.getElementById('points1').value = existingResponse.sectionB_points;
-                document.getElementById('points2').value = existingResponse.sectionC_points;
+        function submitNameCheck() {
+            state.flags.attention_name = state.nameCheckAnswer !== 'Alex';
 
-                // Restore belief questions if this set has them
-                const beliefSetIndex = state.beliefSets.indexOf(state.currentSetIndex);
-                if (beliefSetIndex !== -1 && existingResponse.belief_gradeChance !== undefined) {
-                    document.getElementById('belief1').value = existingResponse.belief_gradeChance || '';
-                    document.getElementById('belief2').value = existingResponse.belief_aiUsageDaily || '';
-                    document.getElementById('belief3').value = existingResponse.belief_counterfactualGrade || '';
-                }
+            // Continue to next choice set
+            state.currentSetIndex++;
+            renderChoiceSet();
+            showScreen('choiceScreen');
+        }
 
-                validatePoints();
+        function checkStraightliner() {
+            // Check if same allocation pattern appears 6+ times
+            const patterns = state.choiceResponses.map(r => {
+                const pts = r.sections.map(s => s.points).sort((a, b) => b - a);
+                return pts.join('-');
+            });
+
+            const patternCounts = {};
+            patterns.forEach(p => {
+                patternCounts[p] = (patternCounts[p] || 0) + 1;
+            });
+
+            if (Object.values(patternCounts).some(count => count >= 6)) {
+                state.flags.straightliner = true;
             }
         }
 
-        function selectAttention(el, value) {
-            document.querySelectorAll('.attention-option').forEach(o => o.classList.remove('selected'));
-            el.classList.add('selected');
-            el.querySelector('input').checked = true;
-            state.attentionAnswer = value;
-            document.getElementById('attentionSubmitBtn').disabled = false;
+        function submitWTP() {
+            state.wtpResponses = {
+                money: document.querySelector('input[name="wtp_money"]:checked').value,
+                time: document.querySelector('input[name="wtp_time"]:checked').value,
+                free_likelihood: document.querySelector('input[name="wtp_free"]:checked').value
+            };
+            showScreen('manipCheckScreen');
         }
 
-        function submitAttention() {
-            if (state.currentSetIndex < 7) {
-                state.currentSetIndex++;
-                renderChoiceSet();
-                showScreen('choiceScreen');
-            } else {
-                showCompletion();
-            }
+        function submitManipChecks() {
+            const gpaAnswer = document.querySelector('input[name="manip_gpa"]:checked').value;
+            const courseAnswer = document.querySelector('input[name="manip_course"]:checked').value;
+
+            const correctGPA = state.studentAbility === 'high' ? '3.8' : '2.5';
+            const correctCourse = state.courseType === 'quantitative' ? 'quant' : 'writing';
+
+            state.manipChecks = {
+                gpa_answer: gpaAnswer,
+                gpa_correct: gpaAnswer === correctGPA,
+                course_answer: courseAnswer,
+                course_correct: courseAnswer === correctCourse
+            };
+
+            // Collect reasons
+            document.querySelectorAll('input[name="reasons"]:checked').forEach(cb => {
+                state.reasons.push(cb.value);
+            });
+
+            showScreen('realismScreen');
         }
 
-        function showCompletion() {
-            document.getElementById('finalRespondentId').textContent = state.respondentId;
+        function submitRealism() {
+            state.realismResponses = {
+                scenarios: document.querySelector('input[name="realism_scenarios"]:checked').value,
+                imagine: document.querySelector('input[name="realism_imagine"]:checked').value,
+                feedback: document.getElementById('feedbackText').value
+            };
+
+            // Generate confirmation code
+            document.getElementById('confirmationCode').textContent = state.respondentId;
             showScreen('completionScreen');
         }
 
         function downloadResults() {
-            // =============================================
-            // SHEET 1: CHOICE RESPONSES (clear, intuitive format)
-            // =============================================
-            const choiceHeaders = [
-                'respondent_id', 'block', 'course_type', 'choice_set',
-                'A_ai_policy', 'A_grading', 'A_peer_rating', 'A_workload_hrs', 'A_points',
-                'B_ai_policy', 'B_grading', 'B_peer_rating', 'B_workload_hrs', 'B_points',
-                'C_ai_policy', 'C_grading', 'C_peer_rating', 'C_workload_hrs', 'C_points'
-            ];
+            // Build comprehensive CSV
+            let csv = `VIGNETTE STUDY RESPONSE DATA (V8)\n`;
+            csv += `${'='.repeat(60)}\n\n`;
 
-            let choiceCSV = choiceHeaders.join(',') + '\n';
+            // Summary
+            csv += `RESPONDENT SUMMARY\n`;
+            csv += `respondent_id,${state.respondentId}\n`;
+            csv += `timestamp,${new Date().toISOString()}\n`;
+            csv += `cell,${state.cell}\n`;
+            csv += `student_ability,${state.studentAbility}\n`;
+            csv += `course_type,${state.courseType}\n`;
+            csv += `block,${state.block}\n`;
+            csv += `duration_minutes,${((Date.now() - state.startTime) / 1000 / 60).toFixed(2)}\n\n`;
 
-            state.responses.forEach(r => {
-                const row = [
-                    state.respondentId,
-                    state.block,
-                    state.courseType,
-                    r.choiceSetOrder,
-                    r.sectionA_ai, r.sectionA_grading, r.sectionA_peer, parseWorkload(r.sectionA_workload), r.sectionA_points,
-                    r.sectionB_ai, r.sectionB_grading, r.sectionB_peer, parseWorkload(r.sectionB_workload), r.sectionB_points,
-                    r.sectionC_ai, r.sectionC_grading, r.sectionC_peer, parseWorkload(r.sectionC_workload), r.sectionC_points
-                ];
-                choiceCSV += row.join(',') + '\n';
+            // Flags
+            csv += `QUALITY FLAGS\n`;
+            csv += `flag_comprehension,${state.flags.comprehension ? 1 : 0}\n`;
+            csv += `flag_attention_name,${state.flags.attention_name ? 1 : 0}\n`;
+            csv += `flag_attention_instructed,${state.flags.attention_instructed ? 1 : 0}\n`;
+            csv += `flag_dominated,${state.flags.dominated ? 1 : 0}\n`;
+            csv += `flag_speedster,${state.flags.speedster ? 1 : 0}\n`;
+            csv += `flag_straightliner,${state.flags.straightliner ? 1 : 0}\n\n`;
+
+            // Demographics
+            csv += `DEMOGRAPHICS\n`;
+            Object.entries(state.demographics).forEach(([k, v]) => {
+                csv += `${k},${v}\n`;
             });
+            csv += `\n`;
 
-            // =============================================
-            // SHEET 2: BELIEF RESPONSES (only sets with beliefs)
-            // =============================================
-            const beliefHeaders = [
-                'respondent_id', 'choice_set', 'belief_about_section',
-                'section_ai_policy', 'section_grading', 'section_peer_rating', 'section_workload_hrs',
-                'prob_grade_B_or_higher', 'prob_use_ai_daily', 'prob_grade_if_ai_flipped'
-            ];
+            // AI Experience
+            csv += `AI EXPERIENCE\n`;
+            csv += `ai_frequency,${state.aiExperience.frequency}\n`;
+            csv += `ai_tasks,"${state.aiExperience.tasks.join(', ')}"\n`;
+            csv += `ai_skill,${state.aiExperience.skill}\n\n`;
 
-            let beliefCSV = beliefHeaders.join(',') + '\n';
-
-            state.responses.forEach(r => {
-                if (r.beliefSection) {
-                    // Get the section's attributes based on which section was asked about
-                    let sectionData;
-                    if (r.beliefSection === 'A') {
-                        sectionData = { ai: r.sectionA_ai, grading: r.sectionA_grading, peer: r.sectionA_peer, workload: r.sectionA_workload };
-                    } else if (r.beliefSection === 'B') {
-                        sectionData = { ai: r.sectionB_ai, grading: r.sectionB_grading, peer: r.sectionB_peer, workload: r.sectionB_workload };
-                    } else {
-                        sectionData = { ai: r.sectionC_ai, grading: r.sectionC_grading, peer: r.sectionC_peer, workload: r.sectionC_workload };
-                    }
-
-                    const row = [
-                        state.respondentId,
-                        r.choiceSetOrder,
-                        r.beliefSection,
-                        sectionData.ai,
-                        sectionData.grading,
-                        sectionData.peer,
-                        parseWorkload(sectionData.workload),
-                        r.belief_gradeChance || '',
-                        r.belief_aiUsageDaily || '',
-                        r.belief_counterfactualGrade || ''
-                    ];
-                    beliefCSV += row.join(',') + '\n';
-                }
+            // Choice responses
+            csv += `CHOICE RESPONSES\n`;
+            csv += `set,section,ai_policy,grading,peer_rating,points\n`;
+            state.choiceResponses.forEach(r => {
+                r.sections.forEach(s => {
+                    csv += `${r.setNumber},${s.label},${s.profile.ai},${s.profile.grading},${s.profile.peer},${s.points}\n`;
+                });
             });
+            csv += `\n`;
 
-            // =============================================
-            // SHEET 3: SUMMARY (metadata + attention check)
-            // =============================================
-            const summaryCSV = `Respondent Summary
-respondent_id,${state.respondentId}
-block_assigned,${state.block}
-course_type,${state.courseType}
-attention_check_answer,${state.attentionAnswer}
-attention_check_correct,${state.attentionAnswer === 'workload' ? 'YES' : 'NO'}
-timestamp,${new Date().toISOString()}
-total_choice_sets,8
-belief_questions_on_sets,"${state.beliefSets.map(i => i + 1).join(', ')}"
-`;
+            // WTP
+            csv += `WTP RESPONSES\n`;
+            csv += `wtp_money,${state.wtpResponses.money}\n`;
+            csv += `wtp_time,${state.wtpResponses.time}\n`;
+            csv += `wtp_free_likelihood,${state.wtpResponses.free_likelihood}\n\n`;
 
-            // =============================================
-            // COMBINE INTO ONE FILE WITH CLEAR SECTIONS
-            // =============================================
-            const fullCSV = `${'='.repeat(60)}
-VIGNETTE STUDY RESPONSE DATA
-${'='.repeat(60)}
+            // Manipulation checks
+            csv += `MANIPULATION CHECKS\n`;
+            csv += `manip_gpa_answer,${state.manipChecks.gpa_answer}\n`;
+            csv += `manip_gpa_correct,${state.manipChecks.gpa_correct ? 1 : 0}\n`;
+            csv += `manip_course_answer,${state.manipChecks.course_answer}\n`;
+            csv += `manip_course_correct,${state.manipChecks.course_correct ? 1 : 0}\n\n`;
 
-${summaryCSV}
-${'='.repeat(60)}
-CHOICE PROBABILITIES (points allocated to each section)
-${'='.repeat(60)}
-${choiceCSV}
-${'='.repeat(60)}
-BELIEF RESPONSES (asked on ${state.beliefSets.length} randomly selected sets)
-${'='.repeat(60)}
-${beliefCSV}`;
+            // Realism
+            csv += `REALISM\n`;
+            csv += `realism_scenarios,${state.realismResponses.scenarios}\n`;
+            csv += `realism_imagine,${state.realismResponses.imagine}\n`;
+            csv += `feedback,"${state.realismResponses.feedback?.replace(/"/g, '""') || ''}"\n`;
 
             // Download
-            const blob = new Blob([fullCSV], { type: 'text/csv' });
+            const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `vignette_response_${state.respondentId}.csv`;
+            a.download = `vignette_response_v8_${state.respondentId}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
-        function parseWorkload(workloadStr) {
-            // Convert "6 hrs" to just 6
-            return parseInt(workloadStr) || workloadStr;
-        }
-
-        // Initialize progress on load
-        updateProgress();
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            renderPracticeSet();
+        });
     </script>
 </body>
 </html>
