@@ -1070,8 +1070,8 @@
 
                     <ol style="padding-left: 24px; color: #475569; margin-bottom: 20px;">
                         <li style="margin-bottom: 8px;"><strong>AI Policy</strong> — rules about using AI on take-home work</li>
-                        <li style="margin-bottom: 8px;"><strong>Grading</strong> — how much of the grade comes from exams vs. homework</li>
-                        <li style="margin-bottom: 8px;"><strong>Class Rating Data</strong> — star ratings and average grades from past students</li>
+                        <li style="margin-bottom: 8px;"><strong>Assessment Structure</strong> — how much of the grade comes from exams vs. homework</li>
+                        <li style="margin-bottom: 8px;"><strong>Student Reviews</strong> — teaching quality and difficulty based on past student feedback</li>
                     </ol>
 
                     <p style="margin-bottom: 20px;">We will show you <strong>9 scenarios</strong>. In each one, you will see three sections and tell us how likely the student would be to enroll in each by giving them points (adding up to 100).</p>
@@ -1239,10 +1239,10 @@
                     </div>
                 </div>
 
-                <!-- GRADING SPLIT Block -->
+                <!-- ASSESSMENT STRUCTURE Block -->
                 <div style="background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; color: white;">
                     <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-bottom: 4px;">Feature 2</div>
-                    <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 12px;">GRADING SPLIT</div>
+                    <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 12px;">ASSESSMENT STRUCTURE</div>
                     <div style="display: grid; gap: 8px;">
                         <div style="background: rgba(255,255,255,0.15); padding: 10px 14px; border-radius: 8px;">
                             <strong>80% Exam / 20% HW</strong> — Grade mostly from exams
@@ -1256,20 +1256,29 @@
                     </div>
                 </div>
 
-                <!-- CLASS RATING DATA Block -->
+                <!-- STUDENT REVIEWS Block -->
                 <div style="background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; color: white;">
                     <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-bottom: 4px;">Feature 3</div>
-                    <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 12px;">CLASS RATING DATA</div>
+                    <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 12px;">STUDENT REVIEWS</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 12px;">
+                        These scores summarize past students' experiences.<br>
+                        <strong>Quality</strong> = how effective the teaching is. <strong>Difficulty</strong> = how demanding the course feels.
+                    </div>
                     <div style="display: grid; gap: 8px;">
                         <div style="background: rgba(255,255,255,0.15); padding: 10px 14px; border-radius: 8px;">
-                            <strong>Rating A</strong> — 4.5/5 stars, Avg grade: B-
+                            <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+                                <span><strong>Quality:</strong> 4.7/5</span>
+                                <span><strong>Difficulty:</strong> 4.3/5</span>
+                            </div>
+                            <span style="font-size: 0.9rem; opacity: 0.9;">Students report strong teaching, but the class is demanding.</span>
                         </div>
                         <div style="background: rgba(255,255,255,0.15); padding: 10px 14px; border-radius: 8px;">
-                            <strong>Rating B</strong> — 2.5/5 stars, Avg grade: B+
+                            <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+                                <span><strong>Quality:</strong> 2.8/5</span>
+                                <span><strong>Difficulty:</strong> 2.3/5</span>
+                            </div>
+                            <span style="font-size: 0.9rem; opacity: 0.9;">Students report weaker teaching, but the class is easier.</span>
                         </div>
-                    </div>
-                    <div style="margin-top: 12px; font-size: 0.9rem; opacity: 0.9;">
-                        <em>Based on ~100 student reviews. Interpret as you see fit.</em>
                     </div>
                 </div>
 
@@ -1413,7 +1422,57 @@
                 </div>
             </div>
 
-            <!-- Screen 12: WTP Questions -->
+            <!-- Screen 12: Direct AI Preference (validation measure) -->
+            <div class="screen" id="directPrefScreen">
+                <h2 style="color: #1e293b; margin-bottom: 24px;">One More Question</h2>
+
+                <p style="color: #475569; margin-bottom: 24px;">
+                    Setting aside grading structure and student reviews, imagine <span id="directPrefName">Emily</span> could choose between three otherwise identical course sections that differ ONLY in their AI policy.
+                </p>
+
+                <div class="question-container">
+                    <label class="question-label">Which AI policy would <span id="directPrefName2">Emily</span> MOST prefer?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'ai_pref_most', 'Prohibited'); validateDirectPref()">
+                            <input type="radio" name="ai_pref_most" value="Prohibited">
+                            <span><strong>AI Prohibited</strong> — No AI tools permitted on any assignments</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_pref_most', 'Verification'); validateDirectPref()">
+                            <input type="radio" name="ai_pref_most" value="Verification">
+                            <span><strong>AI with Verification</strong> — AI allowed with prompt log + output verification</span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_pref_most', 'Permitted'); validateDirectPref()">
+                            <input type="radio" name="ai_pref_most" value="Permitted">
+                            <span><strong>AI Permitted</strong> — AI allowed with no extra requirements</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <label class="question-label">Which AI policy would <span id="directPrefName3">Emily</span> LEAST prefer?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectOption(this, 'ai_pref_least', 'Prohibited'); validateDirectPref()">
+                            <input type="radio" name="ai_pref_least" value="Prohibited">
+                            <span><strong>AI Prohibited</strong></span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_pref_least', 'Verification'); validateDirectPref()">
+                            <input type="radio" name="ai_pref_least" value="Verification">
+                            <span><strong>AI with Verification</strong></span>
+                        </label>
+                        <label class="radio-option" onclick="selectOption(this, 'ai_pref_least', 'Permitted'); validateDirectPref()">
+                            <input type="radio" name="ai_pref_least" value="Permitted">
+                            <span><strong>AI Permitted</strong></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
+                    <button class="btn btn-primary" id="directPrefBtn" onclick="submitDirectPref()" disabled>Continue</button>
+                </div>
+            </div>
+
+            <!-- Screen 13: WTP Questions -->
             <div class="screen" id="wtpScreen">
                 <h2 style="color: #1e293b; margin-bottom: 24px;">AI Skills Training Opportunity</h2>
 
@@ -1598,65 +1657,68 @@
         // ============================================
         // Profile structure: id, ai, grading, rating
         // Grading: 80/20 or 50/50
-        // Rating: Rating-A (4.5/5, avg B-) or Rating-B (2.5/5, avg B+)
+        // Rating: HighQual (high teaching, tough grading) or LowQual (lower teaching, easy grading)
         const PROFILES = [
-            { id: 1, ai: 'Banned', grading: '80/20', rating: 'A' },
-            { id: 2, ai: 'Banned', grading: '80/20', rating: 'B' },
-            { id: 3, ai: 'Banned', grading: '50/50', rating: 'A' },
-            { id: 4, ai: 'Banned', grading: '50/50', rating: 'B' },
-            { id: 5, ai: 'Guided', grading: '80/20', rating: 'A' },
-            { id: 6, ai: 'Guided', grading: '80/20', rating: 'B' },
-            { id: 7, ai: 'Guided', grading: '50/50', rating: 'A' },
-            { id: 8, ai: 'Guided', grading: '50/50', rating: 'B' },
-            { id: 9, ai: 'Unrestricted', grading: '80/20', rating: 'A' },
-            { id: 10, ai: 'Unrestricted', grading: '80/20', rating: 'B' },
-            { id: 11, ai: 'Unrestricted', grading: '50/50', rating: 'A' },
-            { id: 12, ai: 'Unrestricted', grading: '50/50', rating: 'B' }
+            { id: 1, ai: 'Banned', grading: '80/20', rating: 'HighQual' },
+            { id: 2, ai: 'Banned', grading: '80/20', rating: 'LowQual' },
+            { id: 3, ai: 'Banned', grading: '50/50', rating: 'HighQual' },
+            { id: 4, ai: 'Banned', grading: '50/50', rating: 'LowQual' },
+            { id: 5, ai: 'Guided', grading: '80/20', rating: 'HighQual' },
+            { id: 6, ai: 'Guided', grading: '80/20', rating: 'LowQual' },
+            { id: 7, ai: 'Guided', grading: '50/50', rating: 'HighQual' },
+            { id: 8, ai: 'Guided', grading: '50/50', rating: 'LowQual' },
+            { id: 9, ai: 'Unrestricted', grading: '80/20', rating: 'HighQual' },
+            { id: 10, ai: 'Unrestricted', grading: '80/20', rating: 'LowQual' },
+            { id: 11, ai: 'Unrestricted', grading: '50/50', rating: 'HighQual' },
+            { id: 12, ai: 'Unrestricted', grading: '50/50', rating: 'LowQual' }
         ];
 
-        // 9 choice sets total (all regular sets, no dominated check)
-        // Each set has 3 profiles (one per AI policy: Banned, Guided, Unrestricted)
-        // BLOCKING DESIGN: 3 blocks, 9 sets per block
-        // Each set has one profile per AI policy (Banned 1-4, Guided 5-8, Unrestricted 9-12)
+        // 9 choice sets per block with 2-3-3-1 structure:
+        // - Sets 1-2: AI-only (only AI policy varies, isolates pure AI preference)
+        // - Sets 3-5: Assessment-varies (AI + assessment vary, trade AI vs exam weight)
+        // - Sets 6-8: Reviews-varies (AI + reviews vary, trade AI vs quality/difficulty)
+        // - Set 9: Both-vary (AI + assessment + reviews vary, exploratory heterogeneity)
+        // Optimized with odd-one-out balancing (each AI policy is "odd" once per vary-type)
         const BLOCKS = {
             1: [
-                { profiles: [3, 6, 10] },   // Set 1
-                { profiles: [3, 8, 9] },    // Set 2
-                { profiles: [4, 7, 10] },   // Set 3
-                { profiles: [2, 6, 11] },   // Set 4
-                { profiles: [4, 7, 9] },    // Set 5
-                { profiles: [1, 8, 11] },   // Set 6
-                { profiles: [4, 5, 11] },   // Set 7
-                { profiles: [2, 8, 11] },   // Set 8
-                { profiles: [3, 6, 12] }    // Set 9
+                { profiles: [2, 6, 10], type: 'ai_only' },        // Set 1
+                { profiles: [3, 7, 11], type: 'ai_only' },        // Set 2
+                { profiles: [1, 5, 11], type: 'assess_varies' },  // Set 3 (odd=Unrestricted)
+                { profiles: [2, 8, 10], type: 'assess_varies' },  // Set 4 (odd=Guided)
+                { profiles: [1, 7, 11], type: 'assess_varies' },  // Set 5 (odd=Banned)
+                { profiles: [1, 6, 9], type: 'reviews_varies' },  // Set 6 (odd=Guided)
+                { profiles: [3, 8, 12], type: 'reviews_varies' }, // Set 7 (odd=Banned)
+                { profiles: [4, 8, 11], type: 'reviews_varies' }, // Set 8 (odd=Unrestricted)
+                { profiles: [4, 5, 10], type: 'both_vary' }       // Set 9
             ],
             2: [
-                { profiles: [1, 6, 11] },   // Set 1
-                { profiles: [1, 8, 9] },    // Set 2
-                { profiles: [2, 7, 12] },   // Set 3
-                { profiles: [3, 6, 9] },    // Set 4
-                { profiles: [4, 5, 12] },   // Set 5
-                { profiles: [2, 5, 12] },   // Set 6
-                { profiles: [4, 8, 9] },    // Set 7
-                { profiles: [3, 7, 10] },   // Set 8
-                { profiles: [1, 5, 12] }    // Set 9
+                { profiles: [2, 6, 10], type: 'ai_only' },        // Set 1
+                { profiles: [1, 5, 9], type: 'ai_only' },         // Set 2
+                { profiles: [4, 6, 10], type: 'assess_varies' },  // Set 3 (odd=Banned)
+                { profiles: [3, 5, 11], type: 'assess_varies' },  // Set 4 (odd=Guided)
+                { profiles: [3, 7, 9], type: 'assess_varies' },   // Set 5 (odd=Unrestricted)
+                { profiles: [2, 5, 10], type: 'reviews_varies' }, // Set 6 (odd=Guided)
+                { profiles: [3, 7, 12], type: 'reviews_varies' }, // Set 7 (odd=Unrestricted)
+                { profiles: [4, 7, 11], type: 'reviews_varies' }, // Set 8 (odd=Banned)
+                { profiles: [2, 8, 11], type: 'both_vary' }       // Set 9
             ],
             3: [
-                { profiles: [2, 8, 9] },    // Set 1
-                { profiles: [4, 5, 10] },   // Set 2
-                { profiles: [3, 5, 12] },   // Set 3
-                { profiles: [1, 6, 12] },   // Set 4
-                { profiles: [1, 7, 12] },   // Set 5
-                { profiles: [3, 8, 10] },   // Set 6
-                { profiles: [3, 5, 10] },   // Set 7
-                { profiles: [4, 6, 11] },   // Set 8
-                { profiles: [2, 7, 11] }    // Set 9
+                { profiles: [4, 8, 12], type: 'ai_only' },        // Set 1
+                { profiles: [3, 7, 11], type: 'ai_only' },        // Set 2
+                { profiles: [1, 7, 9], type: 'assess_varies' },   // Set 3 (odd=Guided)
+                { profiles: [3, 5, 9], type: 'assess_varies' },   // Set 4 (odd=Banned)
+                { profiles: [2, 6, 12], type: 'assess_varies' },  // Set 5 (odd=Unrestricted)
+                { profiles: [1, 6, 10], type: 'reviews_varies' }, // Set 6 (odd=Banned)
+                { profiles: [2, 6, 9], type: 'reviews_varies' },  // Set 7 (odd=Unrestricted)
+                { profiles: [4, 7, 12], type: 'reviews_varies' }, // Set 8 (odd=Guided)
+                { profiles: [2, 5, 11], type: 'both_vary' }       // Set 9
             ]
         };
 
         function getBlockChoiceSets(blockNum) {
             return BLOCKS[blockNum].map(set => ({
-                profiles: set.profiles.map(id => getProfile(id))
+                profiles: set.profiles.map(id => getProfile(id)),
+                type: set.type
             }));
         }
 
@@ -1671,10 +1733,18 @@
             'Unrestricted': 'AI Permitted'
         };
 
-        // Class Rating Data - neutral labels, just show the data
+        // Student Reviews - Quality (teaching effectiveness) + Difficulty (how demanding)
         const RATING_LABELS = {
-            'A': '4.5/5 stars, Avg grade: B-',
-            'B': '2.5/5 stars, Avg grade: B+'
+            'HighQual': {
+                quality: '4.7/5',
+                difficulty: '4.3/5',
+                summary: 'Students report strong teaching, but the class is demanding.'
+            },
+            'LowQual': {
+                quality: '2.8/5',
+                difficulty: '2.3/5',
+                summary: 'Students report weaker teaching, but the class is easier.'
+            }
         };
 
         // ============================================
@@ -1705,6 +1775,7 @@
             beliefSets: [1, 4, 7], // Sets 2, 5, 8 (0-indexed) - ask beliefs on these sets
             currentBeliefs: {},
             nameCheckAnswer: null,
+            directPref: { most: null, least: null },
             wtpResponses: {},
             manipChecks: {},
             // Quality flags
@@ -1719,17 +1790,71 @@
         };
 
         // ============================================
-        // UTILITY FUNCTIONS
+        // UTILITY FUNCTIONS (DETERMINISTIC ASSIGNMENT)
         // ============================================
-        function generateId() {
+
+        // Seeded PRNG (Mulberry32) - produces deterministic random numbers
+        function mulberry32(seed) {
+            return function() {
+                let t = seed += 0x6D2B79F5;
+                t = Math.imul(t ^ t >>> 15, t | 1);
+                t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+
+        // Hash function (cyrb53) - converts string to numeric seed
+        function hashString(str, seed = 0) {
+            let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+            for (let i = 0, ch; i < str.length; i++) {
+                ch = str.charCodeAt(i);
+                h1 = Math.imul(h1 ^ ch, 2654435761);
+                h2 = Math.imul(h2 ^ ch, 1597334677);
+            }
+            h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+            h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+            h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+            h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+            return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+        }
+
+        // Get or create respondent ID (persists across refreshes)
+        function getOrCreateRespondentId() {
+            // Check URL parameter first (for platform IDs like Prolific/MTurk)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlId = urlParams.get('PROLIFIC_PID') || urlParams.get('workerId') || urlParams.get('respondent_id');
+            if (urlId) {
+                localStorage.setItem('vignette_respondent_id', urlId);
+                return urlId;
+            }
+
+            // Check localStorage
+            let storedId = localStorage.getItem('vignette_respondent_id');
+            if (storedId) {
+                return storedId;
+            }
+
+            // Generate new ID
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let id = '';
             for (let i = 0; i < 8; i++) {
                 id += chars[Math.floor(Math.random() * chars.length)];
             }
+            localStorage.setItem('vignette_respondent_id', id);
             return id;
         }
 
+        // Seeded shuffle (Fisher-Yates with PRNG)
+        function seededShuffle(array, rng) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Regular shuffle (for non-critical randomization)
         function shuffle(array) {
             const arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -1750,7 +1875,7 @@
             const currentScreen = document.querySelector('.screen.active');
             const screenOrder = ['welcomeScreen', 'consentScreen', 'demographicsScreen', 'aiExperienceScreen',
                 'framingScreen', 'gpaScaleScreen', 'compCheckScreen', 'meetStudentScreen', 'attributeScreen',
-                'practiceScreen', 'choiceScreen', 'wtpScreen', 'manipCheckScreen', 'completionScreen'];
+                'practiceScreen', 'choiceScreen', 'directPrefScreen', 'wtpScreen', 'manipCheckScreen', 'completionScreen'];
 
             const idx = screenOrder.indexOf(currentScreen.id);
             if (idx >= 0) {
@@ -1897,12 +2022,21 @@
         // SUBMISSION HANDLERS
         // ============================================
         function startSurvey() {
-            // Initialize state (no consent/eligibility check)
-            state.respondentId = generateId();
+            // ============================================
+            // DETERMINISTIC ASSIGNMENT (reproducible from respondent ID)
+            // ============================================
+
+            // Step 0: Get or create respondent ID (persists on refresh)
+            state.respondentId = getOrCreateRespondentId();
             state.startTime = Date.now();
 
-            // Random assignment to cell (1-8: 2 ability x 2 course x 2 gender)
-            state.cell = randomChoice([1, 2, 3, 4, 5, 6, 7, 8]);
+            // Step 1: Hash respondent ID to get master seed
+            const masterSeed = hashString(state.respondentId);
+
+            // Step 2: Derive cell (1-8) and block (1-3) deterministically
+            // This prevents "refresh until you get a nicer student"
+            state.cell = (masterSeed % 8) + 1;  // 1-8
+            state.block = ((masterSeed >> 3) % 3) + 1;  // 1-3 (use different bits)
 
             // Ability: cells 1-4 = high, cells 5-8 = low
             state.studentAbility = state.cell <= 4 ? 'high' : 'low';
@@ -1916,22 +2050,31 @@
             state.studentPronoun = state.studentGender === 'female' ? 'she' : 'he';
             state.studentPronounPossessive = state.studentGender === 'female' ? 'her' : 'his';
 
-            // Random assignment to block (1-3 for choice set variation)
-            state.block = randomChoice([1, 2, 3]);
+            // Step 3: Get block's choice sets (each set = 3 profiles)
             const originalSets = getBlockChoiceSets(state.block);
 
-            // Randomize the ORDER of choice sets (all 9 sets)
-            // Track original set IDs for data export
+            // Step 4: Seeded shuffle for set display order (reproducible)
+            const setOrderRng = mulberry32(masterSeed + 1000);
             const setIndices = originalSets.map((set, idx) => ({ set, originalIndex: idx + 1 }));
-            const shuffledSets = shuffle([...setIndices]);
+            const shuffledSets = seededShuffle([...setIndices], setOrderRng);
             state.choiceSets = shuffledSets.map(item => item.set);
-            state.setDisplayOrder = shuffledSets.map(item => item.originalIndex); // Maps display position to original set ID
+            state.setDisplayOrder = shuffledSets.map(item => item.originalIndex);
 
-            // Randomize section labels for each set
+            // Step 5: Seeded shuffle for A/B/C labels within each set (reproducible)
             state.sectionLabelOrders = [];
             for (let i = 0; i < state.choiceSets.length; i++) {
-                state.sectionLabelOrders.push(shuffle([0, 1, 2]));
+                const labelRng = mulberry32(masterSeed + 2000 + i);
+                state.sectionLabelOrders.push(seededShuffle([0, 1, 2], labelRng));
             }
+
+            // Log assignment for debugging
+            console.log('Deterministic assignment:', {
+                respondentId: state.respondentId,
+                masterSeed: masterSeed,
+                cell: state.cell,
+                block: state.block,
+                setDisplayOrder: state.setDisplayOrder
+            });
 
             // Go directly to framing screen (skip demographics, AI experience)
             showScreen('framingScreen');
@@ -1995,6 +2138,11 @@
             document.getElementById('wtpStudentName3').textContent = name;
             document.getElementById('wtpStudentName4').textContent = name;
 
+            // Update direct preference screen
+            document.getElementById('directPrefName').textContent = name;
+            document.getElementById('directPrefName2').textContent = name;
+            document.getElementById('directPrefName3').textContent = name;
+
             // Update manipulation check screen
             document.getElementById('manipStudentName7').textContent = name;
             document.getElementById('manipStudentName8').textContent = name;
@@ -2022,9 +2170,9 @@
         // ============================================
         function renderPracticeSet() {
             const practiceProfiles = [
-                { ai: 'Banned', grading: '80/20', rating: 'A' },
-                { ai: 'Guided', grading: '50/50', rating: 'B' },
-                { ai: 'Unrestricted', grading: '80/20', rating: 'A' }
+                { ai: 'Banned', grading: '80/20', rating: 'HighQual' },
+                { ai: 'Guided', grading: '50/50', rating: 'LowQual' },
+                { ai: 'Unrestricted', grading: '80/20', rating: 'HighQual' }
             ];
 
             const container = document.getElementById('practiceCards');
@@ -2088,6 +2236,7 @@
         function createCard(profile, label, mode) {
             const sectionClass = `section-${label.toLowerCase()}`;
             const prefix = mode === 'practice' ? 'practice' : '';
+            const review = RATING_LABELS[profile.rating];
 
             const card = document.createElement('div');
             card.className = 'course-card';
@@ -2099,12 +2248,16 @@
                         <span class="attr-value ${profile.ai.toLowerCase()}">${AI_LABELS[profile.ai]}</span>
                     </div>
                     <div class="attribute-row">
-                        <span class="attr-label">Grading</span>
+                        <span class="attr-label">Assessment Structure</span>
                         <span class="attr-value">${formatGrading(profile.grading)}</span>
                     </div>
-                    <div class="attribute-row">
-                        <span class="attr-label">Class Rating Data</span>
-                        <span class="attr-value">${RATING_LABELS[profile.rating]}</span>
+                    <div class="attribute-row" style="flex-direction: column; align-items: flex-start;">
+                        <span class="attr-label" style="margin-bottom: 8px;">Student Reviews</span>
+                        <div style="display: flex; gap: 16px; margin-bottom: 6px;">
+                            <span><strong>Quality:</strong> ${review.quality}</span>
+                            <span><strong>Difficulty:</strong> ${review.difficulty}</span>
+                        </div>
+                        <span style="font-size: 0.85rem; color: #64748b; font-style: italic;">${review.summary}</span>
                     </div>
                 </div>
                 <div class="point-input-container">
@@ -2198,6 +2351,7 @@
 
             const response = {
                 setNumber: state.currentSetIndex + 1,
+                setType: choiceSet.type,
                 sections: labelOrder.map((profileIdx, displayIdx) => ({
                     label: labels[displayIdx],
                     profile: choiceSet.profiles[profileIdx],
@@ -2243,7 +2397,7 @@
                 // Check for straightliner
                 checkStraightliner();
 
-                showScreen('wtpScreen');
+                showScreen('directPrefScreen');
             }
         }
 
@@ -2280,6 +2434,32 @@
             if (Object.values(patternCounts).some(count => count >= 6)) {
                 state.flags.straightliner = true;
             }
+        }
+
+        function validateDirectPref() {
+            const most = document.querySelector('input[name="ai_pref_most"]:checked');
+            const least = document.querySelector('input[name="ai_pref_least"]:checked');
+            const btn = document.getElementById('directPrefBtn');
+
+            if (most && least) {
+                // Validate that most != least
+                if (most.value === least.value) {
+                    btn.disabled = true;
+                    alert('Your most preferred and least preferred cannot be the same. Please adjust your selection.');
+                } else {
+                    btn.disabled = false;
+                }
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        function submitDirectPref() {
+            const most = document.querySelector('input[name="ai_pref_most"]:checked').value;
+            const least = document.querySelector('input[name="ai_pref_least"]:checked').value;
+
+            state.directPref = { most, least };
+            showScreen('wtpScreen');
         }
 
         function submitWTP() {
@@ -2348,16 +2528,22 @@
             csv += `ai_tasks,"${state.aiExperience.tasks.join(', ')}"\n`;
             csv += `ai_skill,${state.aiExperience.skill}\n\n`;
 
-            // Choice responses
+            // Choice responses (one row per section = 27 rows)
             csv += `CHOICE RESPONSES\n`;
-            csv += `display_position,original_set_id,section,ai_policy,grading,rating,points\n`;
+            csv += `display_position,original_set_id,set_type,display_section,profile_id,ai_policy,grading,rating,points\n`;
             state.choiceResponses.forEach((r, idx) => {
-                const originalSetId = state.setDisplayOrder[idx] || r.setNumber;
+                const originalSetId = state.setDisplayOrder[idx];
+                const setType = r.setType || 'unknown';
                 r.sections.forEach(s => {
-                    csv += `${r.setNumber},${originalSetId},${s.label},${s.profile.ai},${s.profile.grading},${s.profile.rating},${s.points}\n`;
+                    csv += `${r.setNumber},${originalSetId},${setType},${s.label},${s.profile.id},${s.profile.ai},${s.profile.grading},${s.profile.rating},${s.points}\n`;
                 });
             });
             csv += `\n`;
+
+            // Direct AI preference (validation measure)
+            csv += `DIRECT AI PREFERENCE\n`;
+            csv += `ai_pref_most,${state.directPref.most}\n`;
+            csv += `ai_pref_least,${state.directPref.least}\n\n`;
 
             // WTP
             csv += `WTP RESPONSES\n`;
@@ -2377,7 +2563,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `vignette_response_v8_${state.respondentId}.csv`;
+            a.download = `vignette_response_v9_${state.respondentId}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
