@@ -2532,7 +2532,8 @@
             csv += `CHOICE RESPONSES\n`;
             csv += `display_position,original_set_id,set_type,display_section,profile_id,ai_policy,grading,rating,points\n`;
             state.choiceResponses.forEach((r, idx) => {
-                const originalSetId = state.setDisplayOrder[idx];
+                // Use setNumber (display position) to map to original set ID, not loop index
+                const originalSetId = state.setDisplayOrder[r.setNumber - 1];
                 const setType = r.setType || 'unknown';
                 r.sections.forEach(s => {
                     csv += `${r.setNumber},${originalSetId},${setType},${s.label},${s.profile.id},${s.profile.ai},${s.profile.grading},${s.profile.rating},${s.points}\n`;
