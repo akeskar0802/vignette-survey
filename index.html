@@ -1536,10 +1536,10 @@
                     <label class="question-label">The course <span id="manipStudentName8">Emily</span> needed was:</label>
                     <div class="radio-group">
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'quant')">
-                            <input type="radio" name="manip_course" value="quant"><span>A quantitative/math-intensive course (like Statistics)</span>
+                            <input type="radio" name="manip_course" value="quant"><span>A Quantitative (Math/Statistics intensive) course</span>
                         </label>
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'writing')">
-                            <input type="radio" name="manip_course" value="writing"><span>A writing-intensive/qualitative course (like Literature)</span>
+                            <input type="radio" name="manip_course" value="writing"><span>A Qualitative (writing intensive) course</span>
                         </label>
                         <label class="radio-option" onclick="selectOption(this, 'manip_course', 'lab')">
                             <input type="radio" name="manip_course" value="lab"><span>A laboratory course</span>
@@ -1572,7 +1572,7 @@
                         <p style="color: #64748b;">This research examines how AI policies in courses affect student enrollment decisions. We are particularly interested in whether students' beliefs about performance outcomes vary based on:</p>
                         <ul style="color: #64748b; padding-left: 24px; margin-top: 12px;">
                             <li>The student's academic ability (high vs. low GPA)</li>
-                            <li>The type of course (quantitative vs. writing-intensive)</li>
+                            <li>The type of course (Quantitative vs. Qualitative)</li>
                             <li>The AI policy (prohibited, guided, or unrestricted)</li>
                         </ul>
                         <p style="color: #64748b; margin-top: 12px;">Your responses will help universities design AI policies that support student learning while maintaining academic integrity.</p>
@@ -1948,8 +1948,8 @@
                 : `${name} is below average in the class and often finds coursework challenging. ${name} has struggled in some previous courses.`;
 
             const courseText = state.courseType === 'quantitative'
-                ? `Next semester, ${name} needs to take a QUANTITATIVE (math-intensive) course (like Statistics or Econometrics) to fulfill a requirement.`
-                : `Next semester, ${name} needs to take a WRITING-INTENSIVE (qualitative) course (like Literature or History) to fulfill a requirement.`;
+                ? `Next semester, ${name} needs to take a QUANTITATIVE (Math/Statistics intensive) course (like Statistics or Econometrics) to fulfill a requirement.`
+                : `Next semester, ${name} needs to take a QUALITATIVE (writing intensive) course (like Literature or History) to fulfill a requirement.`;
 
             // Update meet student screen
             document.getElementById('studentNameHeader').textContent = name;
@@ -1966,13 +1966,13 @@
             document.getElementById('practiceStudentName').textContent = name;
             document.getElementById('practiceStudentName2').textContent = name;
             document.getElementById('practiceGPA').textContent = gpa;
-            document.getElementById('practiceCourse').textContent = state.courseType;
+            document.getElementById('practiceCourse').textContent = state.courseType === 'quantitative' ? 'Quantitative (Math/Statistics intensive)' : 'Qualitative (writing intensive)';
 
             // Update choice screen
             document.getElementById('choiceStudentName').textContent = name;
             document.getElementById('choiceStudentName2').textContent = name;
             document.getElementById('choiceGPA').textContent = gpa;
-            document.getElementById('choiceCourse').textContent = state.courseType === 'quantitative' ? 'Quantitative' : 'Writing-intensive';
+            document.getElementById('choiceCourse').textContent = state.courseType === 'quantitative' ? 'Quantitative (Math/Statistics intensive)' : 'Qualitative (writing intensive)';
 
             // Update belief questions
             document.getElementById('beliefStudentName').textContent = name;
