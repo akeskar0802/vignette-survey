@@ -1699,6 +1699,7 @@
             practiceResponse: {},
             choiceResponses: [],
             choiceSets: [], // Will be populated based on block assignment
+            setDisplayOrder: [], // Maps display position to original set ID
             currentSetIndex: 0,
             sectionLabelOrders: [],
             beliefSets: [1, 4, 7], // Sets 2, 5, 8 (0-indexed) - ask beliefs on these sets
@@ -1917,7 +1918,14 @@
 
             // Random assignment to block (1-3 for choice set variation)
             state.block = randomChoice([1, 2, 3]);
-            state.choiceSets = getBlockChoiceSets(state.block);
+            const originalSets = getBlockChoiceSets(state.block);
+
+            // Randomize the ORDER of choice sets (all 9 sets)
+            // Track original set IDs for data export
+            const setIndices = originalSets.map((set, idx) => ({ set, originalIndex: idx + 1 }));
+            const shuffledSets = shuffle([...setIndices]);
+            state.choiceSets = shuffledSets.map(item => item.set);
+            state.setDisplayOrder = shuffledSets.map(item => item.originalIndex); // Maps display position to original set ID
 
             // Randomize section labels for each set
             state.sectionLabelOrders = [];
@@ -2313,6 +2321,7 @@
             csv += `timestamp,${new Date().toISOString()}\n`;
             csv += `cell,${state.cell}\n`;
             csv += `block,${state.block}\n`;
+            csv += `set_display_order,"${state.setDisplayOrder.join(',')}"\n`;
             csv += `student_ability,${state.studentAbility}\n`;
             csv += `course_type,${state.courseType}\n`;
             csv += `student_gender,${state.studentGender}\n`;
@@ -2341,10 +2350,11 @@
 
             // Choice responses
             csv += `CHOICE RESPONSES\n`;
-            csv += `set,section,ai_policy,grading,peer_rating,points\n`;
-            state.choiceResponses.forEach(r => {
+            csv += `display_position,original_set_id,section,ai_policy,grading,rating,points\n`;
+            state.choiceResponses.forEach((r, idx) => {
+                const originalSetId = state.setDisplayOrder[idx] || r.setNumber;
                 r.sections.forEach(s => {
-                    csv += `${r.setNumber},${s.label},${s.profile.ai},${s.profile.grading},${s.profile.peer},${s.points}\n`;
+                    csv += `${r.setNumber},${originalSetId},${s.label},${s.profile.ai},${s.profile.grading},${s.profile.rating},${s.points}\n`;
                 });
             });
             csv += `\n`;
