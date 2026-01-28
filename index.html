@@ -1613,51 +1613,49 @@
             { id: 12, ai: 'Unrestricted', grading: '50/50', rating: 'B' }
         ];
 
-        // 9 choice sets total: 8 regular + 1 dominated check
+        // 9 choice sets total (all regular sets, no dominated check)
         // Each set has 3 profiles (one per AI policy: Banned, Guided, Unrestricted)
-        // Each profile appears exactly 2 times across the 8 regular sets
-        // BLOCKING DESIGN: 3 blocks, 8 regular sets + 1 dominated = 9 sets per block
+        // BLOCKING DESIGN: 3 blocks, 9 sets per block
         // Each set has one profile per AI policy (Banned 1-4, Guided 5-8, Unrestricted 9-12)
         const BLOCKS = {
             1: [
-                { profiles: [1, 5, 9] },    // Set 1: All 80/20-A
-                { profiles: [2, 6, 10] },   // Set 2: All 80/20-B
-                { profiles: [3, 7, 11] },   // Set 3: All 50/50-A
-                { profiles: [4, 8, 12] },   // Set 4: All 50/50-B
-                { profiles: [1, 8, 11] },   // Set 5: mixed
-                { profiles: [2, 7, 12] },   // Set 6: mixed
-                { profiles: [3, 6, 9] },    // Set 7: mixed
-                { profiles: [4, 5, 10] },   // Set 8: mixed
-                { profiles: [1, 4, 3], isDominated: true }  // Set 9: dominated (B=50/50-B, C=50/50-A, C dominates B)
+                { profiles: [3, 6, 10] },   // Set 1
+                { profiles: [3, 8, 9] },    // Set 2
+                { profiles: [4, 7, 10] },   // Set 3
+                { profiles: [2, 6, 11] },   // Set 4
+                { profiles: [4, 7, 9] },    // Set 5
+                { profiles: [1, 8, 11] },   // Set 6
+                { profiles: [4, 5, 11] },   // Set 7
+                { profiles: [2, 8, 11] },   // Set 8
+                { profiles: [3, 6, 12] }    // Set 9
             ],
             2: [
-                { profiles: [3, 7, 11] },   // Set 1: All 50/50-A
-                { profiles: [4, 8, 12] },   // Set 2: All 50/50-B
-                { profiles: [1, 5, 9] },    // Set 3: All 80/20-A
-                { profiles: [2, 6, 10] },   // Set 4: All 80/20-B
-                { profiles: [3, 5, 10] },   // Set 5: mixed
-                { profiles: [4, 6, 9] },    // Set 6: mixed
-                { profiles: [1, 8, 12] },   // Set 7: mixed
-                { profiles: [2, 7, 11] },   // Set 8: mixed
-                { profiles: [1, 4, 3], isDominated: true }  // Set 9: dominated
+                { profiles: [1, 6, 11] },   // Set 1
+                { profiles: [1, 8, 9] },    // Set 2
+                { profiles: [2, 7, 12] },   // Set 3
+                { profiles: [3, 6, 9] },    // Set 4
+                { profiles: [4, 5, 12] },   // Set 5
+                { profiles: [2, 5, 12] },   // Set 6
+                { profiles: [4, 8, 9] },    // Set 7
+                { profiles: [3, 7, 10] },   // Set 8
+                { profiles: [1, 5, 12] }    // Set 9
             ],
             3: [
-                { profiles: [2, 6, 10] },   // Set 1: All 80/20-B
-                { profiles: [1, 5, 9] },    // Set 2: All 80/20-A
-                { profiles: [4, 8, 12] },   // Set 3: All 50/50-B
-                { profiles: [3, 7, 11] },   // Set 4: All 50/50-A
-                { profiles: [2, 8, 9] },    // Set 5: mixed
-                { profiles: [1, 7, 10] },   // Set 6: mixed
-                { profiles: [4, 6, 11] },   // Set 7: mixed
-                { profiles: [3, 5, 12] },   // Set 8: mixed
-                { profiles: [1, 4, 3], isDominated: true }  // Set 9: dominated
+                { profiles: [2, 8, 9] },    // Set 1
+                { profiles: [4, 5, 10] },   // Set 2
+                { profiles: [3, 5, 12] },   // Set 3
+                { profiles: [1, 6, 12] },   // Set 4
+                { profiles: [1, 7, 12] },   // Set 5
+                { profiles: [3, 8, 10] },   // Set 6
+                { profiles: [3, 5, 10] },   // Set 7
+                { profiles: [4, 6, 11] },   // Set 8
+                { profiles: [2, 7, 11] }    // Set 9
             ]
         };
 
         function getBlockChoiceSets(blockNum) {
             return BLOCKS[blockNum].map(set => ({
-                profiles: set.profiles.map(id => getProfile(id)),
-                isDominated: set.isDominated || false
+                profiles: set.profiles.map(id => getProfile(id))
             }));
         }
 
@@ -1711,7 +1709,6 @@
             flags: {
                 comprehension: false,
                 attention_name: false,
-                dominated: false,
                 speedster: false,
                 straightliner: false
             },
@@ -2192,7 +2189,6 @@
 
             const response = {
                 setNumber: state.currentSetIndex + 1,
-                isDominated: choiceSet.isDominated || false,
                 sections: labelOrder.map((profileIdx, displayIdx) => ({
                     label: labels[displayIdx],
                     profile: choiceSet.profiles[profileIdx],
@@ -2203,16 +2199,6 @@
             // Add belief data if applicable
             if (state.beliefSets.includes(state.currentSetIndex)) {
                 response.beliefs = { ...state.currentBeliefs };
-            }
-
-            // Check dominated response (Set 5)
-            if (choiceSet.isDominated) {
-                // B should get less than C if paying attention
-                const bPoints = response.sections.find(s => s.label === 'B').points;
-                const cPoints = response.sections.find(s => s.label === 'C').points;
-                if (bPoints > cPoints) {
-                    state.flags.dominated = true;
-                }
             }
 
             // Find existing or add new
@@ -2336,8 +2322,7 @@
             csv += `QUALITY FLAGS\n`;
             csv += `flag_comprehension,${state.flags.comprehension ? 1 : 0}\n`;
             csv += `flag_attention_name,${state.flags.attention_name ? 1 : 0}\n`;
-            csv += `flag_dominated,${state.flags.dominated ? 1 : 0}\n`;
-            csv += `flag_speedster,${state.flags.speedster ? 1 : 0}\n`;
+                        csv += `flag_speedster,${state.flags.speedster ? 1 : 0}\n`;
             csv += `flag_straightliner,${state.flags.straightliner ? 1 : 0}\n\n`;
 
             // Demographics
