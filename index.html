@@ -2541,6 +2541,17 @@
             });
             csv += `\n`;
 
+            // Belief responses (only for display positions 2, 5, 8)
+            csv += `BELIEF RESPONSES\n`;
+            csv += `display_position,original_set_id,belief_grade,belief_hours\n`;
+            state.choiceResponses.forEach((r) => {
+                if (r.beliefs) {
+                    const originalSetId = state.setDisplayOrder[r.setNumber - 1];
+                    csv += `${r.setNumber},${originalSetId},${r.beliefs.grade || ''},${r.beliefs.hours || ''}\n`;
+                }
+            });
+            csv += `\n`;
+
             // Direct AI preference (validation measure)
             csv += `DIRECT AI PREFERENCE\n`;
             csv += `ai_pref_most,${state.directPref.most}\n`;
