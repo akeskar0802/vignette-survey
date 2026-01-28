@@ -2524,9 +2524,9 @@
 
             // AI Experience
             csv += `AI EXPERIENCE\n`;
-            csv += `ai_frequency,${state.aiExperience.frequency}\n`;
-            csv += `ai_tasks,"${state.aiExperience.tasks.join(', ')}"\n`;
-            csv += `ai_skill,${state.aiExperience.skill}\n\n`;
+            csv += `ai_frequency,${state.aiExperience.frequency || ''}\n`;
+            csv += `ai_tasks,"${(state.aiExperience.tasks || []).join(', ')}"\n`;
+            csv += `ai_skill,${state.aiExperience.skill || ''}\n\n`;
 
             // Choice responses (one row per section = 27 rows)
             csv += `CHOICE RESPONSES\n`;
@@ -2554,20 +2554,20 @@
 
             // Direct AI preference (validation measure)
             csv += `DIRECT AI PREFERENCE\n`;
-            csv += `ai_pref_most,${state.directPref.most}\n`;
-            csv += `ai_pref_least,${state.directPref.least}\n\n`;
+            csv += `ai_pref_most,${state.directPref.most || ''}\n`;
+            csv += `ai_pref_least,${state.directPref.least || ''}\n\n`;
 
             // WTP
             csv += `WTP RESPONSES\n`;
-            csv += `wtp_money,${state.wtpResponses.money}\n`;
-            csv += `wtp_time,${state.wtpResponses.time}\n`;
-            csv += `wtp_free_likelihood,${state.wtpResponses.free_likelihood}\n\n`;
+            csv += `wtp_money,${state.wtpResponses.money || ''}\n`;
+            csv += `wtp_time,${state.wtpResponses.time || ''}\n`;
+            csv += `wtp_free_likelihood,${state.wtpResponses.free_likelihood || ''}\n\n`;
 
             // Manipulation checks
             csv += `MANIPULATION CHECKS\n`;
-            csv += `manip_gpa_answer,${state.manipChecks.gpa_answer}\n`;
+            csv += `manip_gpa_answer,${state.manipChecks.gpa_answer || ''}\n`;
             csv += `manip_gpa_correct,${state.manipChecks.gpa_correct ? 1 : 0}\n`;
-            csv += `manip_course_answer,${state.manipChecks.course_answer}\n`;
+            csv += `manip_course_answer,${state.manipChecks.course_answer || ''}\n`;
             csv += `manip_course_correct,${state.manipChecks.course_correct ? 1 : 0}\n\n`;
 
             // Download
